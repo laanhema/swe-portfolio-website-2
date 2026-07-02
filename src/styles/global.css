@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #f8f9fa;
+  --color-text-primary: #121212;
+  --color-accent: #ff3e00;
+
+  --shadow-brutal: 6px 6px 0px 0px #121212;
+  --shadow-brutal-sm: 3px 3px 0px 0px #121212;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .brutal-border {
+    @apply border-4 border-text-primary;
+  }
+  
+  .brutal-shadow {
+    box-shadow: var(--shadow-brutal);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  
+  .brutal-shadow:active {
+    box-shadow: 0px 0px 0px 0px #121212;
+    transform: translate(6px, 6px);
+  }
+
+  .brutal-shadow-hover:hover {
+    box-shadow: var(--shadow-brutal);
+    transform: translate(-3px, -3px);
+  }
+}
