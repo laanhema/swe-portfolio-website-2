@@ -20,7 +20,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   return (
     <article 
-      className={`brutal-border brutal-shadow p-6 md:p-8 flex flex-col h-full animate-on-scroll group bg-[${color}]`}
+      className={`brutal-border brutal-shadow p-6 md:p-8 flex flex-col h-full animate-on-scroll group`}
       style={{ backgroundColor: color }}
     >
       <div className="flex-grow">
