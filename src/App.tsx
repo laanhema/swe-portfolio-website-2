@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Nav from './features/navigation/Nav';
 import ProjectCard from './features/showcase/ProjectCard';
 import ContactForm from './features/contact/ContactForm';
@@ -46,6 +47,23 @@ const PROJECTS = [
 
 function App() {
   useGsapAnimations();
+
+  useEffect(() => {
+    const navEntries = performance.getEntriesByType('navigation');
+    const isReload = navEntries.length > 0
+      ? (navEntries[0] as PerformanceNavigationTiming).type === 'reload'
+      : (performance.navigation && performance.navigation.type === 1);
+
+    if (isReload) {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    }
+  }, []);
 
   return (
     <div className='min-h-screen'>

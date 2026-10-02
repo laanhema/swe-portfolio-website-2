@@ -5,6 +5,25 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>laanhema.dev</title>
+    <script>
+      (function () {
+        try {
+          var navEntries = performance.getEntriesByType('navigation');
+          var isReload = navEntries.length > 0
+            ? navEntries[0].type === 'reload'
+            : (performance.navigation && performance.navigation.type === 1);
+          if (isReload) {
+            if ('scrollRestoration' in history) {
+              history.scrollRestoration = 'manual';
+            }
+            if (window.location.hash) {
+              history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
+            window.scrollTo(0, 0);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
