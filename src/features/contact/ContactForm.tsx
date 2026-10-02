@@ -17,9 +17,9 @@ const ContactForm: React.FC = () => {
             
             <a 
               href="mailto:lahmakkonen@gmail.com" 
-              className="inline-flex items-center gap-3 text-2xl font-bold uppercase break-all hover:text-[#ff3e00] transition-colors"
+              className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold uppercase break-all hover:text-[#ff3e00] transition-colors"
             >
-              <MailIcon className="w-8 h-8" />
+              <MailIcon className="w-8 h-8 shrink-0" />
               lahmakkonen@gmail.com
             </a>
           </div>
