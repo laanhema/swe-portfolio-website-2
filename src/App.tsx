@@ -3,40 +3,47 @@ import ProjectCard from './features/showcase/ProjectCard';
 import ContactForm from './features/contact/ContactForm';
 import { useGsapAnimations } from './hooks/useGsapAnimations';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './components/Icons';
+import portrait from './assets/lauri-makkonen-portrait.jpg';
 
 const PROJECTS = [
   {
-    title: 'Nexus Data Pipeline',
+    title: 'GymBro App',
     description:
-      'High-throughput event streaming architecture processing 10k+ events/sec with fault tolerance.',
-    techStack: ['Kafka', 'Go', 'PostgreSQL', 'Redis'],
-    repoUrl: 'https://github.com/example/nexus-data',
+      'Gamified gym-tracker app for Android with workout sessions, XP progression, and unlockable achievements.',
+    techStack: [
+      'Angular + Ionic Frontend',
+      'Express REST API Backend',
+      'MongoDB',
+    ],
+    repoUrl: 'https://github.com/jamktiko/gymbroapp',
+    liveUrl:
+      'https://staticwebsiteforgymbroapp.s3.eu-north-1.amazonaws.com/index.html',
+    liveLabel: 'Download APK',
     color: '#ff3e00', // Orange accent
   },
   {
-    title: 'Aura UI Framework',
+    title: 'Tralla',
     description:
-      'Accessible, component-driven design system built for enterprise dashboard applications.',
-    techStack: ['React', 'TypeScript', 'Tailwind', 'Storybook'],
-    repoUrl: 'https://github.com/example/aura-ui',
-    liveUrl: 'https://aura-ui.example.com',
+      'Trello-like Kanban board application made in Angular.',
+    techStack: ['Angular', 'Taiga UI', 'NgRx SignalStore'],
+    repoUrl: 'https://github.com/laanhema/tralla',
     color: '#00e5ff', // Cyan accent
   },
   {
-    title: 'Quantum Ledger',
+    title: 'Froots Smoothie App',
     description:
-      'Distributed ledger system utilizing cryptographic proofs for immutable transaction history.',
-    techStack: ['Rust', 'WebAssembly', 'Cryptography'],
-    repoUrl: 'https://github.com/example/quantum-ledger',
+      'Smoothie recipe app for browsing recipes with nutritional info and creating your own blends.',
+    techStack: ['Svelte', 'TypeScript', 'Tailwind'],
+    repoUrl: 'https://github.com/jamktiko/smoothie_testi',
+    liveUrl: 'https://froots-smoothies.netlify.app/',
     color: '#facc15', // Yellow accent
   },
   {
-    title: 'Echo Chat Services',
+    title: 'Distill Design Scraper',
     description:
-      'Real-time WebSocket based chat microservice with sub-10ms latency.',
-    techStack: ['Node.js', 'Socket.io', 'MongoDB', 'Docker'],
-    repoUrl: 'https://github.com/example/echo-chat',
-    liveUrl: 'https://echo-chat.example.com',
+      'Web development tool that scrapes color schemes, fonts, layout, and components from any website.',
+    techStack: ['Next.js', 'React', 'Playwright', 'Sharp', 'Culori', 'Zod'],
+    repoUrl: 'https://github.com/laanhema/distill-design-scraper',
     color: '#a855f7', // Purple accent
   },
 ];
@@ -53,62 +60,74 @@ function App() {
         <div className='absolute top-1/4 right-0 w-64 h-64 bg-[#ff3e00] rounded-full blur-[120px] opacity-20 -z-10'></div>
         <div className='absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#00e5ff] rounded-full blur-[150px] opacity-20 -z-10'></div>
 
-        <div className='max-w-5xl z-10'>
-          <p className='text-xl md:text-2xl font-bold uppercase tracking-widest mb-6 animate-on-scroll'>
-            Software Engineer
-          </p>
-          <h1 className='text-6xl md:text-8xl lg:text-9xl font-bold uppercase leading-[0.85] tracking-tighter mb-10 animate-on-scroll'>
-            Building <br />
-            <span
-              className='text-transparent'
-              style={{ WebkitTextStroke: '3px #121212' }}
-            >
-              Robust
-            </span>{' '}
-            <br />
-            Systems.
-          </h1>
-          <p className='text-xl md:text-2xl max-w-2xl font-medium mb-12 border-l-8 border-[#ff3e00] pl-6 animate-on-scroll'>
-            I specialize in architecting scalable backend services and crafting
-            highly interactive, performant frontend experiences.
-          </p>
+        <div className='w-full flex flex-col xl:flex-row xl:items-center gap-16 z-10'>
+          <div className='max-w-5xl xl:flex-1 min-w-0'>
+            <p className='text-xl md:text-2xl font-bold uppercase tracking-widest mb-6 animate-on-scroll'>
+              Software Engineer
+            </p>
+            <h1 className='text-6xl md:text-8xl lg:text-9xl font-bold uppercase leading-[0.85] tracking-tighter mb-10 animate-on-scroll'>
+              Building <br />
+              <span
+                className='text-transparent'
+                style={{ WebkitTextStroke: '3px #121212' }}
+              >
+                Robust
+              </span>{' '}
+              <br />
+              Systems.
+            </h1>
+            <p className='text-xl md:text-2xl max-w-2xl font-medium mb-12 border-l-8 border-[#ff3e00] pl-6 animate-on-scroll'>
+              I specialize in architecting scalable backend services and crafting
+              highly interactive, performant frontend experiences.
+            </p>
 
-          <div className='flex flex-wrap gap-6 animate-on-scroll'>
-            <a
-              href='#work'
-              className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase brutal-shadow brutal-shadow-hover'
-            >
-              View Work
-            </a>
-            <div className='flex gap-4'>
+            <div className='flex flex-wrap gap-6 animate-on-scroll'>
               <a
-                href='https://github.com/laanhema'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
-                aria-label='GitHub'
+                href='#work'
+                className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase brutal-shadow brutal-shadow-hover'
               >
-                <GithubIcon />
+                View Work
               </a>
-              <a
-                href='https://twitter.com'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
-                aria-label='Twitter'
-              >
-                <TwitterIcon />
-              </a>
-              <a
-                href='https://www.linkedin.com/in/laanhema'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
-                aria-label='LinkedIn'
-              >
-                <LinkedinIcon />
-              </a>
+              <div className='flex gap-4'>
+                <a
+                  href='https://github.com/laanhema'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
+                  aria-label='GitHub'
+                >
+                  <GithubIcon />
+                </a>
+                <a
+                  href='https://twitter.com'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
+                  aria-label='Twitter'
+                >
+                  <TwitterIcon />
+                </a>
+                <a
+                  href='https://www.linkedin.com/in/laanhema'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
+                  aria-label='LinkedIn'
+                >
+                  <LinkedinIcon />
+                </a>
+              </div>
             </div>
+          </div>
+
+          <div className='w-full max-w-md xl:max-w-none xl:w-[34%] shrink-0 animate-on-scroll'>
+            <img
+              src={portrait}
+              alt='Lauri Makkonen'
+              width={853}
+              height={1280}
+              className='w-full h-auto aspect-[2/3] object-cover brutal-border brutal-shadow bg-[#121212]'
+            />
           </div>
         </div>
       </header>
@@ -125,28 +144,26 @@ function App() {
               <br /> The Code.
             </h2>
             <p className='text-xl leading-relaxed font-medium'>
-              With over 5 years of experience in full-stack development,
-              I&apos;ve built everything from internal developer tools to
-              high-traffic consumer applications. I believe in clean code,
-              robust testing, and obsessing over the user experience.
+              I&apos;ve been coding since 2019, specializing in full-stack web
+              development and project leadership. I combine technical skill
+              with professional soft skills to take projects from idea to
+              delivery.
             </p>
           </div>
           <div className='flex-1 grid grid-cols-2 gap-6 animate-on-scroll w-full'>
             <div className='bg-[#facc15] text-[#121212] brutal-border p-6 aspect-square flex flex-col justify-center'>
-              <span className='text-5xl font-bold mb-2'>5+</span>
-              <span className='text-xl font-bold uppercase'>Years Exp.</span>
+              <span className='text-5xl font-bold mb-2'>2019</span>
+              <span className='text-xl font-bold uppercase'>Coding Since</span>
             </div>
             <div className='bg-[#ff3e00] text-[#121212] brutal-border p-6 aspect-square flex flex-col justify-center translate-y-8'>
-              <span className='text-5xl font-bold mb-2'>30+</span>
-              <span className='text-xl font-bold uppercase'>Projects</span>
+              <span className='text-5xl font-bold mb-2'>25</span>
+              <span className='text-xl font-bold uppercase'>Public Repos</span>
             </div>
-            <div className='bg-[#00e5ff] text-[#121212] brutal-border p-6 aspect-square flex flex-col justify-center'>
-              <span className='text-5xl font-bold mb-2'>1M+</span>
-              <span className='text-xl font-bold uppercase'>Users Reached</span>
-            </div>
-            <div className='bg-white text-[#121212] brutal-border p-6 aspect-square flex flex-col justify-center translate-y-8'>
-              <span className='text-5xl font-bold mb-2'>∞</span>
-              <span className='text-xl font-bold uppercase'>Coffee Cups</span>
+            <div className='col-span-2 mt-8 bg-[#00e5ff] text-[#121212] brutal-border p-6 flex flex-col justify-center'>
+              <span className='text-5xl font-bold mb-2'>2000+</span>
+              <span className='text-xl font-bold uppercase'>
+                GitHub Contributions This Year
+              </span>
             </div>
           </div>
         </div>

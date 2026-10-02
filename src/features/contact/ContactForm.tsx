@@ -16,11 +16,11 @@ const ContactForm: React.FC = () => {
             </p>
             
             <a 
-              href="mailto:hello@example.com" 
-              className="inline-flex items-center gap-3 text-2xl font-bold uppercase hover:text-[#ff3e00] transition-colors"
+              href="mailto:lahmakkonen@gmail.com" 
+              className="inline-flex items-center gap-3 text-2xl font-bold uppercase break-all hover:text-[#ff3e00] transition-colors"
             >
               <MailIcon className="w-8 h-8" />
-              hello@example.com
+              lahmakkonen@gmail.com
             </a>
           </div>
           

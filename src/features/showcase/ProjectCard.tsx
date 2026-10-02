@@ -7,6 +7,7 @@ interface ProjectCardProps {
   techStack: string[];
   repoUrl: string;
   liveUrl?: string;
+  liveLabel?: string;
   color: string;
 }
 
@@ -16,6 +17,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   techStack,
   repoUrl,
   liveUrl,
+  liveLabel = 'Live Demo',
   color,
 }) => {
   return (
@@ -62,7 +64,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             rel="noopener noreferrer"
             className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 flex items-center justify-center font-bold uppercase brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
           >
-            Live Demo
+            {liveLabel}
           </a>
         )}
       </div>
