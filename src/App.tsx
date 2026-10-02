@@ -67,10 +67,7 @@ function App() {
             </p>
             <h1 className='text-6xl md:text-8xl lg:text-9xl font-bold uppercase leading-[0.85] tracking-tighter mb-10 animate-on-scroll'>
               Building <br />
-              <span
-                className='text-transparent'
-                style={{ WebkitTextStroke: '3px #121212' }}
-              >
+              <span className='text-transparent text-stroke-robust'>
                 Robust
               </span>{' '}
               <br />

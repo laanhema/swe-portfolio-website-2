@@ -38,4 +38,14 @@
     box-shadow: var(--shadow-brutal);
     transform: translate(-3px, -3px);
   }
+
+  .text-stroke-robust {
+    -webkit-text-stroke: 1.5px var(--color-text-primary);
+  }
+
+  @media (min-width: 768px) {
+    .text-stroke-robust {
+      -webkit-text-stroke: 3px var(--color-text-primary);
+    }
+  }
 }
