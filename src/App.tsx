@@ -172,7 +172,7 @@ function App() {
       {/* Showcase Section */}
       <section id='work' className='py-32 px-6 md:px-12'>
         <div className='max-w-6xl mx-auto'>
-          <div className='flex flex-col md:flex-row justify-between items-end mb-16 animate-on-scroll'>
+          <div className='flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-0 mb-16 animate-on-scroll'>
             <h2 className='text-6xl md:text-8xl font-bold uppercase tracking-tighter'>
               Selected <br /> <span className='text-[#ff3e00]'>Works.</span>
             </h2>
