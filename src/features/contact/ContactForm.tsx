@@ -6,7 +6,7 @@ const ContactForm: React.FC = () => {
     <section id="contact" className="py-24 px-6 md:px-12 bg-white border-t-4 border-[#121212]">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-5xl md:text-7xl font-bold uppercase mb-12 animate-on-scroll">
-          Let&apos;s Build <br/> Something <span className="text-[#ff3e00]">Epic.</span>
+          Let&apos;s Build <br/> Something <span className="text-[#ff3e00]">Awesome.</span>
         </h2>
         
         <div className="grid md:grid-cols-2 gap-12">
