@@ -10,11 +10,7 @@ const PROJECTS = [
     title: 'GymBro App',
     description:
       'Gamified gym-tracker app for Android with workout sessions, XP progression, and unlockable achievements.',
-    techStack: [
-      'Angular + Ionic Frontend',
-      'Express REST API Backend',
-      'MongoDB',
-    ],
+    techStack: ['Angular', 'Ionic', 'Express', 'MongoDB'],
     repoUrl: 'https://github.com/jamktiko/gymbroapp',
     liveUrl:
       'https://staticwebsiteforgymbroapp.s3.eu-north-1.amazonaws.com/index.html',
