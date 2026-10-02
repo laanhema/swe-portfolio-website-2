@@ -5,7 +5,8 @@
 - **Repository**: `laanhema/swe-portfolio-website-2`
 
 ### Skipped Tasks
-_None. All 13 items in TODO.md were open tasks and have been converted to issues._
+- Tasks 1–13 (`TODO.md:1-13`): Already tracked as GitHub issues #2 through #14 (`[TODO-1]` through `[TODO-13]`) and marked complete.
+- Tasks 14–16 (`TODO.md:14-16`): Already tracked as GitHub issues #28 through #30 (`[TODO-14]` through `[TODO-16]`).
 
 ---
 
@@ -446,3 +447,145 @@ Project tags currently include long descriptive labels such as "Angular + Ionic 
 
 - Blocked by: None
 - Blocks: None
+
+---
+
+## [TODO-14] Align "2019 Coding Since" stat card text with surrounding cards
+
+**GitHub**: #28
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: enhancement, frontend, mobile
+**Source**: `TODO.md:14` — "- [ ] The text \"2019 coding since\" doesnt look good. It is centered unlike the other boxes texts around it. I would prefer if the text was aligned in similar fashion as the elements around it. Just make sure it looks good on mobile also."
+
+### Description
+
+In the About section, the text inside the yellow "2019 Coding Since" stat card is currently centered (`items-center text-center`), whereas the adjacent stat cards ("25 Public Repos" and "2000+ GitHub Contributions This Year") are left-aligned. Update the alignment of the 2019 stat card to match the surrounding cards consistently on desktop and mobile viewports.
+
+### Acceptance Criteria
+
+- [ ] "2019" and "Coding Since" text inside the yellow stat card are left-aligned to match the other stat cards.
+- [ ] Text spacing, padding, and font sizes render cleanly without clipping or misaligning on mobile viewports.
+- [ ] Visual harmony across all three stat cards is maintained on both desktop and mobile screens.
+
+### Technical Notes
+
+- Key implementation details: Adjust flex alignment and text alignment classes on the yellow card (`bg-[#facc15]`) in `src/App.tsx`, replacing `items-center text-center` with alignment matching adjacent cards (e.g., `flex flex-col justify-center`).
+- Files likely to be modified: `src/App.tsx`.
+- Patterns to follow: Consistent neo-brutalist styling with `brutal-border` and responsive padding.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-15] Make navbar brand logo text clickable to reload or scroll to top
+
+**GitHub**: #29
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:15` — "- [ ] Add the top bar \"laanhema.dev\" text as clickable, and it will be a link that redirects to # (reloads the page)."
+
+### Description
+
+The "laanhema.dev" brand title in the top navigation bar is currently a static `div`. It should be an interactive anchor link targeting `#` (or top of page) so clicking it redirects/scrolls to the top and reloads the view.
+
+### Acceptance Criteria
+
+- [ ] The "laanhema.dev" brand text in the top navigation bar is wrapped in or converted to an accessible clickable link targeting `#`.
+- [ ] Clicking the link smoothly scrolls or navigates to the top of the page.
+- [ ] Neo-brutalist styling, typography size, uppercase styling, and orange period accent (`text-[#ff3e00]`) remain visually intact.
+- [ ] Hover and focus states feel responsive and consistent with other navbar elements.
+
+### Technical Notes
+
+- Key implementation details: Change the `div` containing `laanhema.dev` in `src/features/navigation/Nav.tsx` to an anchor (`<a>`) tag with `href="#"`.
+- Files likely to be modified: `src/features/navigation/Nav.tsx`.
+- Patterns to follow: Retain sticky navbar styling and brutalist font hierarchy.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-16] Add blog post button link to selected project cards
+
+**GitHub**: #30
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Medium
+**Phase**: Backlog
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:16` — "- [ ] I would like to add a button to the selected projects that will take to a blog post where I could tell more about the project. I haven't documented my own thoughts and learning experiences about these projects anywhere so that would be super valuable, way more valuable than just listing them here. This might potentially mean some big changes."
+
+### Description
+
+Currently, project cards in the showcase section only provide links to "Code" (GitHub repo) and "Live Demo". Add support for an optional blog post / case study button that links to an external or dedicated writeup where the developer shares learning experiences, architectural thoughts, and project context.
+
+### Acceptance Criteria
+
+- [ ] `ProjectCardProps` interface supports an optional `articleUrl` or `postUrl` (and optional label like "Read Post" / "Article").
+- [ ] When a post URL is provided, an interactive button renders alongside "Code" and "Live Demo" buttons.
+- [ ] Action buttons wrap and align cleanly on narrow mobile screens (320px–375px) as well as desktop viewports without overflowing or breaking layout.
+- [ ] Button styling conforms to the neo-brutalist design language (`brutal-border`, `brutal-shadow`, high-contrast styling).
+- [ ] External post links open safely with `target="_blank"` and `rel="noopener noreferrer"`.
+
+### Technical Notes
+
+- Key implementation details: Extend `ProjectCardProps` in `src/features/showcase/ProjectCard.tsx` with an optional blog/post URL property, add the button UI, and update project data in `src/App.tsx`.
+- Files likely to be modified: `src/features/showcase/ProjectCard.tsx`, `src/App.tsx`.
+- Patterns to follow: Mobile-first responsive flex/grid button container to prevent wrapping issues when up to three buttons are present on a card.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-17] Fix website defaulting to #work hash on page refresh
+
+**GitHub**: #31
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: bug, frontend
+**Source**: `TODO.md:17` — "- [ ] Why does the website default to refresh to url laanhema.dev/#work always. This is annoying."
+
+### Description
+
+When navigating the website, clicking anchor links like "View Work" or "Work" appends `#work` to the browser URL. When the user subsequently refreshes the page, the browser retains `#work` in the address bar and auto-scrolls down to the `#work` section instead of loading from the top hero section. Investigate and resolve this behavior so page reloads land cleanly at the top of the site or handle hash navigation without sticky scrolling.
+
+### Acceptance Criteria
+
+- [ ] Identify root cause of why page refresh defaults to or maintains `#work` hash.
+- [ ] Ensure refreshing the page loads at the top of the website (hero section) unless the user explicitly navigates directly with a hash.
+- [ ] In-page smooth scrolling to `#work`, `#about`, and `#contact` continues to function properly when clicking navigation and hero buttons.
+- [ ] Browser history and back/forward navigation behavior remain predictable and clean.
+
+### Technical Notes
+
+- Key implementation details: Check window scroll restoration (`history.scrollRestoration = 'manual'`), clean hash behavior upon refresh or reload (e.g. stripping or resetting hash on fresh loads / `beforeunload` or on mount), or replacing hash state with `history.replaceState` when appropriate.
+- Files likely to be modified: `src/App.tsx`, `src/features/navigation/Nav.tsx`, `index.html`.
+- Patterns to follow: Preserve standard anchor navigation while preventing unwanted persistent hash locks across browser reloads.
+- Assumptions made: The user wants refreshing the page to show the top hero section rather than jumping straight to `#work`.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+

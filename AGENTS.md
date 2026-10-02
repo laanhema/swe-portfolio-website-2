@@ -2,6 +2,8 @@
 
 This file provides guidance to agents when working with code in this repository.
 
+Follow .agents/design-system/laanhema-design-system/DESIGN.md and BUILDING-PAGES.md for any UI work, and reuse the class strings in .agents/design-system/laanhema-design-system/components/*/README.md.
+
 ## Project Overview
 
 `swe-portfolio-website-2` (`laanhema.dev`) is a high-performance, single-page portfolio web application built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It serves as the professional digital presence and personal brand showcase for full-stack software engineer Lauri Makkonen, active since 2019. The application uses a bold Neo-Brutalist design language (4px borders, hard offset drop-shadows, high-contrast typography, and vivid accent colors) to showcase flagship software projects, highlight engineering experience, and provide direct recruiter outreach paths.

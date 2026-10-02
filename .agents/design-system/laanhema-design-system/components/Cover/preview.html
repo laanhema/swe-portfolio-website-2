@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head><link rel="stylesheet" href="../../styles/tokens.css"><link rel="stylesheet" href="../../styles/bundle.css">
+<meta charset="utf-8">
+<title>laanhema.dev</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--bg-primary); color:var(--text-primary); overflow:hidden; font-family:"Noto Sans Variable", system-ui, sans-serif; }
+  .cover { position:relative; width:960px; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:0; width:960px; height:128px; overflow:hidden; }
+  .art svg { display:block; }
+  .ink { fill:var(--text-primary); }
+  .blk { stroke:var(--text-primary); stroke-width:4px; }
+  .o { fill:var(--accent); } .c { fill:var(--accent-cyan); } .y { fill:var(--accent-yellow); } .p { fill:var(--accent-purple); }
+  .words { position:absolute; left:24px; bottom:24px; right:24px; }
+  .name { margin:0; font-size:64px; line-height:.92; font-weight:700; letter-spacing:-0.05em; text-transform:uppercase; color:var(--text-primary); white-space:nowrap; }
+  .name span { color:var(--accent); }
+  .tag { margin:8px 0 0 2px; font-size:14px; line-height:20px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-primary); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 960 128" width="960" height="128">
+<!--
+  blocks      accent 296×80 · accent-cyan 216×80 · accent-yellow 168×80 · accent-purple 200×80 bleeding off the right — the showcase's card rotation in order; ink only as border-4 + shadow-brutal; ≈ 30% of 960×288
+  arrangement top-band skeleton (the uppercase wordmark is wider than 440px at 64px): a strip of unequal blocks, every second one dropped by space-4 like the staggered cards, gutters space-6
+  pattern     loud poster type → 4px ink stripes at a space-4 pitch cut into the cyan block (the border-4 weight, repeated)
+  scales      border-4 strokes, shadow-brutal 6px offsets, gutters space-6, stagger space-4, corners radius-none
+-->
+<rect class="ink" x="30" y="22" width="296" height="80"/><rect class="blk o" x="24" y="16" width="296" height="80"/>
+<rect class="ink" x="350" y="38" width="216" height="80"/><rect class="blk c" x="344" y="32" width="216" height="80"/>
+<rect class="ink" x="360" y="52" width="184" height="4"/><rect class="ink" x="360" y="68" width="184" height="4"/><rect class="ink" x="360" y="84" width="184" height="4"/>
+<rect class="ink" x="590" y="22" width="168" height="80"/><rect class="blk y" x="584" y="16" width="168" height="80"/>
+<rect class="ink" x="782" y="38" width="200" height="80"/><rect class="blk p" x="776" y="32" width="200" height="80"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">laanhema<span>.</span>dev</h1>
+<p class="tag">Thick borders. Hard shadows. Loud type.</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+/* laanhema.dev design tokens — generated from tokens.json */
+:root {
+  --bg-primary: #f8f9fa;
+  --text-primary: #121212;
+  --white: #ffffff;
+  --accent: #ff3e00;
+  --accent-cyan: #00e5ff;
+  --accent-yellow: #facc15;
+  --accent-purple: #a855f7;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-none: 0px;
+  --radius-full: 9999px;
+  --shadow-brutal: 6px 6px 0px 0px #121212;
+  --shadow-brutal-sm: 3px 3px 0px 0px #121212;
+  --shadow-brutal-press: 2px 2px 0px 0px #121212;
+  --shadow-none: 0px 0px 0px 0px #121212;
+  --border-2: 2px;
+  --border-4: 4px;
+  --border-8: 8px;
+  --stroke-text: 3px;
+  --container: 1152px;
+  --container-hero: 1024px;
+  --container-contact: 896px;
+  --measure-lede: 672px;
+  --measure-note: 384px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --font-sans: "Noto Sans Variable", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@font-face {
+  font-family: 'Noto Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../fonts/noto-sans-latin-wght-normal.woff2') format('woff2-variations');
+}

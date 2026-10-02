@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head><link rel="stylesheet" href="../../styles/tokens.css"><link rel="stylesheet" href="../../styles/bundle.css"><meta charset="utf-8"><title>BlogArticle — preview</title><style>html,body{margin:0}</style></head>
+<body>
+<nav class='sticky top-0 z-50 w-full bg-[#f8f9fa] border-b-4 border-[#121212]'>
+  <div class='py-4 px-6 md:px-12 flex justify-between items-center'>
+    <div class='text-2xl md:text-3xl font-bold uppercase tracking-tighter'>laanhema<span class='text-[#ff3e00]'>.</span>dev</div>
+    <div class='hidden md:flex gap-8 text-lg font-bold'><a href='#work' class='hover:text-[#ff3e00] transition-colors relative group'>Work<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a><a href='#about' class='hover:text-[#ff3e00] transition-colors relative group'>About<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a><a href='#blog' class='hover:text-[#ff3e00] transition-colors relative group'>Blog<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a><a href='#contact' class='hover:text-[#ff3e00] transition-colors relative group'>Contact<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a></div>
+    <button class='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all cursor-pointer' aria-label='Open menu' aria-expanded='false' aria-controls='mobile-menu'>Menu</button>
+  </div>
+</nav>
+<main class="px-6 md:px-12 pb-24"><header class="max-w-4xl mx-auto pt-16 md:pt-20 pb-12">
+  <a href="#blog" class="inline-flex items-center gap-2 font-bold uppercase tracking-wider mb-10 hover:underline decoration-4 underline-offset-4 decoration-[#ff3e00]">&larr; All posts</a>
+  <div class="flex flex-wrap gap-2 mb-6"><span class="bg-white brutal-border px-3 py-1 text-sm font-bold uppercase">Angular</span><span class="bg-white brutal-border px-3 py-1 text-sm font-bold uppercase">NgRx</span></div>
+  <h1 class="text-5xl md:text-7xl font-bold uppercase leading-[0.9] tracking-tighter mb-8">NgRx SignalStore patterns I keep <span class="text-[#ff3e00]">reaching for.</span></h1>
+  <div class="flex flex-wrap items-center gap-3 text-sm font-bold uppercase tracking-wider mb-10"><span>Lauri Makkonen</span><span aria-hidden="true">/</span><time datetime="2026-09-18">Sep 18, 2026</time><span aria-hidden="true">/</span><span>8 min read</span></div>
+  <p class="text-xl md:text-2xl font-medium border-l-8 border-[#ff3e00] pl-6">How Tralla&apos;s board state stayed small: feature stores, computed selectors and the one rule I&apos;d break again.</p>
+</header><div class="max-w-4xl mx-auto"><div class="brutal-prose">
+  <p>Tralla started as a weekend Kanban clone and grew into the project where I finally stopped fighting state management. The board, its columns and every card live in <code>BoardStore</code>, and the components only ever read signals.</p>
+  <h2>One store per feature</h2>
+  <p>The rule: if two components need the same data, it goes in a store; if only one does, it stays local. <a href="#">Angular&apos;s signals guide</a> covers the primitives; the store adds the structure.</p>
+  <ul><li>Feature stores, not one global store</li><li>Computed selectors for anything derived</li><li>Methods for writes, never <code>patchState</code> from a component</li></ul>
+  <pre><code><span class="text-[#ff3e00]">export const</span> BoardStore = <span class="text-[#00e5ff]">signalStore</span>(
+  <span class="text-[#00e5ff]">withState</span>({ columns: [] <span class="text-[#ff3e00]">as</span> <span class="text-[#facc15]">Column</span>[] }),
+  <span class="text-[#00e5ff]">withComputed</span>(({ columns }) =&gt; ({
+    cardCount: <span class="text-[#00e5ff]">computed</span>(() =&gt; columns().<span class="text-[#00e5ff]">reduce</span>((n, c) =&gt; n + c.cards.length, <span class="text-[#facc15]">0</span>)),
+  })),
+);</code></pre>
+  <blockquote>Derived state is a bug you haven&apos;t written yet. Compute it.</blockquote>
+  <h3>When I broke the rule</h3>
+  <p>Drag-and-drop needed optimistic updates, so the column component owns a short-lived copy of its cards until the drop settles.</p>
+  <table><thead><tr><th>Pattern</th><th>Where</th></tr></thead><tbody><tr><td>withComputed</td><td>card counts, WIP limits</td></tr><tr><td>withMethods</td><td>move, add, archive</td></tr></tbody></table>
+</div></div></main>
+<section id="contact" class="py-24 px-6 md:px-12 bg-white border-t-4 border-[#121212]">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-5xl md:text-7xl font-bold uppercase mb-12 animate-on-scroll">Let&apos;s Build <br/> Something <span class="text-[#ff3e00]">Epic.</span></h2>
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="animate-on-scroll">
+        <p class="text-xl font-bold mb-8">I&apos;m currently open to new opportunities, freelance projects, and open source collaborations. Drop a message if you want to chat.</p>
+        <a href="mailto:lahmakkonen@gmail.com" class="inline-flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold uppercase break-all hover:text-[#ff3e00] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 shrink-0" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>lahmakkonen@gmail.com</a>
+      </div>
+      <form class="animate-on-scroll flex flex-col gap-6" onsubmit="return false">
+  <div class="flex flex-col gap-2"><label for="name" class="font-bold uppercase tracking-wider">Name</label><input type="text" id="name" class="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all" placeholder="John Doe" /></div>
+  <div class="flex flex-col gap-2"><label for="email" class="font-bold uppercase tracking-wider">Email</label><input type="email" id="email" class="brutal-border p-4 bg-white focus:outline-none brutal-shadow transition-all" value="lauri@" /></div>
+  <div class="flex flex-col gap-2"><label for="message" class="font-bold uppercase tracking-wider">Message</label><textarea id="message" rows="4" class="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all resize-none" placeholder="How can I help you?"></textarea></div>
+  <button type="submit" class="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl brutal-shadow hover:-translate-y-1 hover:translate-x-1 transition-all">Send Message</button>
+</form>
+    </div>
+  </div>
+</section>
+<footer class='bg-[#121212] text-white py-12 px-6 md:px-12 border-t-4 border-white'>
+  <div class='max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6'>
+    <div class='text-2xl font-bold uppercase tracking-tighter'>Dev<span class='text-[#ff3e00]'>.</span>Portfolio</div>
+    <p class='font-bold'>© 2026 All rights reserved.</p>
+    <div class='flex gap-6 font-bold uppercase'><a href='https://github.com/laanhema' class='hover:text-[#ff3e00] transition-colors'>GitHub</a><a href='https://twitter.com' class='hover:text-[#ff3e00] transition-colors'>Twitter</a><a href='https://www.linkedin.com/in/laanhema' class='hover:text-[#ff3e00] transition-colors'>LinkedIn</a></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head><link rel="stylesheet" href="../../styles/tokens.css"><link rel="stylesheet" href="../../styles/bundle.css"><meta charset="utf-8"><title>Prose — preview</title><style>html,body{margin:0}</style></head>
+<body>
+<div class='p-12'><div class="brutal-prose">
+  <p>Tralla started as a weekend Kanban clone and grew into the project where I finally stopped fighting state management. The board, its columns and every card live in <code>BoardStore</code>, and the components only ever read signals.</p>
+  <h2>One store per feature</h2>
+  <p>The rule: if two components need the same data, it goes in a store; if only one does, it stays local. <a href="#">Angular&apos;s signals guide</a> covers the primitives; the store adds the structure.</p>
+  <ul><li>Feature stores, not one global store</li><li>Computed selectors for anything derived</li><li>Methods for writes, never <code>patchState</code> from a component</li></ul>
+  <pre><code><span class="text-[#ff3e00]">export const</span> BoardStore = <span class="text-[#00e5ff]">signalStore</span>(
+  <span class="text-[#00e5ff]">withState</span>({ columns: [] <span class="text-[#ff3e00]">as</span> <span class="text-[#facc15]">Column</span>[] }),
+  <span class="text-[#00e5ff]">withComputed</span>(({ columns }) =&gt; ({
+    cardCount: <span class="text-[#00e5ff]">computed</span>(() =&gt; columns().<span class="text-[#00e5ff]">reduce</span>((n, c) =&gt; n + c.cards.length, <span class="text-[#facc15]">0</span>)),
+  })),
+);</code></pre>
+  <blockquote>Derived state is a bug you haven&apos;t written yet. Compute it.</blockquote>
+  <h3>When I broke the rule</h3>
+  <p>Drag-and-drop needed optimistic updates, so the column component owns a short-lived copy of its cards until the drop settles.</p>
+  <table><thead><tr><th>Pattern</th><th>Where</th></tr></thead><tbody><tr><td>withComputed</td><td>card counts, WIP limits</td></tr><tr><td>withMethods</td><td>move, add, archive</td></tr></tbody></table>
+</div></div>
+</body>
+</html>
