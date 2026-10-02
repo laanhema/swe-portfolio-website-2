@@ -77,8 +77,11 @@ function App() {
               Systems.
             </h1>
             <p className='text-xl md:text-2xl max-w-2xl font-medium mb-12 border-l-8 border-[#ff3e00] pl-6 animate-on-scroll'>
-              I specialize in architecting scalable backend services and crafting
-              highly interactive, performant frontend experiences.
+              Full-stack software engineer dedicated to building dependable
+              systems and high-craft digital experiences. Since 2019, I&apos;ve
+              paired technical rigor with clear communication to take software
+              from concept to production with maintainable architecture,
+              performance, and attention to detail.
             </p>
 
             <div className='flex flex-wrap gap-6 animate-on-scroll'>
