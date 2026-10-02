@@ -9,9 +9,17 @@ const Nav: React.FC = () => {
   return (
     <nav className='sticky top-0 z-50 w-full bg-[#f8f9fa] border-b-4 border-[#121212]'>
       <div className='py-4 px-6 md:px-12 flex justify-between items-center'>
-        <div className='text-2xl md:text-3xl font-bold uppercase tracking-tighter'>
+        <a
+          href='#'
+          onClick={() => {
+            closeMenu();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className='text-2xl md:text-3xl font-bold uppercase tracking-tighter hover:text-[#ff3e00] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff3e00]'
+          aria-label='laanhema.dev - Back to top'
+        >
           laanhema<span className='text-[#ff3e00]'>.</span>dev
-        </div>
+        </a>
 
         {/* Desktop Navigation */}
         <div className='hidden md:flex gap-8 text-lg font-bold'>
