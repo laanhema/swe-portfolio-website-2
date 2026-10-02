@@ -81,19 +81,19 @@ function App() {
               performance, and attention to detail.
             </p>
 
-            <div className='flex flex-wrap gap-6 animate-on-scroll'>
+            <div className='flex flex-wrap items-center gap-6 animate-on-scroll'>
               <a
                 href='#work'
                 className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase brutal-shadow brutal-shadow-hover'
               >
                 View Work
               </a>
-              <div className='flex gap-4'>
+              <div className='flex items-center gap-4 flex-nowrap'>
                 <a
                   href='https://github.com/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center'
                   aria-label='GitHub'
                 >
                   <GithubIcon />
@@ -102,7 +102,7 @@ function App() {
                   href='https://twitter.com'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center'
                   aria-label='Twitter'
                 >
                   <TwitterIcon />
@@ -111,7 +111,7 @@ function App() {
                   href='https://www.linkedin.com/in/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212]'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center'
                   aria-label='LinkedIn'
                 >
                   <LinkedinIcon />
