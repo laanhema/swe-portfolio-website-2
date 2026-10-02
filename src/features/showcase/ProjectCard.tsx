@@ -51,9 +51,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           href={repoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 bg-white brutal-border py-3 flex items-center justify-center gap-2 font-bold uppercase brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
+          className="flex-1 bg-white brutal-border py-3 px-3 flex items-center justify-center gap-2 font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
         >
-          <GithubIcon className="w-5 h-5" />
+          <GithubIcon className="w-5 h-5 shrink-0" />
           <span>Code</span>
         </a>
         
@@ -62,9 +62,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 flex items-center justify-center font-bold uppercase brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
+            className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
           >
-            {liveLabel}
+            <span>{liveLabel}</span>
           </a>
         )}
       </div>
