@@ -165,7 +165,7 @@ function App() {
             </p>
           </div>
           <div className='flex-1 grid grid-cols-2 gap-6 animate-on-scroll w-full'>
-            <div className='bg-[#facc15] text-[#121212] brutal-border p-6 aspect-square flex flex-col items-center justify-center text-center'>
+            <div className='bg-[#facc15] text-[#121212] brutal-border p-6 aspect-square flex flex-col justify-center'>
               <span className='text-5xl font-bold mb-2'>2019</span>
               <span className='text-xl font-bold uppercase'>Coding Since</span>
             </div>
