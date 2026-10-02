@@ -13,7 +13,7 @@
   body {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Noto Sans Variable', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }

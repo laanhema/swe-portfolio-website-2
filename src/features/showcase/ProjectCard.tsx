@@ -24,7 +24,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       style={{ backgroundColor: color }}
     >
       <div className="flex-grow">
-        <h3 className="text-3xl md:text-4xl font-black mb-4 uppercase leading-tight tracking-tight">
+        <h3 className="text-3xl md:text-4xl font-bold mb-4 uppercase leading-tight tracking-tight">
           {title}
         </h3>
         

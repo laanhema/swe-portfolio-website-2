@@ -5,7 +5,7 @@ const ContactForm: React.FC = () => {
   return (
     <section id="contact" className="py-24 px-6 md:px-12 bg-white border-t-4 border-[#121212]">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-5xl md:text-7xl font-black uppercase mb-12 animate-on-scroll">
+        <h2 className="text-5xl md:text-7xl font-bold uppercase mb-12 animate-on-scroll">
           Let&apos;s Build <br/> Something <span className="text-[#ff3e00]">Epic.</span>
         </h2>
         
@@ -17,7 +17,7 @@ const ContactForm: React.FC = () => {
             
             <a 
               href="mailto:hello@example.com" 
-              className="inline-flex items-center gap-3 text-2xl font-black uppercase hover:text-[#ff3e00] transition-colors"
+              className="inline-flex items-center gap-3 text-2xl font-bold uppercase hover:text-[#ff3e00] transition-colors"
             >
               <MailIcon className="w-8 h-8" />
               hello@example.com
@@ -57,7 +57,7 @@ const ContactForm: React.FC = () => {
             
             <button 
               type="submit"
-              className="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-black uppercase text-xl brutal-shadow hover:-translate-y-1 hover:translate-x-1 transition-all"
+              className="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl brutal-shadow hover:-translate-y-1 hover:translate-x-1 transition-all"
             >
               Send Message
             </button>
