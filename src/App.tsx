@@ -18,6 +18,7 @@ const PROJECTS = [
     repoUrl: 'https://github.com/jamktiko/gymbroapp',
     liveUrl:
       'https://staticwebsiteforgymbroapp.s3.eu-north-1.amazonaws.com/index.html',
+    liveLabel: 'Download APK',
     color: '#ff3e00', // Orange accent
   },
   {
