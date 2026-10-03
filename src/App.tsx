@@ -104,7 +104,7 @@ function HomePage() {
             </p>
             <h1 className='text-6xl md:text-8xl lg:text-9xl font-bold uppercase leading-[0.85] tracking-tighter mb-10 animate-on-scroll'>
               Building <br />
-              <span className='text-transparent text-stroke-robust'>
+              <span className='text-transparent text-stroke-robust tracking-normal'>
                 Robust
               </span>{' '}
               <br />

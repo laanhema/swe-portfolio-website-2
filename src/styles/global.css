@@ -54,6 +54,7 @@
 
   .text-stroke-robust {
     -webkit-text-stroke: 1.5px var(--color-text-primary);
+    letter-spacing: normal;
   }
 
   @media (min-width: 768px) {
