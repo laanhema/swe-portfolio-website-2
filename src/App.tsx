@@ -6,7 +6,7 @@ import ContactForm from './features/contact/ContactForm';
 import { BlogIndex } from './features/blog/BlogIndex';
 import { BlogPost } from './features/blog/BlogPost';
 import { useGsapAnimations } from './hooks/useGsapAnimations';
-import { GithubIcon, TwitterIcon, LinkedinIcon } from './components/Icons';
+import { GithubIcon, LinkedinIcon } from './components/Icons';
 import portrait from './assets/lauri-makkonen-portrait.jpg';
 
 const PROJECTS = [
@@ -136,15 +136,6 @@ function HomePage() {
                   <GithubIcon />
                 </a>
                 <a
-                  href='https://twitter.com'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center'
-                  aria-label='Twitter'
-                >
-                  <TwitterIcon />
-                </a>
-                <a
                   href='https://www.linkedin.com/in/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -249,12 +240,6 @@ function HomePage() {
               className='hover:text-[#ff3e00] transition-colors'
             >
               GitHub
-            </a>
-            <a
-              href='https://twitter.com'
-              className='hover:text-[#ff3e00] transition-colors'
-            >
-              Twitter
             </a>
             <a
               href='https://www.linkedin.com/in/laanhema'
