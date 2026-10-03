@@ -5,8 +5,7 @@
 - **Repository**: `laanhema/swe-portfolio-website-2`
 
 ### Skipped Tasks
-- Tasks 1–13 (`TODO.md:1-13`): Already tracked as GitHub issues #2 through #14 (`[TODO-1]` through `[TODO-13]`) and marked complete.
-- Tasks 14–16 (`TODO.md:14-16`): Already tracked as GitHub issues #28 through #30 (`[TODO-14]` through `[TODO-16]`).
+- Tasks 1–17 (`TODO.md:1-17`): Already tracked as GitHub issues #2 through #14 and #28 through #31, and marked complete.
 
 ---
 
@@ -947,5 +946,195 @@ Run full TypeScript compilation, ESLint check, and Vite production bundle build 
 
 - Blocked by: #43 ([TODO-26])
 - Blocks: None
+
+---
+
+# Stories from TODO.md (Tasks 18–20)
+
+- **Source File**: `TODO.md`
+- **Generated Date**: 2026-10-03
+- **Repository**: `laanhema/swe-portfolio-website-2`
+
+### Skipped Tasks
+- Tasks 1–13 (`TODO.md:1-13`): Already tracked as GitHub issues #2 through #14 (`[TODO-1]` through `[TODO-13]`) and marked complete.
+- Tasks 14–17 (`TODO.md:14-17`): Already tracked as GitHub issues #28 through #31 (`[TODO-14]` through `[TODO-17]`).
+
+---
+
+## [TODO-28] Refine and polish hero introductory paragraph copy
+
+**GitHub**: #55
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:18` — "- [ ] The hero paragraph still needs some work."
+
+### Description
+
+The hero section introductory bio paragraph currently describes full-stack software engineering background and core values since 2019, but needs further refinement to enhance tone, punchiness, and personal brand voice. Revise the copy to clearly communicate engineering strengths, values, and career trajectory while maintaining visual harmony with the display headline.
+
+### Acceptance Criteria
+
+- [ ] Review current hero bio paragraph in `src/App.tsx` and revise copy for clarity, impact, and concise personal branding.
+- [ ] Ensure revised copy maintains the bold brutalist tone and reads naturally across mobile, tablet, and desktop viewports.
+- [ ] Preserve the 8px orange left border accent (`border-[#ff3e00]`) and responsive typography (`text-xl md:text-2xl`).
+- [ ] Verify copy does not introduce awkward line breaks or excessive vertical height on mobile viewports.
+
+### Technical Notes
+
+- Key implementation details: Update the `<p>` element text within the hero `<header>` in `src/App.tsx`.
+- Files likely to be modified: `src/App.tsx`.
+- Patterns to follow: Follow voice and content guidelines in `.agents/design-system/laanhema-design-system/DESIGN.md` (first person, confident, plain, no buzzword fluff).
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-29] Standardize button pressed-down (active) visual behavior and offsets
+
+**GitHub**: #56
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: bug, frontend
+**Source**: `TODO.md:19` — "- [ ] The buttons are not consistent in their visual behavior when pressed down."
+
+### Description
+
+Action buttons across the site exhibit inconsistent visual behavior when pressed down (`:active` state). Some buttons use custom hover offsets without defined active states (e.g. `ContactForm` submit button and `ProjectCard` action links), others use `.brutal-shadow:active` with `translate(6px, 6px)`, and the mobile menu button uses `active:translate-x-1 active:translate-y-1`. Establish a unified, predictable pressed-down interaction model for all clickable buttons.
+
+### Acceptance Criteria
+
+- [ ] Audit all button and clickable link styles across the site (`Nav.tsx`, `App.tsx`, `ProjectCard.tsx`, `ContactForm.tsx`, `PostCard.tsx`, `ArticleHeader.tsx`).
+- [ ] Define consistent active/press behavior in `src/styles/global.css` (e.g. `.brutal-btn` or standardized `.brutal-shadow:active` and hover interactions).
+- [ ] Ensure buttons cleanly translate toward their shadow on press (e.g. `translate(6px, 6px)` with zero shadow, or consistent 2px/4px press) without visual jitter or snapping from conflicting hover rules.
+- [ ] Verify pressed state behavior feels tactile and consistent on both desktop click and mobile touch.
+
+### Technical Notes
+
+- Key implementation details: Consolidate active state classes in `src/styles/global.css` and align button utility classes in `Nav.tsx`, `ProjectCard.tsx`, and `ContactForm.tsx`.
+- Files likely to be modified: `src/styles/global.css`, `src/features/navigation/Nav.tsx`, `src/features/showcase/ProjectCard.tsx`, `src/features/contact/ContactForm.tsx`, `src/App.tsx`.
+- Patterns to follow: Follow neo-brutalist interaction rules in `DESIGN.md` ("Press: .brutal-shadow:active moves translate(6px,6px) with no shadow, so the element sits in its own shadow").
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-30] Remove Twitter / X buttons and social links across the site
+
+**GitHub**: #57
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:20` — "- [ ] Get rid of Twitter / X buttons. I don't use Twitter / X."
+
+### Description
+
+The developer does not use Twitter/X. Remove the Twitter/X button from the hero section social icon group, remove Twitter links from the site footers (`App.tsx`, `BlogIndex.tsx`, `BlogPost.tsx`), and clean up unused `TwitterIcon` exports/references.
+
+### Acceptance Criteria
+
+- [ ] Remove Twitter/X icon button from hero social links in `src/App.tsx`.
+- [ ] Remaining hero social links (GitHub, LinkedIn) maintain clean horizontal alignment, spacing, and brutalist borders/shadows.
+- [ ] Remove Twitter link from footer navigation in `src/App.tsx`, `src/features/blog/BlogIndex.tsx`, and `src/features/blog/BlogPost.tsx`.
+- [ ] Clean up unused `TwitterIcon` imports and evaluate deprecating or removing `TwitterIcon` in `src/components/Icons.tsx`.
+- [ ] `npm run lint` and `npm run build` pass with zero errors.
+
+### Technical Notes
+
+- Key implementation details: Delete Twitter link elements in `src/App.tsx:138-146`, footer link `src/App.tsx:257`, `src/features/blog/BlogIndex.tsx:73`, and `src/features/blog/BlogPost.tsx:67, 123`.
+- Files likely to be modified: `src/App.tsx`, `src/features/blog/BlogIndex.tsx`, `src/features/blog/BlogPost.tsx`, `src/components/Icons.tsx`.
+- Patterns to follow: Maintain brutalist footer and social button group layout.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-31] Fix hero flash and scroll jump when navigating from blog to homepage section anchors
+
+**GitHub**: #58
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: bug, frontend
+**Source**: `TODO.md:21` — "- [ ] When moving between Blog -> Contact, Blog -> About, Blog -> Work, the screen flashes the hero image animation for a split second and then moves to the correct part of the site. This gives a sloppy feeling. This has to be fixed."
+
+### Description
+
+When navigating from a blog route (`/blog` or `/blog/:slug`) back to an anchor section on the home page (`/#work`, `/#about`, `/#contact`), the home page initially mounts at scroll position 0 and triggers the hero entrance animations before scrolling down to the target anchor, creating an unsightly flash and jump. Ensure navigation to home page anchors from external routes immediately positions the viewport at the target section without flashing the hero animation.
+
+### Acceptance Criteria
+
+- [ ] Navigating from `/blog` or `/blog/:slug` to `/#work`, `/#about`, or `/#contact` lands directly at the target section without showing a split-second hero animation flash.
+- [ ] GSAP entrance animations do not abruptly trigger or flash above the viewport during cross-page anchor transitions.
+- [ ] In-page navigation between sections while already on `/` remains smooth and interactive.
+- [ ] Direct URL entry or reload with an anchor hash respects clean positioning and avoids redundant animations.
+
+### Technical Notes
+
+- Key implementation details: In `src/App.tsx`, check `location.hash` before triggering animations or perform an immediate `scrollTo` before paint / in `useLayoutEffect`, or suppress hero entrance animations when mounting with an anchor hash.
+- Files likely to be modified: `src/App.tsx`, `src/hooks/useGsapAnimations.ts`.
+- Patterns to follow: Clean scroll restoration and GSAP lifecycle handling.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-32] Adjust letter-spacing for "Robust" headline to fix S and T kerning
+
+**GitHub**: #59
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: bug, frontend
+**Source**: `TODO.md:22` — "- [ ] S and T letters are too close to each other in word "robust" in the title."
+
+### Description
+
+In the hero display heading "Building Robust Systems.", the word "Robust" is styled with `-webkit-text-stroke` (`text-stroke-robust`) and inherits `tracking-tighter` from the `<h1>`. Because of the tight letter spacing and stroke thickness, the letters "S" and "T" at the end of "ROBUST" sit too close together and visually collide. Adjust letter-spacing on "Robust" or character kerning so "S" and "T" have clean visual separation across all viewports.
+
+### Acceptance Criteria
+
+- [ ] Letters "S" and "T" in "Robust" headline have clear, comfortable visual spacing without colliding or overlapping.
+- [ ] Stroke outline (`text-stroke-robust`) renders cleanly without overlapping stroke edges between "S" and "T".
+- [ ] Visual weight and brutalist aesthetic of the display headline are preserved across mobile, tablet, and desktop viewports.
+
+### Technical Notes
+
+- Key implementation details: Apply explicit letter-spacing (e.g. `tracking-tight`, `tracking-normal`, or custom letter spacing) specifically to the `<span>` enclosing `Robust` in `src/App.tsx`.
+- Files likely to be modified: `src/App.tsx`, `src/styles/global.css`.
+- Patterns to follow: Retain brutalist headline rules from `DESIGN.md`.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+
+
 
 
