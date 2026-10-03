@@ -1,7 +1,10 @@
 # Code Review: feature/fix-hero-flash-and-scroll-jump
 
 **Scope**: Changes on branch `feature/fix-hero-flash-and-scroll-jump` vs `main`
-**Recommendation**: APPROVE
+**Recommendation**: REVERTED (Top bar link regressions)
+
+> [!CAUTION]
+> **POST-MERGE REVERT**: Changes from PR #62 caused top bar navigation links to fail across routes. Reverted in commit `f39adc0`. Issue #58 reopened and moved to Ready. Bug is NOT fixed.
 
 ## Summary
 

@@ -2,7 +2,11 @@
 
 **Plan**: `.agents/plans/completed/fix-hero-flash-and-scroll-jump-plan.md`
 **Branch**: `feature/fix-hero-flash-and-scroll-jump`
-**Status**: COMPLETE
+**Status**: REVERTED (NOT FIXED)
+
+> [!WARNING]
+> **REVERTED**: The code changes in this implementation (PR #62) were reverted in commit `f39adc0` because top bar navigation links stopped functioning properly.
+> Issue #58 has been reopened and moved back to **Ready**. The bug remains **NOT FIXED**.
 
 ## Summary
 
