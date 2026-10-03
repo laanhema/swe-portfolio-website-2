@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router';
 import Nav from './features/navigation/Nav';
 import ProjectCard from './features/showcase/ProjectCard';
@@ -49,8 +49,9 @@ const PROJECTS = [
 ];
 
 function HomePage() {
-  useGsapAnimations();
   const location = useLocation();
+  useGsapAnimations(location.hash);
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     const navEntries = performance.getEntriesByType('navigation');
@@ -66,25 +67,29 @@ function HomePage() {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      isInitialMount.current = false;
       return;
     }
 
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      // On initial mount with a hash, useGsapAnimations (in useLayoutEffect)
+      // already positioned the viewport cleanly before paint without triggering hero entrance animations.
+      if (!location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      }
+      return;
+    }
+
+    // Subsequent in-page hash changes while already mounted on HomePage
     if (location.hash) {
       const id = location.hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        const timer = setTimeout(() => {
-          const el = document.getElementById(id);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-        return () => clearTimeout(timer);
       }
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
   }, [location.pathname, location.hash]);
 
