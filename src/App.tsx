@@ -13,9 +13,7 @@ const PROJECTS = [
       'Gamified gym-tracker app for Android with workout sessions, XP progression, and unlockable achievements.',
     techStack: ['Angular', 'Ionic', 'Express', 'MongoDB'],
     repoUrl: 'https://github.com/jamktiko/gymbroapp',
-    liveUrl:
-      'https://staticwebsiteforgymbroapp.s3.eu-north-1.amazonaws.com/index.html',
-    liveLabel: 'Download APK',
+    postSlug: 'gymbro-app',
     color: '#ff3e00', // Orange accent
   },
   {
@@ -24,6 +22,7 @@ const PROJECTS = [
       'Trello-like Kanban board application made in Angular.',
     techStack: ['Angular', 'Taiga UI', 'NgRx SignalStore'],
     repoUrl: 'https://github.com/laanhema/tralla',
+    postSlug: 'tralla',
     color: '#00e5ff', // Cyan accent
   },
   {
@@ -32,7 +31,7 @@ const PROJECTS = [
       'Smoothie recipe app for browsing recipes with nutritional info and creating your own blends.',
     techStack: ['Svelte', 'TypeScript', 'Tailwind'],
     repoUrl: 'https://github.com/jamktiko/smoothie_testi',
-    liveUrl: 'https://froots-smoothies.netlify.app/',
+    postSlug: 'froots-smoothie-app',
     color: '#facc15', // Yellow accent
   },
   {
@@ -41,6 +40,7 @@ const PROJECTS = [
       'Web development tool that scrapes color schemes, fonts, layout, and components from any website.',
     techStack: ['Next.js', 'React', 'Playwright', 'Sharp', 'Culori', 'Zod'],
     repoUrl: 'https://github.com/laanhema/distill-design-scraper',
+    postSlug: 'distill-design-scraper',
     color: '#a855f7', // Purple accent
   },
 ];

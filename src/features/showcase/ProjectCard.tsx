@@ -1,28 +1,29 @@
 import React from 'react';
+import { useInRouterContext, Link } from 'react-router';
 import { GithubIcon } from '../../components/Icons';
 
-interface ProjectCardProps {
+export interface ProjectCardProps {
   title: string;
   description: string;
   techStack: string[];
   repoUrl: string;
-  liveUrl?: string;
-  liveLabel?: string;
+  postSlug?: string;
   color: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({
+export const ProjectCard: React.FC<ProjectCardProps> = ({
   title,
   description,
   techStack,
   repoUrl,
-  liveUrl,
-  liveLabel = 'Live Demo',
+  postSlug,
   color,
 }) => {
+  const inRouter = useInRouterContext();
+
   return (
     <article 
-      className={`brutal-border brutal-shadow p-6 md:p-8 flex flex-col h-full animate-on-scroll group`}
+      className="brutal-border brutal-shadow p-6 md:p-8 flex flex-col h-full animate-on-scroll group"
       style={{ backgroundColor: color }}
     >
       <div className="flex-grow">
@@ -57,15 +58,22 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           <span>Code</span>
         </a>
         
-        {liveUrl && (
-          <a 
-            href={liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
-          >
-            <span>{liveLabel}</span>
-          </a>
+        {postSlug && (
+          inRouter ? (
+            <Link 
+              to={`/blog/${postSlug}`}
+              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
+            >
+              <span>Read Story</span>
+            </Link>
+          ) : (
+            <a 
+              href={`/blog/${postSlug}`}
+              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
+            >
+              <span>Read Story</span>
+            </a>
+          )
         )}
       </div>
     </article>
@@ -73,3 +81,4 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 };
 
 export default ProjectCard;
+
