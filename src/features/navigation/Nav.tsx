@@ -48,40 +48,20 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
 
         {/* Desktop Navigation */}
         <div className='hidden md:flex gap-8 text-lg font-bold'>
-          {inRouter && !isHome ? (
-            <Link
-              to='/#work'
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              Work
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </Link>
-          ) : (
-            <a
-              href={workHref}
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              Work
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </a>
-          )}
-          {inRouter && !isHome ? (
-            <Link
-              to='/#about'
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              About
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </Link>
-          ) : (
-            <a
-              href={aboutHref}
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              About
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </a>
-          )}
+          <a
+            href={workHref}
+            className='hover:text-[#ff3e00] transition-colors relative group'
+          >
+            Work
+            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
+          </a>
+          <a
+            href={aboutHref}
+            className='hover:text-[#ff3e00] transition-colors relative group'
+          >
+            About
+            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
+          </a>
           {inRouter ? (
             <Link
               to={blogHref}
@@ -99,23 +79,13 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
               <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
             </a>
           )}
-          {inRouter && !isHome ? (
-            <Link
-              to='/#contact'
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              Contact
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </Link>
-          ) : (
-            <a
-              href={contactHref}
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              Contact
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </a>
-          )}
+          <a
+            href={contactHref}
+            className='hover:text-[#ff3e00] transition-colors relative group'
+          >
+            Contact
+            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -136,40 +106,20 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
           id='mobile-menu'
           className='md:hidden border-t-4 border-[#121212] bg-[#f8f9fa] px-6 py-6 flex flex-col gap-4 text-xl font-bold uppercase tracking-wide'
         >
-          {inRouter && !isHome ? (
-            <Link
-              to='/#work'
-              onClick={closeMenu}
-              className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-            >
-              Work
-            </Link>
-          ) : (
-            <a
-              href={workHref}
-              onClick={closeMenu}
-              className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-            >
-              Work
-            </a>
-          )}
-          {inRouter && !isHome ? (
-            <Link
-              to='/#about'
-              onClick={closeMenu}
-              className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-            >
-              About
-            </Link>
-          ) : (
-            <a
-              href={aboutHref}
-              onClick={closeMenu}
-              className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-            >
-              About
-            </a>
-          )}
+          <a
+            href={workHref}
+            onClick={closeMenu}
+            className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
+          >
+            Work
+          </a>
+          <a
+            href={aboutHref}
+            onClick={closeMenu}
+            className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
+          >
+            About
+          </a>
           {inRouter ? (
             <Link
               to={blogHref}
@@ -187,23 +137,13 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
               Blog
             </a>
           )}
-          {inRouter && !isHome ? (
-            <Link
-              to='/#contact'
-              onClick={closeMenu}
-              className='py-2 hover:text-[#ff3e00] transition-colors'
-            >
-              Contact
-            </Link>
-          ) : (
-            <a
-              href={contactHref}
-              onClick={closeMenu}
-              className='py-2 hover:text-[#ff3e00] transition-colors'
-            >
-              Contact
-            </a>
-          )}
+          <a
+            href={contactHref}
+            onClick={closeMenu}
+            className='py-2 hover:text-[#ff3e00] transition-colors'
+          >
+            Contact
+          </a>
         </div>
       )}
     </nav>
