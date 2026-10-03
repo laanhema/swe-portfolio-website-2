@@ -8,6 +8,23 @@
     <script>
       (function () {
         try {
+          var redirect = sessionStorage.getItem('spa_redirect');
+          if (redirect) {
+            sessionStorage.removeItem('spa_redirect');
+            var currentPath = window.location.pathname + window.location.search + window.location.hash;
+            if (redirect !== currentPath) {
+              window.history.replaceState(null, '', redirect);
+            }
+          } else {
+            var params = new URLSearchParams(window.location.search);
+            var queryRedirect = params.get('p');
+            if (queryRedirect) {
+              params.delete('p');
+              var newSearch = params.toString() ? '?' + params.toString() : '';
+              window.history.replaceState(null, '', queryRedirect + newSearch + window.location.hash);
+            }
+          }
+
           var navEntries = performance.getEntriesByType('navigation');
           var isReload = navEntries.length > 0
             ? navEntries[0].type === 'reload'
