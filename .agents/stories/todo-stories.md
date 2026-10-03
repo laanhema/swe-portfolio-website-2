@@ -589,3 +589,363 @@ When navigating the website, clicking anchor links like "View Work" or "Work" ap
 - Blocked by: None
 - Blocks: None
 
+---
+
+# Stories from .agents/plans/add-blog-page-plan.md
+
+- **Source File**: `.agents/plans/add-blog-page-plan.md`
+- **Generated Date**: 2026-10-03
+- **Repository**: `laanhema/swe-portfolio-website-2`
+
+### Skipped Tasks
+- None (all 10 plan tasks from `add-blog-page-plan.md` mapped to issues TODO-18 through TODO-27).
+
+---
+
+## [TODO-18] Add design tokens and .brutal-prose typography styles to global.css
+
+**GitHub**: #35
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: High
+**Complexity**: Small
+**Phase**: Blog Foundation
+**Labels**: technical, frontend
+**Source**: `.agents/plans/add-blog-page-plan.md:148` — "Task 1: Add Design Tokens and `.brutal-prose` to `src/styles/global.css`"
+
+### Description
+
+Add missing `@theme` color tokens (`--color-accent-cyan`, `--color-accent-yellow`, `--color-accent-purple`) and integrate the complete `.brutal-prose` typography styling layer into `src/styles/global.css` so that blog posts, markdown formatting, headings, code blocks, tables, and blockquotes render in the neo-brutalist style.
+
+### Acceptance Criteria
+
+- [ ] `--color-accent-cyan: #00e5ff`, `--color-accent-yellow: #facc15`, and `--color-accent-purple: #a855f7` are added to the `@theme` block in `src/styles/global.css`.
+- [ ] `.brutal-prose` component styles are copied directly from `.agents/design-system/laanhema-design-system/styles/brutal-prose.css` into the `@layer components` section.
+- [ ] Headings, blockquotes, inline code, preformatted code blocks, tables, and links within `.brutal-prose` conform to the design system specification.
+- [ ] `npm run build` compiles without CSS or Tailwind v4 syntax errors.
+
+### Technical Notes
+
+- Files to modify: `src/styles/global.css`.
+- Reference: `.agents/design-system/laanhema-design-system/styles/brutal-prose.css:1-23`.
+- Tailwind v4 uses `@theme` and `@layer components`. Ensure `@apply` directives work cleanly with existing `@theme` definitions.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: #38 ([TODO-21]), #40 ([TODO-23])
+
+---
+
+## [TODO-19] Install react-router and configure GitHub Pages SPA redirection
+
+**GitHub**: #36
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: High
+**Complexity**: Small
+**Phase**: Blog Foundation
+**Labels**: technical, frontend
+**Source**: `.agents/plans/add-blog-page-plan.md:163` — "Task 2: Install `react-router` and Configure GitHub Pages SPA Redirection"
+
+### Description
+
+Install `react-router` for client-side routing and implement the standard GitHub Pages single-page application redirect mechanism (`public/404.html` and `index.html` restoration script) to support direct deep link loading and browser refreshes on subpaths like `/blog` and `/blog/:slug`.
+
+### Acceptance Criteria
+
+- [ ] `react-router` is added to `dependencies` in `package.json` and cleanly installed.
+- [ ] `public/404.html` is created with a redirection script that stores the requested path in `sessionStorage` (or query string) and redirects to `/`.
+- [ ] `index.html` includes a lightweight restoration script in `<head>` that parses the redirect and restores browser history to the requested deep route.
+- [ ] `npm run build` builds the client application and includes `404.html` in the Vite production output.
+
+### Technical Notes
+
+- Files to modify/create: `package.json`, `public/404.html`, `index.html`.
+- Pattern: Standard GitHub Pages SPA single-page routing pattern.
+- Ensure script does not break local dev server HMR or Vite preview.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: #39 ([TODO-22]), #40 ([TODO-23]), #41 ([TODO-24]), #43 ([TODO-26])
+
+---
+
+## [TODO-20] Create blog data models and initial project post entries
+
+**GitHub**: #37
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: High
+**Complexity**: Medium
+**Phase**: Blog Content & Components
+**Labels**: enhancement, frontend
+**Source**: `.agents/plans/add-blog-page-plan.md:174` — "Task 3: Create Blog Data Models and Initial 4 Project Posts"
+
+### Description
+
+Define TypeScript interfaces for blog articles and author the initial four technical devlogs for the featured projects (GymBro App, Tralla, Froots Smoothie App, Distill Design Scraper) covering technical choices, architecture decisions, and lessons learned.
+
+### Acceptance Criteria
+
+- [ ] `src/features/blog/types.ts` defines and exports the `BlogPost` interface (`slug`, `projectTitle`, `title`, `titleHighlight`, `summary`, `author`, `date`, `displayDate`, `readingTime`, `excerpt`, `tags`, `accentColor`, `content`).
+- [ ] `src/features/blog/data/posts.ts` defines and exports `BLOG_POSTS: BlogPost[]` containing all 4 featured devlogs.
+- [ ] Each post includes rich, formatted content (sections, code snippets, lists, quotes) reflecting authentic engineering details.
+- [ ] `npm run lint` and `npm run build` pass with zero type errors.
+
+### Technical Notes
+
+- Files to create: `src/features/blog/types.ts`, `src/features/blog/data/posts.ts`.
+- Project slugs: `gymbro-app`, `tralla`, `froots-smoothie-app`, `distill-design-scraper`.
+- Reference: `.agents/design-system/laanhema-design-system/components/BlogIndex/preview.html:17-32`.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: #39 ([TODO-22]), #40 ([TODO-23]), #42 ([TODO-25])
+
+---
+
+## [TODO-21] Create reusable PostCard and ArticleHeader components
+
+**GitHub**: #38
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Medium
+**Phase**: Blog Content & Components
+**Labels**: enhancement, frontend
+**Source**: `.agents/plans/add-blog-page-plan.md:188` — "Task 4: Create Reusable `PostCard` and `ArticleHeader` Components"
+
+### Description
+
+Implement reusable presentational components for the blog: `PostCard` for previewing articles within grids with tags, date, and reading time, and `ArticleHeader` for individual post pages with breadcrumbs, uppercase titles with colored emphasis, byline, and lede quote callout.
+
+### Acceptance Criteria
+
+- [ ] `PostCard.tsx` renders article date, reading time, linked title, excerpt, and tech badges in neo-brutalist cards with `.brutal-shadow-hover`.
+- [ ] `PostCard` supports custom background color props (cyan `#00e5ff` for featured card, white for standard).
+- [ ] `ArticleHeader.tsx` renders `← All posts` link back to `/blog`, topic tags, responsive H1 with highlighted phrase, author byline with date/reading time, and thick-bordered lede quote.
+- [ ] All components conform to `.agents/design-system/laanhema-design-system/components/PostCard/README.md` and `BlogArticle/preview.html`.
+
+### Technical Notes
+
+- Files to create: `src/features/blog/components/PostCard.tsx`, `src/features/blog/components/ArticleHeader.tsx`.
+- Use React Router `Link` for internal navigation without full page reload.
+
+### Dependencies
+
+- Blocked by: #35 ([TODO-18])
+- Blocks: #39 ([TODO-22]), #40 ([TODO-23])
+
+---
+
+## [TODO-22] Build BlogIndex page with Field Notes header and staggered post grid
+
+**GitHub**: #39
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Medium
+**Phase**: Blog Pages
+**Labels**: enhancement, frontend
+**Source**: `.agents/plans/add-blog-page-plan.md:208` — "Task 5: Build `BlogIndex.tsx` Page"
+
+### Description
+
+Build the main blog index route (`/blog`) featuring the "Field Notes." section display heading, a 2-column staggered card layout, sticky navigation bar, and GSAP scroll entrance animations.
+
+### Acceptance Criteria
+
+- [ ] `BlogIndex.tsx` renders the "Field Notes." H1 header with accent styling and descriptive subtitle.
+- [ ] Posts are mapped into a 2-column grid (`grid md:grid-cols-2 gap-10`) with odd-numbered cards offset via `md:translate-y-16`.
+- [ ] The first card is styled with the featured cyan accent fill (`#00e5ff`) and subsequent cards use white backgrounds.
+- [ ] Navigation bar and footer are present, and `useGsapAnimations()` is mounted.
+
+### Technical Notes
+
+- Files to create: `src/features/blog/BlogIndex.tsx`.
+- Reference: `.agents/design-system/laanhema-design-system/components/BlogIndex/preview.html`.
+- Ensure window scroll resets to top on initial page load.
+
+### Dependencies
+
+- Blocked by: #36 ([TODO-19]), #37 ([TODO-20]), #38 ([TODO-21])
+- Blocks: #43 ([TODO-26])
+
+---
+
+## [TODO-23] Build BlogPost article page replicating design system preview
+
+**GitHub**: #40
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Medium
+**Phase**: Blog Pages
+**Labels**: enhancement, frontend
+**Source**: `.agents/plans/add-blog-page-plan.md:222` — "Task 6: Build `BlogPost.tsx` Page (1:1 with `BlogArticle/preview.html`)"
+
+### Description
+
+Build the dynamic individual blog article route (`/blog/:slug`) replicating `BlogArticle/preview.html` 1:1, rendering the article header, `.brutal-prose` formatted body content, a brutalist 404 state for unknown slugs, and seamlessly transitioning into the Contact section.
+
+### Acceptance Criteria
+
+- [ ] `BlogPost.tsx` retrieves the post slug from route params using `useParams()` and matches it against `BLOG_POSTS`.
+- [ ] Non-existent slugs render an accessible brutalist "Post Not Found" fallback with a button back to `/blog`.
+- [ ] Article renders `ArticleHeader`, followed by `.brutal-prose` body content enclosed in `<div className="max-w-4xl mx-auto">`.
+- [ ] Page smoothly concludes with `<ContactForm />` and the site footer.
+- [ ] Page mounts `useGsapAnimations()` and resets window scroll to top on route change.
+
+### Technical Notes
+
+- Files to create: `src/features/blog/BlogPost.tsx`.
+- Reference: `.agents/design-system/laanhema-design-system/components/BlogArticle/preview.html:1-60`.
+- Content should support headings, code blocks, lists, and quotes formatted with `.brutal-prose`.
+
+### Dependencies
+
+- Blocked by: #35 ([TODO-18]), #36 ([TODO-19]), #37 ([TODO-20]), #38 ([TODO-21])
+- Blocks: #43 ([TODO-26])
+
+---
+
+## [TODO-24] Add Blog link to navigation bar and support cross-page anchor routing
+
+**GitHub**: #41
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Navigation & Integration
+**Labels**: enhancement, frontend, mobile
+**Source**: `.agents/plans/add-blog-page-plan.md:239` — "Task 7: Update `src/features/navigation/Nav.tsx`"
+
+### Description
+
+Update `Nav.tsx` to insert a "Blog" link between "About" and "Contact" in both desktop and mobile drawer menus, update the brand logo to navigate to `/`, and implement path-aware anchor routing so clicking "Work" or "About" from `/blog` navigates back to `/#work` and `/#about`.
+
+### Acceptance Criteria
+
+- [ ] "Blog" appears between "About" and "Contact" in desktop navigation and in the mobile drawer menu.
+- [ ] Brand logo `laanhema.dev` links to `/` and scrolls to top.
+- [ ] On `/`, navigation links target `#work`, `#about`, `/blog`, `#contact`.
+- [ ] On `/blog` or `/blog/:slug`, navigation links target `/#work`, `/#about`, `/blog`, `/#contact` using `useLocation()` detection.
+- [ ] Mobile drawer automatically closes when any link is selected.
+
+### Technical Notes
+
+- Files to modify: `src/features/navigation/Nav.tsx`.
+- Use React Router `Link` or path detection via `useLocation()`.
+- Maintain brutalist styling and hover underlines.
+
+### Dependencies
+
+- Blocked by: #36 ([TODO-19])
+- Blocks: #43 ([TODO-26])
+
+---
+
+## [TODO-25] Update ProjectCard to 2-button layout with Code and Read Story links
+
+**GitHub**: #42
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Navigation & Integration
+**Labels**: enhancement, frontend, mobile
+**Source**: `.agents/plans/add-blog-page-plan.md:252` — "Task 8: Update `ProjectCard.tsx` to 2-Button Layout (\"Code\" + \"Read Story\")"
+
+### Description
+
+Refactor `ProjectCard.tsx` action buttons from "Code" + "Live Demo" to a standardized 2-button layout ("Code" linking to GitHub repo, "Read Story" linking to `/blog/:slug`), and update project datasets to pass `postSlug`.
+
+### Acceptance Criteria
+
+- [ ] `ProjectCardProps` replaces `liveUrl` and `liveLabel` with `postSlug?: string`.
+- [ ] "Code" button links externally to GitHub repository with GitHub icon and opens in a new tab.
+- [ ] "Read Story" button links internally to `/blog/${postSlug}` using React Router navigation.
+- [ ] Buttons sit side-by-side using `flex-1` and do not wrap or overflow on narrow mobile screens (320px–375px).
+- [ ] `PROJECTS` in `src/App.tsx` is updated with corresponding slugs for all four projects.
+
+### Technical Notes
+
+- Files to modify: `src/features/showcase/ProjectCard.tsx`, `src/App.tsx`.
+- Slugs: `gymbro-app`, `tralla`, `froots-smoothie-app`, `distill-design-scraper`.
+
+### Dependencies
+
+- Blocked by: #37 ([TODO-20])
+- Blocks: #43 ([TODO-26])
+
+---
+
+## [TODO-26] Configure React Router in App.tsx and extract HomePage component
+
+**GitHub**: #43
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Medium
+**Phase**: Navigation & Integration
+**Labels**: enhancement, frontend
+**Source**: `.agents/plans/add-blog-page-plan.md:264` — "Task 9: Configure React Router in `src/App.tsx` and Extract `HomePage`"
+
+### Description
+
+Configure declarative client-side routing in `App.tsx` using React Router, extract the existing landing page into a dedicated `HomePage` component, and mount routes for `/`, `/blog`, and `/blog/:slug`.
+
+### Acceptance Criteria
+
+- [ ] Application is wrapped in React Router (`BrowserRouter` or route provider).
+- [ ] Existing landing page content (hero, about, selected works, contact, footer) is cleanly organized as `HomePage`.
+- [ ] Routes are declared for `/` (`HomePage`), `/blog` (`BlogIndex`), and `/blog/:slug` (`BlogPost`).
+- [ ] Hash navigation behavior (`#work`, `#about`, `#contact`) smoothly functions across route transitions.
+
+### Technical Notes
+
+- Files to modify: `src/App.tsx`.
+- Ensure reload scroll behavior and `useGsapAnimations` are appropriately initialized.
+
+### Dependencies
+
+- Blocked by: #36 ([TODO-19]), #39 ([TODO-22]), #40 ([TODO-23]), #41 ([TODO-24]), #42 ([TODO-25])
+- Blocks: #44 ([TODO-27])
+
+---
+
+## [TODO-27] Run full build and lint validation for blog feature
+
+**GitHub**: #44
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: Low
+**Complexity**: Small
+**Phase**: Quality Assurance
+**Labels**: technical
+**Source**: `.agents/plans/add-blog-page-plan.md:278` — "Task 10: Run Full Build and Lint Validation"
+
+### Description
+
+Run full TypeScript compilation, ESLint check, and Vite production bundle build to verify zero errors, clean type resolution, and successful generation of all production assets and SPA fallback files.
+
+### Acceptance Criteria
+
+- [ ] `npm run lint` passes with 0 warnings and 0 errors.
+- [ ] `npm run build` succeeds with 0 TypeScript compiler errors.
+- [ ] Vite production bundle output in `dist/` contains valid bundles and `404.html`.
+
+### Technical Notes
+
+- Validate with `npm run lint && npm run build`.
+- Ensure all imported types, hooks, and routing packages resolve cleanly.
+
+### Dependencies
+
+- Blocked by: #43 ([TODO-26])
+- Blocks: None
+
+
