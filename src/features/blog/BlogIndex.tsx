@@ -65,14 +65,6 @@ export const BlogIndex: React.FC = () => {
               GitHub
             </a>
             <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#ff3e00] transition-colors"
-            >
-              Twitter
-            </a>
-            <a
               href="https://www.linkedin.com/in/laanhema"
               target="_blank"
               rel="noopener noreferrer"
