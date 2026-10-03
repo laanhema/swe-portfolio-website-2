@@ -335,13 +335,13 @@ npm run lint
 
 ## Acceptance Criteria
 
-- [ ] All 10 tasks completed in order.
-- [ ] React Router configured with HTML5 URLs (`/`, `/blog`, `/blog/:slug`).
-- [ ] `public/404.html` SPA fallback script prevents 404 errors on GitHub Pages reloads.
-- [ ] "Blog" appears as the 4th item in desktop and mobile navigation.
-- [ ] Project cards feature exactly 2 buttons: "Code" and "Read Story".
-- [ ] Blog index page renders "Field Notes." header and staggered 2-column grid.
-- [ ] Blog article view replicates `BlogArticle/preview.html` 1:1 with `.brutal-prose` styling.
-- [ ] Initial 4 project devlogs populated for GymBro App, Tralla, Froots Smoothie App, and Distill Design Scraper.
-- [ ] `npm run lint` passes with 0 errors.
-- [ ] `npm run build` succeeds with 0 errors.
+- [x] All 10 tasks completed in order.
+- [x] React Router configured with HTML5 URLs (`/`, `/blog`, `/blog/:slug`).
+- [x] `public/404.html` SPA fallback script prevents 404 errors on GitHub Pages reloads.
+- [x] "Blog" appears as the 4th item in desktop and mobile navigation.
+- [x] Project cards feature exactly 2 buttons: "Code" and "Read Story".
+- [x] Blog index page renders "Field Notes." header and staggered 2-column grid.
+- [x] Blog article view replicates `BlogArticle/preview.html` 1:1 with `.brutal-prose` styling.
+- [x] Initial 4 project devlogs populated for GymBro App, Tralla, Froots Smoothie App, and Distill Design Scraper.
+- [x] `npm run lint` passes with 0 errors.
+- [x] `npm run build` succeeds with 0 errors.
