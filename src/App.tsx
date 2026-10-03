@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router';
 import Nav from './features/navigation/Nav';
 import ProjectCard from './features/showcase/ProjectCard';
 import ContactForm from './features/contact/ContactForm';
+import { BlogIndex } from './features/blog/BlogIndex';
+import { BlogPost } from './features/blog/BlogPost';
 import { useGsapAnimations } from './hooks/useGsapAnimations';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './components/Icons';
 import portrait from './assets/lauri-makkonen-portrait.jpg';
@@ -45,8 +48,9 @@ const PROJECTS = [
   },
 ];
 
-function App() {
+function HomePage() {
   useGsapAnimations();
+  const location = useLocation();
 
   useEffect(() => {
     const navEntries = performance.getEntriesByType('navigation');
@@ -62,8 +66,27 @@ function App() {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      return;
     }
-  }, []);
+
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        const timer = setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    }
+  }, [location.pathname, location.hash]);
 
   return (
     <div className='min-h-screen'>
@@ -246,4 +269,15 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/blog' element={<BlogIndex />} />
+        <Route path='/blog/:slug' element={<BlogPost />} />
+        <Route path='*' element={<Navigate to='/' replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
