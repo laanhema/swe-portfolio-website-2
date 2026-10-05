@@ -48,17 +48,22 @@ const PROJECTS = [
   },
 ];
 
+// Module-level reload detection: evaluated once on script load, then consumed on initial mount
+let isPageReload = false;
+if (typeof performance !== 'undefined') {
+  const navEntries = performance.getEntriesByType('navigation');
+  isPageReload = navEntries.length > 0
+    ? (navEntries[0] as PerformanceNavigationTiming).type === 'reload'
+    : (performance as unknown as { navigation?: { type?: number } }).navigation?.type === 1;
+}
+
 function HomePage() {
   useGsapAnimations();
   const location = useLocation();
 
   useEffect(() => {
-    const navEntries = performance.getEntriesByType('navigation');
-    const isReload = navEntries.length > 0
-      ? (navEntries[0] as PerformanceNavigationTiming).type === 'reload'
-      : (performance.navigation && performance.navigation.type === 1);
-
-    if (isReload) {
+    if (isPageReload) {
+      isPageReload = false;
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
@@ -88,6 +93,17 @@ function HomePage() {
     }
   }, [location.pathname, location.hash]);
 
+  const handleViewWork = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const element = document.getElementById('work');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      if (window.location.hash !== '#work') {
+        history.pushState(null, '', '#work');
+      }
+    }
+  };
+
   return (
     <div className='min-h-screen'>
       <Nav />
@@ -114,13 +130,14 @@ function HomePage() {
               Full-stack software engineer dedicated to building dependable
               systems and high-craft digital experiences. Since 2019, I&apos;ve
               paired technical rigor with clear communication to take software
-              from concept to production with maintainable architecture,
-              performance, and attention to detail.
+              from concept to production with maintainable architecture, and
+              attention to detail.
             </p>
 
             <div className='flex flex-wrap items-center gap-6 animate-on-scroll'>
               <a
                 href='#work'
+                onClick={handleViewWork}
                 className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase brutal-shadow brutal-shadow-hover'
               >
                 View Work

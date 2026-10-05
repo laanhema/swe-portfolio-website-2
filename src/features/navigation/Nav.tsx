@@ -23,6 +23,20 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    closeMenu();
+    if (isHome) {
+      e.preventDefault();
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        if (window.location.hash !== `#${targetId}`) {
+          history.pushState(null, '', `#${targetId}`);
+        }
+      }
+    }
+  };
+
   return (
     <nav className='sticky top-0 z-50 w-full bg-[#f8f9fa] border-b-4 border-[#121212]'>
       <div className='py-4 px-6 md:px-12 flex justify-between items-center'>
@@ -50,6 +64,7 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
         <div className='hidden md:flex gap-8 text-lg font-bold'>
           <a
             href={workHref}
+            onClick={(e) => handleSectionClick(e, 'work')}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             Work
@@ -57,6 +72,7 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
           </a>
           <a
             href={aboutHref}
+            onClick={(e) => handleSectionClick(e, 'about')}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             About
@@ -81,6 +97,7 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
           )}
           <a
             href={contactHref}
+            onClick={(e) => handleSectionClick(e, 'contact')}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             Contact
@@ -108,14 +125,14 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
         >
           <a
             href={workHref}
-            onClick={closeMenu}
+            onClick={(e) => handleSectionClick(e, 'work')}
             className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
           >
             Work
           </a>
           <a
             href={aboutHref}
-            onClick={closeMenu}
+            onClick={(e) => handleSectionClick(e, 'about')}
             className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
           >
             About
@@ -139,7 +156,7 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
           )}
           <a
             href={contactHref}
-            onClick={closeMenu}
+            onClick={(e) => handleSectionClick(e, 'contact')}
             className='py-2 hover:text-[#ff3e00] transition-colors'
           >
             Contact

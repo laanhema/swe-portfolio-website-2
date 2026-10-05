@@ -12,7 +12,7 @@ const ContactForm: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-12">
           <div className="animate-on-scroll">
             <p className="text-xl font-bold mb-8">
-              I&apos;m currently open to new job offers! Drop a message and lets chat about it.
+              I&apos;m currently open to new job offers! Drop me a message and lets chat about it.
             </p>
             
             <a 
