@@ -42,7 +42,8 @@ export const PostCard: React.FC<PostCardProps> = ({
   const bgColor =
     backgroundColor ??
     color ??
-    (featured ? (post?.accentColor ?? '#00e5ff') : '#ffffff');
+    post?.accentColor ??
+    (featured ? '#00e5ff' : '#ffffff');
 
   return (
     <article

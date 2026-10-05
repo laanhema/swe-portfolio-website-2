@@ -36,8 +36,7 @@ export const BlogIndex: React.FC = () => {
               >
                 <PostCard
                   post={post}
-                  featured={index === 0}
-                  backgroundColor={index === 0 ? '#00e5ff' : '#ffffff'}
+                  backgroundColor={post.accentColor}
                   className="animate-on-scroll"
                 />
               </div>
