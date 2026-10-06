@@ -58,16 +58,42 @@ if (typeof performance !== 'undefined') {
   isPageReload &&= window.location.pathname === '/';
 }
 
+// Chrome's scroll anchoring only corrects layout shifts in the first frame after a scroll, so a
+// later reflow above the target (e.g. a font swap) would push it off the nav bottom (#63).
+const ANCHOR_HOLD_MS = 2000;
+
+// Re-scrolls `target` whenever `root` resizes, until the first user input or ANCHOR_HOLD_MS.
+function holdAnchor(target: HTMLElement, root: HTMLElement): () => void {
+  const inputs = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const;
+  const observer = new ResizeObserver(() => target.scrollIntoView({ behavior: 'instant' }));
+  const timer = setTimeout(stop, ANCHOR_HOLD_MS);
+
+  function stop() {
+    observer.disconnect();
+    clearTimeout(timer);
+    inputs.forEach((type) => window.removeEventListener(type, stop));
+  }
+
+  inputs.forEach((type) => window.addEventListener(type, stop, { passive: true }));
+  observer.observe(root);
+  return stop;
+}
+
 function HomePage() {
   useGsapAnimations();
   const location = useLocation();
 
-  const hasMounted = useRef(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const landedAt = useRef<string | null>(null);
 
   // Layout effect so the first scroll lands before paint and the hero never flashes.
   useLayoutEffect(() => {
-    const behavior: ScrollBehavior = hasMounted.current ? 'smooth' : 'instant';
-    hasMounted.current = true;
+    // The effect only re-runs when the URL changes, so a run for the URL it already landed on
+    // is StrictMode's dev re-run of the initial landing, not a new navigation.
+    const landing = location.pathname + location.hash;
+    const isInitialLanding = landedAt.current === null || landedAt.current === landing;
+    landedAt.current = landing;
+    const behavior: ScrollBehavior = isInitialLanding ? 'instant' : 'smooth';
 
     if (isPageReload) {
       isPageReload = false;
@@ -82,7 +108,11 @@ function HomePage() {
     }
 
     if (location.hash) {
-      document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior });
+      const target = document.getElementById(location.hash.slice(1));
+      target?.scrollIntoView({ behavior });
+      if (isInitialLanding && target && rootRef.current) {
+        return holdAnchor(target, rootRef.current);
+      }
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
     }
@@ -100,7 +130,7 @@ function HomePage() {
   };
 
   return (
-    <div className='min-h-screen'>
+    <div ref={rootRef} className='min-h-screen'>
       <Nav />
 
       {/* Hero Section */}

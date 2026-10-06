@@ -35,7 +35,7 @@ Preconditions:
 ## Gotchas
 
 - Desktop links are `display:none` below 768px, so on mobile they are absent from the snapshot. Use the drawer there.
-- `#work` lands with `getBoundingClientRect().top` equal to 0, so the section top sits under the 4px-bordered sticky nav. Judge the heading visually, not the offset.
+- Section links land with the section top at the nav bottom: `section.getBoundingClientRect().top` equals `nav.getBoundingClientRect().bottom` (84px on mobile, 72px at `md`+), set by `scroll-padding-top` on `html`. Read both with `chrome-devtools-axi eval` (read-only); a difference over 2px is a regression of issue #63.
 - `nav-reload-reset` requires a real reload. `ax.sh open /#work` is a fresh navigation, not a reload. Use `chrome-devtools-axi eval "location.reload()"` (with the session env set), then read `state`.
 - Cross-page section links are client-side router navigations (no document reload), and `HomePage` jumps to the hash in a layout effect before first paint. A full reload or a visible hero on a cross-page click is a regression of issue #58.
-- On mobile, the hero intro paragraph can re-wrap one line after mount, so a cross-page landing may sit about 28 to 61px past the section top. The section heading stays visible.
+- After a cross-page landing, `HomePage` re-anchors the target on any layout resize for up to 2s, or until the first wheel, touch, key, or pointer input, so a late reflow above the target does not move it (issue #63).
