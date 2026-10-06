@@ -1,11 +1,13 @@
-# Stories from TODO.md
+# Issues from TODO.md
 
 - **Source File**: `TODO.md`
-- **Generated Date**: 2026-10-02
+- **Generated Date**: 2026-10-06
 - **Repository**: `laanhema/swe-portfolio-website-2`
 
 ### Skipped Tasks
 - Tasks 1–17 (`TODO.md:1-17`): Already tracked as GitHub issues #2 through #14 and #28 through #31, and marked complete.
+- Tasks 18–22 (`TODO.md:18-22`): Already tracked as GitHub issues #55 through #59.
+- Tasks 23–24 (`TODO.md:23-24`): Already tracked as GitHub issues #63 and #64 (TODO-33, TODO-34).
 
 ---
 
@@ -1069,7 +1071,7 @@ The developer does not use Twitter/X. Remove the Twitter/X button from the hero 
 
 ## [TODO-31] Fix hero flash and scroll jump when navigating from blog to homepage section anchors
 
-**GitHub**: #58
+**GitHub**: #58 (closed as superseded by #63)
 **Type**: Bug
 **GitHub Label**: bug
 **Priority**: Medium
@@ -1134,7 +1136,115 @@ In the hero display heading "Building Robust Systems.", the word "Robust" is sty
 - Blocked by: None
 - Blocks: None
 
+---
 
+## [TODO-33] Fix mobile cross-page section landings settling below the section top
 
+**GitHub**: #63
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Medium
+**Phase**: Backlog
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:23` — "Mobile landings can sit slightly low. On phones, a cross-page landing can end 28 to 61px below the section's top edge. One frame after the home page appears, the hero intro paragraph re-wraps from 308px to 280px tall, which shifts everything below it. It varies between runs and between Chrome builds. I didn't trace why the paragraph re-wraps. The section heading stays fully visible."
 
+### Description
 
+On mobile viewports, navigating from a blog route to a home page section (`/#work`, `/#about`, `/#contact`) can leave the viewport 28–61px below the section's top edge. The `useLayoutEffect` in `HomePage` scrolls to the anchor before paint, but one frame later the hero intro paragraph re-wraps from 308px to 280px tall, so all content below it shifts up after the scroll position was set. The landing should end exactly at the section's top edge.
+
+### Acceptance Criteria
+
+- [ ] The cause of the one-frame re-wrap of the hero intro paragraph is identified and written in the PR description.
+- [ ] On a 375px-wide viewport, navigating from `/blog` and `/blog/:slug` to `/#work`, `/#about` and `/#contact` ends with the section's top edge within 2px of the bottom of the sticky nav.
+- [ ] The result holds across at least 5 repeated runs per target (the bug is intermittent).
+- [ ] The hero-flash fix from #58 doesn't regress: no frame of the hero is visible during the cross-page landing.
+- [ ] `npm run lint` and `npm run build` pass.
+
+### Technical Notes
+
+- Scroll-on-mount logic: `src/App.tsx` (`HomePage` `useLayoutEffect`, which calls `scrollIntoView({ behavior })` on `location.hash`).
+- Re-wrapping element: hero intro `<p>` in `src/App.tsx` (`text-xl md:text-2xl max-w-2xl ... border-l-8 ... animate-on-scroll`).
+- Hypothesis, not verified: a web font swap. `@fontsource-variable/noto-sans` is imported in `src/main.tsx`, and the font may load after first paint, so text is first laid out in the `system-ui` fallback and then re-wraps when Noto Sans arrives. Variance between runs and between Chrome builds fits a font-load race. Check this before you pick a fix.
+- Candidate fixes, depending on the cause: wait for `document.fonts.ready` before the anchor scroll (or scroll again after it), preload the font file, or re-anchor after layout settles (for example, with a `ResizeObserver` on the hero for a short window after mount).
+- Use the `/verify` skill (headless Chrome, mobile viewport) to measure the landing offset before and after the fix.
+- Assumption: "landing" means the section's top edge aligned under the sticky nav. Check whether sections already use `scroll-margin-top`.
+
+### Dependencies
+
+- Blocked by: None (related to #58, which covers the hero flash on the same navigation path)
+- Blocks: None
+
+---
+
+## [TODO-34] Fix mobile menu overshooting section targets on the home page
+
+**GitHub**: #64
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Phase**: Backlog
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:24` — "The mobile menu overshoots on the home page itself. Tapping About in the open mobile menu while already on / lands about 282px past the section, measured. My guess at the cause: the scroll target is measured while the open menu is still pushing the page down, then the menu closes."
+
+### Description
+
+On `/` at a mobile viewport, tapping a section link (for example, About) in the open mobile menu scrolls about 282px past the target section. In `Nav.tsx`, `handleSectionClick` calls `closeMenu()` and then calls `element.scrollIntoView({ behavior: 'smooth' })` immediately. The drawer is still rendered inside the sticky nav at that point, so the scroll target is computed against a layout that changes when the drawer unmounts. Tapping a menu link should land exactly on the section.
+
+### Acceptance Criteria
+
+- [ ] On `/` at a 375px-wide viewport, tapping Work, About and Contact in the open mobile menu ends with each section's top edge within 2px of the bottom of the sticky nav.
+- [ ] The mobile menu closes when a section link is tapped.
+- [ ] The URL hash still updates to the tapped section (`#work`, `#about`, `#contact`).
+- [ ] Desktop nav links and cross-page links from `/blog` keep working as before.
+- [ ] `npm run lint` and `npm run build` pass.
+
+### Technical Notes
+
+- File to change: `src/features/navigation/Nav.tsx` (`handleSectionClick`, the mobile drawer `{isOpen && (...)}`).
+- The author's hypothesis matches the code: the drawer's height is in layout when `scrollIntoView` runs. Likely fix: close the menu first, then scroll after the drawer has unmounted (for example, `flushSync(() => setIsOpen(false))` before measuring, or defer the scroll to the next frame or a layout effect).
+- `#about` sits further down the page than `#work`, which may explain why the overshoot is so large. Confirm the 282px matches the drawer height plus any `scroll-margin-top`.
+- Use the `/verify` skill (mobile menu flow) to measure the landing before and after the fix.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-35] Add navbar-style underline hover effect to the "All posts" link
+
+**GitHub**: #66
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:25` — "The "All posts" link that moves user from a specific blog post to the view where they can see all of the blog posts could have similar underline hover effect as the links found in header navbar."
+
+### Description
+
+The "← All posts" link at the top of each blog post uses a plain text-decoration underline on hover, while the desktop navbar links show an orange bar that grows under the link. Make the "All posts" link use the same animated underline so hover feedback is consistent across the site.
+
+### Acceptance Criteria
+
+- [ ] Hovering "← All posts" grows a 4px (`h-1`) orange bar from left to full width beneath the link, matching the desktop navbar links.
+- [ ] The current `hover:underline decoration-4 …` underline is removed, so only the animated bar shows.
+- [ ] The link keeps a visible keyboard focus indicator.
+- [ ] The ArticleHeader `preview.html` in the design system reflects the new class strings.
+- [ ] `npm run lint` and `npm run build` pass.
+
+### Technical Notes
+
+- File to change: `src/features/blog/components/ArticleHeader.tsx` (the `<Link to="/blog">` around lines 79–85).
+- Reuse the NavBar pattern from `.agents/design-system/laanhema-design-system/components/NavBar/README.md`: `relative group` on the link plus `<span className="absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full"></span>`.
+- Because the link is `inline-flex` with an arrow, decide whether the bar spans the arrow too; the simplest match is spanning the whole link.
+- Assumption: only the underline is copied, not the navbar's `hover:text-[#ff3e00]` text color change.
+- Update `.agents/design-system/laanhema-design-system/components/ArticleHeader/preview.html` to match.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
