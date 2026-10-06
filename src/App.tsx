@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router';
 import Nav from './features/navigation/Nav';
 import ProjectCard from './features/showcase/ProjectCard';
@@ -55,13 +55,20 @@ if (typeof performance !== 'undefined') {
   isPageReload = navEntries.length > 0
     ? (navEntries[0] as PerformanceNavigationTiming).type === 'reload'
     : (performance as unknown as { navigation?: { type?: number } }).navigation?.type === 1;
+  isPageReload &&= window.location.pathname === '/';
 }
 
 function HomePage() {
   useGsapAnimations();
   const location = useLocation();
 
-  useEffect(() => {
+  const hasMounted = useRef(false);
+
+  // Layout effect so the first scroll lands before paint and the hero never flashes.
+  useLayoutEffect(() => {
+    const behavior: ScrollBehavior = hasMounted.current ? 'smooth' : 'instant';
+    hasMounted.current = true;
+
     if (isPageReload) {
       isPageReload = false;
       if ('scrollRestoration' in history) {
@@ -75,19 +82,7 @@ function HomePage() {
     }
 
     if (location.hash) {
-      const id = location.hash.replace('#', '');
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        const timer = setTimeout(() => {
-          const el = document.getElementById(id);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-        return () => clearTimeout(timer);
-      }
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior });
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
     }

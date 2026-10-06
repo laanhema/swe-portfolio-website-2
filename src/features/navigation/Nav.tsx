@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
-import { useLocation, useInRouterContext, Link } from 'react-router';
+import { useLocation, Link } from 'react-router';
 
-interface NavViewProps {
-  pathname: string;
-  inRouter: boolean;
-}
-
-const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
+export const Nav: React.FC = () => {
+  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
 
   const isHome = pathname === '/';
-  const workHref = isHome ? '#work' : '/#work';
-  const aboutHref = isHome ? '#about' : '/#about';
-  const blogHref = '/blog';
-  const contactHref = isHome ? '#contact' : '/#contact';
 
   const handleLogoClick = () => {
     closeMenu();
@@ -40,69 +32,48 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
   return (
     <nav className='sticky top-0 z-50 w-full bg-[#f8f9fa] border-b-4 border-[#121212]'>
       <div className='py-4 px-6 md:px-12 flex justify-between items-center'>
-        {inRouter ? (
-          <Link
-            to='/'
-            onClick={handleLogoClick}
-            className='text-2xl md:text-3xl font-bold uppercase tracking-tighter hover:text-[#ff3e00] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff3e00]'
-            aria-label='laanhema.dev - Back to top'
-          >
-            laanhema<span className='text-[#ff3e00]'>.</span>dev
-          </Link>
-        ) : (
-          <a
-            href='/'
-            onClick={handleLogoClick}
-            className='text-2xl md:text-3xl font-bold uppercase tracking-tighter hover:text-[#ff3e00] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff3e00]'
-            aria-label='laanhema.dev - Back to top'
-          >
-            laanhema<span className='text-[#ff3e00]'>.</span>dev
-          </a>
-        )}
+        <Link
+          to='/'
+          onClick={handleLogoClick}
+          className='text-2xl md:text-3xl font-bold uppercase tracking-tighter hover:text-[#ff3e00] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff3e00]'
+          aria-label='laanhema.dev - Back to top'
+        >
+          laanhema<span className='text-[#ff3e00]'>.</span>dev
+        </Link>
 
         {/* Desktop Navigation */}
         <div className='hidden md:flex gap-8 text-lg font-bold'>
-          <a
-            href={workHref}
+          <Link
+            to='/#work'
             onClick={(e) => handleSectionClick(e, 'work')}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             Work
             <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-          </a>
-          <a
-            href={aboutHref}
+          </Link>
+          <Link
+            to='/#about'
             onClick={(e) => handleSectionClick(e, 'about')}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             About
             <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-          </a>
-          {inRouter ? (
-            <Link
-              to={blogHref}
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              Blog
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </Link>
-          ) : (
-            <a
-              href={blogHref}
-              className='hover:text-[#ff3e00] transition-colors relative group'
-            >
-              Blog
-              <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-            </a>
-          )}
-          <a
-            href={contactHref}
+          </Link>
+          <Link
+            to='/blog'
+            className='hover:text-[#ff3e00] transition-colors relative group'
+          >
+            Blog
+            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
+          </Link>
+          <Link
+            to='/#contact'
             onClick={(e) => handleSectionClick(e, 'contact')}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             Contact
             <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -123,66 +94,38 @@ const NavView: React.FC<NavViewProps> = ({ pathname, inRouter }) => {
           id='mobile-menu'
           className='md:hidden border-t-4 border-[#121212] bg-[#f8f9fa] px-6 py-6 flex flex-col gap-4 text-xl font-bold uppercase tracking-wide'
         >
-          <a
-            href={workHref}
+          <Link
+            to='/#work'
             onClick={(e) => handleSectionClick(e, 'work')}
             className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
           >
             Work
-          </a>
-          <a
-            href={aboutHref}
+          </Link>
+          <Link
+            to='/#about'
             onClick={(e) => handleSectionClick(e, 'about')}
             className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
           >
             About
-          </a>
-          {inRouter ? (
-            <Link
-              to={blogHref}
-              onClick={closeMenu}
-              className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-            >
-              Blog
-            </Link>
-          ) : (
-            <a
-              href={blogHref}
-              onClick={closeMenu}
-              className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-            >
-              Blog
-            </a>
-          )}
-          <a
-            href={contactHref}
+          </Link>
+          <Link
+            to='/blog'
+            onClick={closeMenu}
+            className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
+          >
+            Blog
+          </Link>
+          <Link
+            to='/#contact'
             onClick={(e) => handleSectionClick(e, 'contact')}
             className='py-2 hover:text-[#ff3e00] transition-colors'
           >
             Contact
-          </a>
+          </Link>
         </div>
       )}
     </nav>
   );
-};
-
-const NavWithRouter: React.FC = () => {
-  const location = useLocation();
-  return <NavView pathname={location.pathname} inRouter={true} />;
-};
-
-const NavWithoutRouter: React.FC = () => {
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
-  return <NavView pathname={pathname} inRouter={false} />;
-};
-
-export const Nav: React.FC = () => {
-  const inRouter = useInRouterContext();
-  if (inRouter) {
-    return <NavWithRouter />;
-  }
-  return <NavWithoutRouter />;
 };
 
 export default Nav;
