@@ -15,6 +15,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* = sticky nav height (Nav.tsx); keep in sync. rem parts track the root font size, px parts are borders */
+    scroll-padding-top: calc(4.5rem + 12px);
+  }
+
+  @media (min-width: 48rem) {
+    html {
+      scroll-padding-top: calc(4.25rem + 4px);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
