@@ -61,6 +61,7 @@ The handles are lines from the accessibility snapshot, matched with an extended 
 - **Disambiguate repeated names by URL.** For example, use `link "CODE" url=".*github.com/laanhema/tralla"`, or `link "READ STORY" url=.*/blog/gymbro-app`.
 - **Never reuse a raw `@gN:...` ref.** Refs carry a generation tag and go stale after the next snapshot. `ax.sh click` takes the snapshot and clicks in a single step for this reason.
 - Smooth scrolling and GSAP fade-ins run for about 0.8s. Run `sleep 1.2` after a click that scrolls, before you read `state` or take a screenshot.
+- `ax.sh click` takes about 3s (it snapshots first), and the click lands at the end of that time, so the next command starts at an unknown delay after it. To test a short time window after a click, such as the 2s anchor hold (#63), do the click, the change, and the measurement in one async `eval`, and say in the report that the probe used `eval` instead of the user path.
 - External links (GitHub, LinkedIn, project repos) open new tabs. Assert their `url=` in the snapshot. Do not click them.
 
 ## Evidence
