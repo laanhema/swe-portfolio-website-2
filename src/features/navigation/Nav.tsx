@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { useLocation, Link } from 'react-router';
 
 export const Nav: React.FC = () => {
@@ -6,7 +7,13 @@ export const Nav: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
-  const closeMenu = () => setIsOpen(false);
+  const closeMenu = () => {
+    if (isOpen) {
+      flushSync(() => {
+        setIsOpen(false);
+      });
+    }
+  };
 
   const isHome = pathname === '/';
 
