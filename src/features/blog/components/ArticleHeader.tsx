@@ -79,7 +79,7 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
     <header className={`max-w-4xl mx-auto pt-16 md:pt-20 pb-12 ${className}`.trim()}>
       <Link
         to="/blog"
-        className="inline-flex items-center gap-2 font-bold uppercase tracking-wider mb-10 relative group"
+        className="inline-flex items-center gap-2 font-bold uppercase tracking-wider mb-10 hover:text-[#ff3e00] transition-colors relative group"
       >
         ← All posts
         <span className="absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full"></span>
