@@ -58,23 +58,34 @@ if (typeof performance !== 'undefined') {
   isPageReload &&= window.location.pathname === '/';
 }
 
-// Chrome's scroll anchoring only corrects layout shifts in the first frame after a scroll, so a
-// later reflow above the target (e.g. a font swap) would push it off the nav bottom (#63).
+// Scroll anchoring does not correct later reflows above the target on this page (measured, #63),
+// so a late reflow (e.g. a font swap) would push the target off the nav bottom.
 const ANCHOR_HOLD_MS = 2000;
 
-// Re-scrolls `target` whenever `root` resizes, until the first user input or ANCHOR_HOLD_MS.
+// Re-scrolls `target` whenever `root` resizes, until the first user input, a scroll the hold did
+// not make (e.g. a scrollbar drag, which fires no pointerdown), or ANCHOR_HOLD_MS.
 function holdAnchor(target: HTMLElement, root: HTMLElement): () => void {
   const inputs = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const;
-  const observer = new ResizeObserver(() => target.scrollIntoView({ behavior: 'instant' }));
+  let heldY = window.scrollY;
+  const observer = new ResizeObserver(() => {
+    target.scrollIntoView({ behavior: 'instant' });
+    heldY = window.scrollY;
+  });
   const timer = setTimeout(stop, ANCHOR_HOLD_MS);
+
+  function onScroll() {
+    if (window.scrollY !== heldY) stop();
+  }
 
   function stop() {
     observer.disconnect();
     clearTimeout(timer);
     inputs.forEach((type) => window.removeEventListener(type, stop));
+    window.removeEventListener('scroll', onScroll);
   }
 
   inputs.forEach((type) => window.addEventListener(type, stop, { passive: true }));
+  window.addEventListener('scroll', onScroll, { passive: true });
   observer.observe(root);
   return stop;
 }
