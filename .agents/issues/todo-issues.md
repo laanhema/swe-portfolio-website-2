@@ -1,13 +1,14 @@
 # Issues from TODO.md
 
 - **Source File**: `TODO.md`
-- **Generated Date**: 2026-10-06
+- **Generated Date**: 2026-10-07
 - **Repository**: `laanhema/swe-portfolio-website-2`
 
 ### Skipped Tasks
 - Tasks 1–17 (`TODO.md:1-17`): Already tracked as GitHub issues #2 through #14 and #28 through #31, and marked complete.
 - Tasks 18–22 (`TODO.md:18-22`): Already tracked as GitHub issues #55 through #59.
 - Tasks 23–24 (`TODO.md:23-24`): Already tracked as GitHub issues #63 and #64 (TODO-33, TODO-34).
+- Task 25 (`TODO.md:25`): Already tracked as GitHub issue #66 (TODO-35).
 
 ---
 
@@ -1248,3 +1249,40 @@ The "← All posts" link at the top of each blog post uses a plain text-decorati
 
 - Blocked by: None
 - Blocks: None
+
+---
+
+## [TODO-36] Add navbar-style text hover color to the "All posts" link
+
+**GitHub**: #68
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:26` — "The \"All posts\" link still needs to have the same hover styling color as the links inside navbar header. You can just reference the color from those."
+
+### Description
+
+The "← All posts" link at the top of each blog post has the animated orange underline bar matching the navbar, but does not change its text color on hover. The desktop navbar header links use `hover:text-[#ff3e00] transition-colors` so text turns orange on hover. Update the "All posts" link to use the same hover text color and transition for full visual consistency with the navbar.
+
+### Acceptance Criteria
+
+- [ ] Hovering the "← All posts" link changes the link text color to `#ff3e00` with a smooth color transition (`hover:text-[#ff3e00] transition-colors`), matching the desktop navbar links.
+- [ ] The existing animated orange underline hover effect (`h-1 bg-[#ff3e00]`) remains intact and animates concurrently with the text color change.
+- [ ] Keyboard focus styling remains visible and accessible (`focus-visible`).
+- [ ] The ArticleHeader `preview.html` in the design system is updated to include the matching classes.
+- [ ] `npm run lint` and `npm run build` pass without errors.
+
+### Technical Notes
+
+- File to modify: `src/features/blog/components/ArticleHeader.tsx` (the `<Link to="/blog">` around line 80).
+- Reference classes from `src/features/navigation/Nav.tsx`: `hover:text-[#ff3e00] transition-colors`.
+- Update design system preview: `.agents/design-system/laanhema-design-system/components/ArticleHeader/preview.html`.
+- Follow neo-brutalist conventions outlined in `AGENTS.md`.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
