@@ -8,6 +8,8 @@
   --color-accent-yellow: #facc15;
   --color-accent-purple: #a855f7;
 
+  --font-sans: 'Noto Sans Variable', system-ui, sans-serif;
+
   --shadow-brutal: 6px 6px 0px 0px #121212;
   --shadow-brutal-sm: 3px 3px 0px 0px #121212;
 }
@@ -34,7 +36,6 @@
   body {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
-    font-family: 'Noto Sans Variable', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
