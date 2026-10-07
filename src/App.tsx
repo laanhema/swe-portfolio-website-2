@@ -174,7 +174,7 @@ function HomePage() {
               <a
                 href='#work'
                 onClick={handleViewWork}
-                className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase brutal-shadow brutal-shadow-hover'
+                className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase brutal-shadow brutal-shadow-hover active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation'
               >
                 View Work
               </a>
