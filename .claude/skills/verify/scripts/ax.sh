@@ -10,6 +10,7 @@
 #   ax.sh shot <file.png> [--full-page]
 #   ax.sh aria <file.txt>             save the full accessibility snapshot
 #   ax.sh tables                      print each .brutal-prose table's width vs its container; exit 1 if any overflows
+#   ax.sh nav                         print the nav logo and menu button boxes and font; exit 1 unless the font is Noto Sans Variable
 #   ax.sh mobile | desktop            viewport 375x812 mobile+touch | 1280x900
 #   ax.sh stop                        stop this session's browser bridge
 set -euo pipefail
@@ -39,6 +40,11 @@ case "${1:-}" in
       | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
     echo "${out:-no tables}"
     ! grep -q OVERFLOW <<<"$out" ;;
+  nav)
+    out="$(axi eval "(() => { const box = e => { const b = e.getBoundingClientRect(); return [b.x, b.y, b.width, b.height].map(v => +v.toFixed(2)).join(','); }; const logo = document.querySelector('nav a[aria-label^=laanhema]'); const menu = document.querySelector('nav button[aria-controls=mobile-menu]'); const font = getComputedStyle(logo).fontFamily.split(',')[0].replace(/[^A-Za-z -]/g, '').trim(); return 'logo=' + box(logo) + ' menu=' + box(menu) + ' font=' + font + (font === 'Noto Sans Variable' && getComputedStyle(menu).fontFamily === getComputedStyle(logo).fontFamily ? ' ok' : ' WRONG-FONT'); })()" \
+      | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
+    echo "$out"
+    ! grep -q WRONG-FONT <<<"$out" ;;
   aria) axi snapshot --full >"$2" && echo "$2" ;;
   mobile) axi emulate --viewport "375x812x2,mobile,touch" >/dev/null && echo "viewport 375x812 mobile" ;;
   desktop) axi emulate --viewport "1280x900x1" >/dev/null && echo "viewport 1280x900" ;;
