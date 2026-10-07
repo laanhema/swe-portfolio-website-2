@@ -6,7 +6,7 @@
   <div class='py-4 px-6 md:px-12 flex justify-between items-center'>
     <div class='text-2xl md:text-3xl font-bold uppercase tracking-tighter'>laanhema<span class='text-[#ff3e00]'>.</span>dev</div>
     <div class='hidden md:flex gap-8 text-lg font-bold'><a href='#work' class='hover:text-[#ff3e00] transition-colors relative group'>Work<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a><a href='#about' class='hover:text-[#ff3e00] transition-colors relative group'>About<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a><a href='#blog' class='hover:text-[#ff3e00] transition-colors relative group'>Blog<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a><a href='#contact' class='hover:text-[#ff3e00] transition-colors relative group'>Contact<span class='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span></a></div>
-    <button class='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all cursor-pointer' aria-label='Open menu' aria-expanded='false' aria-controls='mobile-menu'>Menu</button>
+    <button class='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none data-pressed:translate-x-1 data-pressed:translate-y-1 data-pressed:shadow-none transition-all duration-75 touch-manipulation cursor-pointer' aria-label='Open menu' aria-expanded='false' aria-controls='mobile-menu'>Menu</button>
   </div>
 </nav>
 <main class="px-6 md:px-12 pb-24"><header class="max-w-4xl mx-auto pt-16 md:pt-20 pb-12">
@@ -43,7 +43,7 @@
   <div class="flex flex-col gap-2"><label for="name" class="font-bold uppercase tracking-wider">Name</label><input type="text" id="name" class="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all" placeholder="John Doe" /></div>
   <div class="flex flex-col gap-2"><label for="email" class="font-bold uppercase tracking-wider">Email</label><input type="email" id="email" class="brutal-border p-4 bg-white focus:outline-none brutal-shadow transition-all" value="lauri@" /></div>
   <div class="flex flex-col gap-2"><label for="message" class="font-bold uppercase tracking-wider">Message</label><textarea id="message" rows="4" class="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all resize-none" placeholder="How can I help you?"></textarea></div>
-  <button type="submit" class="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl brutal-shadow hover:-translate-y-1 hover:translate-x-1 transition-all">Send Message</button>
+  <button type="submit" class="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation cursor-pointer">Send Message</button>
 </form>
     </div>
   </div>
