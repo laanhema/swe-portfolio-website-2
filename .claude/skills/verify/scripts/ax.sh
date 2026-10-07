@@ -12,6 +12,7 @@
 #   ax.sh tables                      print each .brutal-prose table's width vs its container; exit 1 if any overflows
 #   ax.sh nav                         print the nav logo and menu button boxes and font; exit 1 unless the font is Noto Sans Variable
 #   ax.sh buttons                     hover VIEW WORK, the first card's CODE and READ STORY, and SEND MESSAGE; exit 1 unless all four lift the same (#56)
+#   ax.sh cursor                      print SEND MESSAGE's and the form fields' computed cursor; exit 1 unless the button is pointer and the fields are text (#86)
 #   ax.sh mobile | desktop            viewport 375x812 mobile+touch | 1280x900
 #   ax.sh stop                        stop this session's browser bridge
 set -euo pipefail
@@ -82,9 +83,16 @@ for i, (label, hov, tf, tr, sh) in enumerate(rows):
 ' <<<"$rows")"
     echo "$out"
     ! grep -q -E 'NO-HOVER|WRONG-TARGET|NOT-LIFTED|MISMATCH' <<<"$out" ;;
+  cursor)
+    # Computed cursor comes from the cascade, not :hover, so this only reads; no hover or GSAP waits needed.
+    # MISSING fails the check closed when the contact section is not on the page.
+    out="$(axi eval "(() => { const btn = [...document.querySelectorAll('#contact button')].find(b => b.textContent.trim().toUpperCase() === 'SEND MESSAGE'); if (!btn) return 'SEND MESSAGE cursor=? MISSING'; const rows = []; const c = getComputedStyle(btn).cursor; rows.push('SEND MESSAGE cursor=' + c + (c === 'pointer' ? ' ok' : ' NOT-POINTER')); for (const id of ['name', 'email', 'message']) { const el = document.getElementById(id); const v = el ? getComputedStyle(el).cursor : '?'; rows.push(id.toUpperCase() + ' cursor=' + v + (!el ? ' MISSING' : v === 'text' ? ' ok' : ' NOT-TEXT')); } return rows.join('\\n'); })()" \
+      | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
+    echo "$out"
+    ! grep -q -E 'NOT-POINTER|NOT-TEXT|MISSING' <<<"$out" ;;
   aria) axi snapshot --full >"$2" && echo "$2" ;;
   mobile) axi emulate --viewport "375x812x2,mobile,touch" >/dev/null && echo "viewport 375x812 mobile" ;;
   desktop) axi emulate --viewport "1280x900x1" >/dev/null && echo "viewport 1280x900" ;;
   stop) axi stop ;;
-  *) sed -n '2,16p' "$0"; exit 2 ;;
+  *) sed -n '2,17p' "$0"; exit 2 ;;
 esac
