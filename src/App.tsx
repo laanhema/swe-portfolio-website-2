@@ -183,7 +183,7 @@ function HomePage() {
                   href='https://github.com/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation'
                   aria-label='GitHub'
                 >
                   <GithubIcon />
@@ -192,7 +192,7 @@ function HomePage() {
                   href='https://www.linkedin.com/in/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center'
+                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation'
                   aria-label='LinkedIn'
                 >
                   <LinkedinIcon />
