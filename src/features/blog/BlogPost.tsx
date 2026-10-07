@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router';
 import Nav from '../navigation/Nav';
 import ContactForm from '../contact/ContactForm';
@@ -9,12 +9,30 @@ import { useGsapAnimations } from '../../hooks/useGsapAnimations';
 export const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? BLOG_POSTS.find((p) => p.slug === slug) : undefined;
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useGsapAnimations();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [slug]);
+
+    if (contentRef.current) {
+      const tables = contentRef.current.querySelectorAll('table');
+      tables.forEach((table) => {
+        const parent = table.parentElement;
+        if (
+          parent &&
+          !parent.classList.contains('brutal-table-wrapper') &&
+          !parent.classList.contains('overflow-x-auto')
+        ) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'brutal-table-wrapper';
+          parent.insertBefore(wrapper, table);
+          wrapper.appendChild(table);
+        }
+      });
+    }
+  }, [slug, post?.content]);
 
   if (!post) {
     return (
@@ -81,6 +99,7 @@ export const BlogPost: React.FC = () => {
         <ArticleHeader post={post} />
         <div className="max-w-4xl mx-auto">
           <div
+            ref={contentRef}
             className="brutal-prose"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />

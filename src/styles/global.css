@@ -89,7 +89,11 @@
   .brutal-prose hr { @apply border-0 border-t-4 border-text-primary my-16; }
   .brutal-prose figure img { @apply border-4 border-text-primary shadow-brutal w-full; }
   .brutal-prose figcaption { @apply mt-4 text-sm font-bold uppercase tracking-wider; }
-  .brutal-prose table { @apply w-full border-4 border-text-primary text-base; }
+  .brutal-table-wrapper {
+    @apply w-full overflow-x-auto my-6;
+    -webkit-overflow-scrolling: touch;
+  }
+  .brutal-prose table { @apply w-full min-w-full border-4 border-text-primary text-base; }
   .brutal-prose th { @apply bg-text-primary text-white uppercase text-left font-bold p-3; }
   .brutal-prose td { @apply border-t-2 border-text-primary p-3; }
 }
