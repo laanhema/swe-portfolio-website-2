@@ -48,7 +48,7 @@ Every new element should use at least the first three:
 
 - **Rest:** `brutal-border brutal-shadow` (6px shadow).
 - **Hover, buttons:** `brutal-shadow-hover` lifts the element `translate(-3px,-3px)` and keeps the 6px shadow. It only applies under `@media (hover: hover)`, so a tap never leaves it lifted. Pair it with `shadow-brutal transition-[transform,box-shadow] duration-100`.
-- **Press:** Buttons play the press with `onPointerDown={playPress}` (`translate(6px,6px)` with no shadow, so the element sits in its own shadow). `.brutal-shadow:active` does the same in CSS for non-button boxes. The mobile menu uses a smaller press: `active:translate-x-1 active:translate-y-1 active:shadow-none`.
+- **Press:** Buttons play the press with `onPointerDown={playPress}` (`translate(6px,6px)` with no shadow, so the element sits in its own shadow). `.brutal-shadow:active` does the same in CSS for non-button boxes. The mobile menu uses a smaller press: `active:translate-x-1 active:translate-y-1 active:shadow-none` plus the same three under `data-pressed:`, which `Nav.tsx` sets from pointer events because mobile browsers skip `:active` on taps.
 - **Focus (inputs):** `focus:outline-none focus:bg-white focus:brutal-shadow`. Links and buttons rely on the browser's default focus ring. Don't remove it.
 - **Nav link hover:** a 4px `accent` bar grows from 0 to full width under the link (`h-1 w-0 → group-hover:w-full`).
 - Transitions are 0.1s ease on shadows and Tailwind's default 150ms on colours and transforms.
