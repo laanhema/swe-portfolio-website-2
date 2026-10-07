@@ -52,7 +52,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           href={repoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 bg-white brutal-border py-3 px-3 flex items-center justify-center gap-2 font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
+          className="flex-1 bg-white brutal-border py-3 px-3 flex items-center justify-center gap-2 font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation"
         >
           <GithubIcon className="w-5 h-5 shrink-0" />
           <span>Code</span>
@@ -62,14 +62,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           inRouter ? (
             <Link 
               to={`/blog/${postSlug}`}
-              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
+              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation"
             >
               <span>Read Story</span>
             </Link>
           ) : (
             <a 
               href={`/blog/${postSlug}`}
-              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all"
+              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_#121212] transition-all active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation"
             >
               <span>Read Story</span>
             </a>
