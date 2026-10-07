@@ -6,7 +6,7 @@
 
 - `blog-index`: `/blog` lists the posts `tralla`, `distill-design-scraper`, `froots-smoothie-app`, and `gymbro-app` as title links.
 - `blog-open-post`: a post card's title link routes to `/blog/<slug>`, which opens at the top.
-- `blog-article`: the article header and body render, including h2s and tables from `content`.
+- `blog-article`: the article header and body render, including h2s and tables from `content`. Below `md`, tables stack each row into a block so they fit the column without sideways scrolling (#74).
 - `blog-back`: `← ALL POSTS` returns to `/blog`.
 - `blog-404`: `/blog/<unknown>` shows `POST NOT FOUND.` with `← BACK TO ALL POSTS`.
 - `blog-deep-link`: loading `/blog/<slug>` directly serves the post. Dev and preview use Vite's SPA fallback. Production on GitHub Pages uses `public/404.html`.
@@ -26,6 +26,7 @@ Preconditions:
 - **Index.** Run `ax.sh state`. The output shows `"path": "/blog"` and `"h1": "Field  Notes."` (with two spaces, because of the `<br/>`). Run `ax.sh aria "$RUN_DIR/blog-index.aria.txt"`. The file has four `link "..." url=.*/blog/<slug>` lines.
 - **Open post.** Run `ax.sh click 'link "REBUILDING TRELLO WITH ANGULAR AND SIGNALSTORE"'`, then `ax.sh state`. The output shows `"path": "/blog/tralla"`, `"h1": "Rebuilding Trello with Angular and SignalStore."`, and `"scrollY": 0`.
 - **Article.** Run `ax.sh has 'heading "REBUILDING TRELLO WITH ANGULAR AND SIGNALSTORE\." level="1"'`, then `ax.sh has 'link "← ALL POSTS"'`. Take `ax.sh shot "$RUN_DIR/blog-post-tralla.png"`.
+- **Tables fit (mobile).** For each slug, run `ax.sh open /blog/<slug>`, `ax.sh mobile`, then `ax.sh tables`. Every line ends in `fits` and the command exits 0. Repeat at 320px with `chrome-devtools-axi emulate --viewport "320x640x2,mobile,touch"`. Take `ax.sh shot` after scrolling the table into view, because a fitting table can still read badly.
 - **Back.** Run `ax.sh click 'link "← ALL POSTS"'`, then `ax.sh state`. The output shows `"path": "/blog"`.
 - **404.** Run `ax.sh open /blog/does-not-exist`, then `ax.sh state`. The output shows `"h1": "Post Not Found."`. `ax.sh has 'link "← BACK TO ALL POSTS"'` succeeds.
 - **Deep link.** Run `ax.sh open /blog/gymbro-app`, then `ax.sh state`. The output shows `"path": "/blog/gymbro-app"` and the GymBro post's h1. To check the GitHub Pages redirect, use `verify-server.sh start preview`. Note that `vite preview` also uses SPA fallback and never serves `404.html`, so this check cannot prove the Pages redirect locally.
