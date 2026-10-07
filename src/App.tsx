@@ -90,6 +90,15 @@ function holdAnchor(target: HTMLElement, root: HTMLElement): () => void {
   return stop;
 }
 
+// `:active` can stay set after a tap opens a new tab, leaving the link stuck pressed (#72).
+const PRESS_KEYFRAMES: Keyframe[] = [
+  { transform: 'translate(6px, 6px)', boxShadow: '0px 0px 0px 0px #121212', offset: 0.4 },
+];
+
+const playPress = (e: React.PointerEvent<HTMLElement>) => {
+  e.currentTarget.animate(PRESS_KEYFRAMES, { duration: 200, easing: 'ease-out' });
+};
+
 function HomePage() {
   useGsapAnimations();
   const location = useLocation();
@@ -183,8 +192,9 @@ function HomePage() {
                   href='https://github.com/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation'
+                  className='bg-white brutal-border p-4 shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover text-[#121212] flex items-center justify-center touch-manipulation'
                   aria-label='GitHub'
+                  onPointerDown={playPress}
                 >
                   <GithubIcon />
                 </a>
@@ -192,8 +202,9 @@ function HomePage() {
                   href='https://www.linkedin.com/in/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 brutal-shadow brutal-shadow-hover text-[#121212] flex items-center justify-center active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation'
+                  className='bg-white brutal-border p-4 shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover text-[#121212] flex items-center justify-center touch-manipulation'
                   aria-label='LinkedIn'
+                  onPointerDown={playPress}
                 >
                   <LinkedinIcon />
                 </a>
