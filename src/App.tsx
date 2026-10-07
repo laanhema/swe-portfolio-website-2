@@ -7,6 +7,7 @@ import { BlogIndex } from './features/blog/BlogIndex';
 import { BlogPost } from './features/blog/BlogPost';
 import { useGsapAnimations } from './hooks/useGsapAnimations';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
+import { playPress } from './components/playPress';
 import portrait from './assets/lauri-makkonen-portrait.jpg';
 
 const PROJECTS = [
@@ -89,15 +90,6 @@ function holdAnchor(target: HTMLElement, root: HTMLElement): () => void {
   observer.observe(root);
   return stop;
 }
-
-// `:active` can stay set after a tap opens a new tab, leaving the link stuck pressed (#72).
-const PRESS_KEYFRAMES: Keyframe[] = [
-  { transform: 'translate(6px, 6px)', boxShadow: '0px 0px 0px 0px #121212', offset: 0.4 },
-];
-
-const playPress = (e: React.PointerEvent<HTMLElement>) => {
-  e.currentTarget.animate(PRESS_KEYFRAMES, { duration: 200, easing: 'ease-out' });
-};
 
 function HomePage() {
   useGsapAnimations();
@@ -183,7 +175,8 @@ function HomePage() {
               <a
                 href='#work'
                 onClick={handleViewWork}
-                className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase brutal-shadow brutal-shadow-hover active:translate-x-1 active:translate-y-1 active:shadow-none duration-75 touch-manipulation'
+                onPointerDown={playPress}
+                className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation'
               >
                 View Work
               </a>
