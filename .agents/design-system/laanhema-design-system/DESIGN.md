@@ -7,8 +7,8 @@ Every new element should use at least the first three:
 1. **A 4px ink border.** `.brutal-border` (`border-4 border-text-primary`, the `border-4` token in `text-primary`) goes on every card, button, tag, input and image.
 2. **A hard offset shadow.** `.brutal-shadow` (`shadow-brutal`: 6px 6px, no blur, `text-primary`) goes on anything you can click or anything that's a card. Shadows are never blurred and never coloured.
 3. **Bold uppercase type.** Headings, buttons, labels, tags and nav are `font-bold uppercase` in Noto Sans. Display headings also get `tracking-tighter` and tight leading.
-4. **Flat saturated fills.** Use `accent`, `accent-cyan`, `accent-yellow` or `accent-purple` as whole-block backgrounds with ink text on top. No gradients and no tints, except the two blurred blobs behind the hero.
-5. **Square corners.** Use `radius-none` everywhere. `rounded-full` is only for the hero blobs.
+4. **Flat saturated fills.** Use `accent`, `accent-cyan`, `accent-yellow` or `accent-purple` as whole-block backgrounds with ink text on top. No gradients, tints, or blurred glows.
+5. **Square corners.** Use `radius-none` everywhere.
 
 ## Content fundamentals
 
@@ -26,7 +26,7 @@ Every new element should use at least the first three:
 - **Section grounds alternate.** The order is canvas (hero), ink band (About), canvas (Work), white (Contact), ink (footer). Each seam gets a 4px border: `border-y-4`, `border-t-4`, and a white `border-t-4` on the footer.
 - **Accent rotation for card fills.** Use `accent` → `accent-cyan` → `accent-yellow` → `accent-purple`, in showcase order, and repeat the cycle for more items. Text on any fill is `text-primary`.
 - **`accent` as text** is only for words 24px or larger, or 19px bold or larger. It reads at 3.35:1 on `bg-primary` and 3.53:1 on `white`. For smaller links, use ink text with an accent underline (`decoration-[#ff3e00]`), not orange text.
-- The hero's cyan and orange blobs use `blur-[120px]`/`blur-[150px]` at `opacity-20` behind the content (`-z-10`). They are the only soft element. Don't add more.
+- No element uses blur or gradients.
 
 ### Known contrast misses (kept as shipped)
 

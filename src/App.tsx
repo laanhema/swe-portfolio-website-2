@@ -147,9 +147,6 @@ function HomePage() {
 
       {/* Hero Section */}
       <header className='pt-16 md:pt-20 xl:pt-24 pb-16 md:pb-20 px-6 md:px-12 flex flex-col items-start min-h-[85vh] justify-center relative overflow-hidden'>
-        <div className='absolute top-1/4 right-0 w-64 h-64 bg-[#ff3e00] rounded-full blur-[120px] opacity-20 -z-10'></div>
-        <div className='absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#00e5ff] rounded-full blur-[150px] opacity-20 -z-10'></div>
-
         <div className='w-full flex flex-col xl:flex-row xl:items-start gap-12 xl:gap-16 z-10'>
           <div className='max-w-5xl xl:flex-1 min-w-0'>
             <p className='text-xl md:text-2xl font-bold uppercase tracking-widest mb-6 animate-on-scroll'>
