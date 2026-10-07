@@ -55,9 +55,11 @@
     transform: translate(6px, 6px);
   }
 
-  .brutal-shadow-hover:hover {
-    box-shadow: var(--shadow-brutal);
-    transform: translate(-3px, -3px);
+  @media (hover: hover) {
+    .brutal-shadow-hover:hover {
+      box-shadow: var(--shadow-brutal);
+      transform: translate(-3px, -3px);
+    }
   }
 
   .text-stroke-robust {
