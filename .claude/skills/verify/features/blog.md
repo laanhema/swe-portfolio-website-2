@@ -27,6 +27,7 @@ Preconditions:
 - **Open post.** Run `ax.sh click 'link "REBUILDING TRELLO WITH ANGULAR AND SIGNALSTORE"'`, then `ax.sh state`. The output shows `"path": "/blog/tralla"`, `"h1": "Rebuilding Trello with Angular and SignalStore."`, and `"scrollY": 0`.
 - **Article.** Run `ax.sh has 'heading "REBUILDING TRELLO WITH ANGULAR AND SIGNALSTORE\." level="1"'`, then `ax.sh has 'link "← ALL POSTS"'`. Take `ax.sh shot "$RUN_DIR/blog-post-tralla.png"`.
 - **Tables fit (mobile).** For each slug, run `ax.sh open /blog/<slug>`, `ax.sh mobile`, then `ax.sh tables`. Every line ends in `fits` and the command exits 0. Repeat at 320px with `chrome-devtools-axi emulate --viewport "320x640x2,mobile,touch"`. Take `ax.sh shot` after scrolling the table into view, because a fitting table can still read badly.
+- **Nav matches home (mobile).** Run `ax.sh mobile`, then `ax.sh nav` on `/`, `/blog`, `/blog/tralla`, and `/blog/does-not-exist`. Every line ends in `ok`, the `logo=` and `menu=` boxes match `/`, and each command exits 0 (#75).
 - **Back.** Run `ax.sh click 'link "← ALL POSTS"'`, then `ax.sh state`. The output shows `"path": "/blog"`.
 - **404.** Run `ax.sh open /blog/does-not-exist`, then `ax.sh state`. The output shows `"h1": "Post Not Found."`. `ax.sh has 'link "← BACK TO ALL POSTS"'` succeeds.
 - **Deep link.** Run `ax.sh open /blog/gymbro-app`, then `ax.sh state`. The output shows `"path": "/blog/gymbro-app"` and the GymBro post's h1. To check the GitHub Pages redirect, use `verify-server.sh start preview`. Note that `vite preview` also uses SPA fallback and never serves `404.html`, so this check cannot prove the Pages redirect locally.
@@ -35,4 +36,5 @@ Preconditions:
 
 - Post titles in the tree are upper-cased (`"REBUILDING TRELLO ..."`), but `state.h1` keeps the source casing.
 - An unknown top-level path such as `/foo` redirects to `/`, not to the blog 404.
+- This host's `system-ui` is Noto Sans, so a page that falls back to the system font renders at the same size here as on `/`. On a phone it does not. Trust the `font=` field from `ax.sh nav`, not equal boxes.
 - Article HTML comes from `content` strings rendered with `dangerouslySetInnerHTML`. Check tables and code blocks visually, at both viewports.
