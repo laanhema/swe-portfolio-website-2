@@ -8,7 +8,7 @@
 - Tasks 1–17 (`TODO.md:1-17`): Already tracked as GitHub issues #2 through #14 and #28 through #31, and marked complete.
 - Tasks 18–22 (`TODO.md:18-22`): Already tracked as GitHub issues #55 through #59.
 - Tasks 23–24 (`TODO.md:23-24`): Already tracked as GitHub issues #63 and #64 (TODO-33, TODO-34).
-- Task 25 (`TODO.md:25`): Already tracked as GitHub issue #66 (TODO-35).
+- Tasks 25–26 (`TODO.md:25-26`): Already tracked as GitHub issues #66 and #68 (TODO-35, TODO-36).
 
 ---
 
@@ -1285,4 +1285,184 @@ The "← All posts" link at the top of each blog post has the animated orange un
 
 - Blocked by: None
 - Blocks: None
+
+---
+
+## [TODO-37] Fix intermittent failure of mobile navbar menu button click animation
+
+**GitHub**: #71
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:27` — "- [ ] Sometimes the top navbar \"menu\" button animation doesnt run. This can be reproduced on mobile phone when you scroll down, and then scroll up to come back to the top part of the website and then press the menu button. Yes the button opens up the menu but the animation for clicking on the button doesnt work at that moment."
+
+### Description
+
+On mobile devices, tapping the navbar "Menu" button occasionally fails to execute the click/press animation, particularly after scrolling down the page and back up to the top. While the drawer toggles open, the tactile button animation does not trigger. The button interaction state and active animation should reliably fire upon every tap.
+
+### Acceptance Criteria
+
+- [ ] Button opens/closes the menu drawer reliably.
+- [ ] Button reliably runs its press/click animation even after scrolling down and back up to the top.
+- [ ] Active and transition styling on the menu button (`active:translate-x-1 active:translate-y-1 active:shadow-none transition-all`) triggers predictably on touch after scroll operations.
+- [ ] Any stuck or conflicting hover/focus states after touch scroll are reset so tap feedback is immediately visible.
+- [ ] Mobile navigation drawer toggling functionality and accessibility attributes (`aria-expanded`) remain fully functional.
+- [ ] `npm run lint` and `npm run build` pass without errors.
+
+### Technical Notes
+
+- Key implementation details: Inspect `src/features/navigation/Nav.tsx` mobile menu button styling and touch/click event handling. Ensure CSS `:active` or touch event listeners trigger animation without getting suppressed by scroll momentum or sticky hover states.
+- Files likely to be modified: `src/features/navigation/Nav.tsx`, `src/styles/global.css`.
+- Patterns to follow: Brutalist button interactions and tactile feedback conventions.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-38] Fix social link buttons freezing in hover/active animation state on mobile touch
+
+**GitHub**: #72
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:28` — "- [ ] Clicking on social links on mobile makes the social link buttons to freeze to the animation state they were left last time, resulting in the social buttons to not lining up anymore. The wanted behavior here is that the animation runs from start to finish, effectively resetting the buttons visual state to the default one, when all of the buttons line up nicely."
+
+### Description
+
+Clicking social link buttons (GitHub, LinkedIn) in the hero section on mobile devices causes them to stick in their hover/active transformed state (`translate(-3px, -3px)`), causing the buttons to become misaligned. The button animation should reset smoothly back to the default resting position after touch interaction so all buttons stay aligned in a clean row.
+
+### Acceptance Criteria
+
+- [ ] Social link button animation resets to the default visual state after click/touch so that all buttons line up nicely.
+- [ ] Tapping social link buttons (GitHub, LinkedIn) on touch devices does not leave them stuck in the hover translate state (`translate(-3px, -3px)`).
+- [ ] Hover transforms in `.brutal-shadow-hover` or button classes are scoped to `@media (hover: hover)` or reset on touch end/blur.
+- [ ] Social buttons return to their aligned default position without persistent offsets or gaps.
+- [ ] External navigation to social profiles continues to function with `target="_blank"` and `rel="noopener noreferrer"`.
+- [ ] `npm run lint` and `npm run build` pass.
+
+### Technical Notes
+
+- Key implementation details: Mobile browsers emulate mouse hover on touch, which leaves `:hover` styles active until another element is tapped. Guard `.brutal-shadow-hover:hover` in `src/styles/global.css` with `@media (hover: hover)` or handle `onTouchEnd` / `onBlur` to remove stuck offsets.
+- Files likely to be modified: `src/styles/global.css`, `src/App.tsx`.
+- Patterns to follow: Brutalist button alignment and clean hover/touch states.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-39] Add button press and hover animations to "View work", "Code", and "Read story" buttons on mobile
+
+**GitHub**: #73
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:29` — "- [ ] Main screen \"View work\" button has no animation whatsoever on mobile. A bug? Same issue is with all of the \"Code\" and \"Read story\" buttons."
+
+### Description
+
+On mobile devices, the "View Work" hero CTA button as well as the "Code" and "Read story" action buttons in project cards have no visual touch/press animation. On desktop they rely on hover styling, but on touch devices they lack tactile feedback. Add mobile-responsive active/press animations so these buttons depress or respond tactilely upon touch.
+
+### Acceptance Criteria
+
+- [ ] "View work", "Code", and "Read story" action buttons provide visible tactile animation on mobile.
+- [ ] "View Work" CTA button in hero section provides a visible press/active animation on mobile touch (e.g. `active:translate-x-1 active:translate-y-1` or `.brutal-shadow:active`).
+- [ ] "Code" and "Read Story" action buttons in `ProjectCard` provide consistent tactile press/active feedback on mobile touch.
+- [ ] Smooth scrolling to `#work` on "View Work" click remains intact.
+- [ ] Card navigation to GitHub and `/blog/:slug` remains functional.
+- [ ] `npm run lint` and `npm run build` pass cleanly.
+
+### Technical Notes
+
+- Key implementation details: Update button utility classes on "View Work" in `src/App.tsx` and "Code" / "Read Story" in `src/features/showcase/ProjectCard.tsx` (and `src/styles/global.css` if using shared active styles) to ensure `:active` translates the button toward its shadow on touch.
+- Files likely to be modified: `src/App.tsx`, `src/features/showcase/ProjectCard.tsx`, `src/styles/global.css`.
+- Patterns to follow: Consistent brutalist press interactions (`translate(6px, 6px)` / `translate(2px, 2px)` with shadow collapse).
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-40] Fix blog post table overflow and responsiveness on mobile viewports
+
+**GitHub**: #74
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:30` — "- [ ] Tables dont fit properly in view on mobile when reading blog posts. The only table that does seem to fit is the one inside Svelte blog post, and that is because it has less text than the other ones."
+
+### Description
+
+When viewing blog articles on mobile devices, multi-column tables formatted with `.brutal-prose` exceed viewport width and clip or overflow horizontally past the page boundaries. Ensure all blog post tables fit within the mobile layout gracefully by adding a responsive horizontal scroll wrapper or responsive table container styles.
+
+### Acceptance Criteria
+
+- [ ] Blog post tables fit properly within view on mobile screens without overflowing the page layout or clipping content.
+- [ ] Tables within `.brutal-prose` on blog posts are wrapped in or styled with responsive horizontal scrolling (`overflow-x-auto`).
+- [ ] Table borders, headers, and cell content remain fully readable on narrow mobile screens (320px–375px) without breaking page container boundaries.
+- [ ] Desktop table presentation retains full width and brutalist border styling (`border-4 border-text-primary`).
+- [ ] `npm run lint` and `npm run build` pass cleanly.
+
+### Technical Notes
+
+- Key implementation details: In `src/styles/global.css` or `BlogPost.tsx` / markdown rendering, ensure tables are enclosed in an `overflow-x-auto` container with `-webkit-overflow-scrolling: touch` and brutalist borders.
+- Files likely to be modified: `src/styles/global.css`, `src/features/blog/BlogPost.tsx`.
+- Patterns to follow: Neo-brutalist table styling with high contrast borders and clear cell padding.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-41] Investigate and fix navbar logo and menu button shift on mobile blog page
+
+**GitHub**: #75
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:31` — "- [ ] When on blog page on mobile for some reason the top navhar \"laanhema.dev\" AND \"menu\" buttons both shift a little bit. Investigate why this happens. The wanted behavior here is that they stay were they are exactly same place where they are on the other view page."
+
+### Description
+
+On mobile devices, navigating between the home page (`/`) and blog pages (`/blog`, `/blog/:slug`) causes the top navigation bar's "laanhema.dev" logo and "Menu" button to slightly shift position horizontally. Investigate the root cause of this layout discrepancy and adjust page or navbar container rules so the header elements remain in the exact same coordinates across all views.
+
+### Acceptance Criteria
+
+- [ ] Investigate root cause of why the shift occurs on the blog page on mobile.
+- [ ] Top navbar "laanhema.dev" logo and "Menu" button stay in the exact same position on mobile when switching between home and blog pages.
+- [ ] Identify layout discrepancies between `/` and `/blog` (e.g. scrollbar presence, body overflow, or container padding) causing the shift.
+- [ ] Brand logo `laanhema.dev` and mobile menu button align at identical horizontal coordinates across all routes on a 375px viewport.
+- [ ] Responsive navbar padding (`px-6 md:px-12`) and sticky navigation behavior remain preserved.
+- [ ] `npm run lint` and `npm run build` pass cleanly.
+
+### Technical Notes
+
+- Key implementation details: Compare root container classes in `src/App.tsx` (`min-h-screen`) and `src/features/blog/BlogIndex.tsx` / `BlogPost.tsx`. Check for differences in `scrollbar-gutter`, `overflow-x`, or margin/padding that might shift the sticky nav on mobile viewports.
+- Files likely to be modified: `src/features/navigation/Nav.tsx`, `src/styles/global.css`, `src/features/blog/BlogIndex.tsx`, `src/features/blog/BlogPost.tsx`, `src/App.tsx`.
+- Patterns to follow: Consistent viewport layout and sticky navbar anchoring.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
 
