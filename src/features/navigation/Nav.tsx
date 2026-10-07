@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useLocation, Link } from 'react-router';
+
+// Mobile browsers skip :active on taps that follow a scroll (#71), so the menu button's press
+// style is driven from pointer events and held long enough to be seen on a quick tap.
+const MIN_PRESS_MS = 150;
 
 export const Nav: React.FC = () => {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const pressedAt = useRef(0);
+  const releaseTimer = useRef<number | undefined>(undefined);
+
+  const pressMenuButton = () => {
+    clearTimeout(releaseTimer.current);
+    pressedAt.current = performance.now();
+    setIsPressed(true);
+  };
+  const releaseMenuButton = () => {
+    clearTimeout(releaseTimer.current);
+    const remaining = MIN_PRESS_MS - (performance.now() - pressedAt.current);
+    releaseTimer.current = window.setTimeout(() => setIsPressed(false), Math.max(0, remaining));
+  };
 
   const toggleMenu = (e?: React.MouseEvent<HTMLButtonElement>) => {
     if (e && (e.nativeEvent as PointerEvent).pointerType) {
@@ -91,7 +109,12 @@ export const Nav: React.FC = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-75 touch-manipulation cursor-pointer'
+          onPointerDown={pressMenuButton}
+          onPointerUp={releaseMenuButton}
+          onPointerCancel={releaseMenuButton}
+          onPointerLeave={releaseMenuButton}
+          data-pressed={isPressed || undefined}
+          className='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none data-pressed:translate-x-1 data-pressed:translate-y-1 data-pressed:shadow-none transition-all duration-75 touch-manipulation cursor-pointer'
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
           aria-controls='mobile-menu'
