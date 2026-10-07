@@ -1,5 +1,6 @@
 import React from 'react';
 import { MailIcon } from '../../components/Icons';
+import { playPress } from '../../components/playPress';
 
 const ContactForm: React.FC = () => {
   return (
@@ -57,7 +58,8 @@ const ContactForm: React.FC = () => {
             
             <button 
               type="submit"
-              className="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl brutal-shadow hover:-translate-y-1 hover:translate-x-1 transition-all"
+              className="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation"
+              onPointerDown={playPress}
             >
               Send Message
             </button>
