@@ -58,7 +58,7 @@ const ContactForm: React.FC = () => {
             
             <button 
               type="submit"
-              className="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation"
+              className="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation cursor-pointer"
               onPointerDown={playPress}
             >
               Send Message
