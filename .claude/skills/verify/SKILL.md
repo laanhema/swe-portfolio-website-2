@@ -53,6 +53,7 @@ $A has 'heading "POST NOT FOUND\."'                   # assert a node exists (ex
 $A state                                              # {"path","hash","scrollY","h1","menuExpanded"}
 $A buttons                                            # hover VIEW WORK, CODE, READ STORY, SEND MESSAGE; exit 1 unless they lift alike (#56)
 $A cursor                                             # read SEND MESSAGE's and the form fields' computed cursor; exit 1 unless pointer / text (#86)
+$A hero                                               # check hero header across desktop and mobile viewports; exit 1 if any blur found
 $A aria "$RUN_DIR/<name>.aria.txt"                    # full accessibility snapshot to a file
 $A shot "$RUN_DIR/<name>.png" [--full-page]           # screenshot
 ```
@@ -99,6 +100,6 @@ ls "$RUN_DIR"  # evidence must still be here
 | Script | Invocation |
 | --- | --- |
 | `scripts/verify-server.sh` | `start [dev\|preview]`, `doctor`, `stop` |
-| `scripts/ax.sh` | `open <path>`, `click '<regex>'`, `has '<regex>'`, `state`, `shot <png> [--full-page]`, `aria <txt>`, `tables`, `nav`, `buttons`, `cursor`, `mobile`, `desktop`, `stop` |
+| `scripts/ax.sh` | `open <path>`, `click '<regex>'`, `has '<regex>'`, `state`, `shot <png> [--full-page]`, `aria <txt>`, `tables`, `nav`, `buttons`, `cursor`, `hero`, `mobile`, `desktop`, `stop` |
 
 Run either script with no arguments to print its usage.

@@ -13,6 +13,7 @@
 #   ax.sh nav                         print the nav logo and menu button boxes and font; exit 1 unless the font is Noto Sans Variable
 #   ax.sh buttons                     hover VIEW WORK, the first card's CODE and READ STORY, and SEND MESSAGE; exit 1 unless all four lift the same (#56)
 #   ax.sh cursor                      print SEND MESSAGE's and the form fields' computed cursor; exit 1 unless the button is pointer and the fields are text (#86)
+#   ax.sh hero                      check hero header across desktop and mobile viewports; exit 1 if any element has computed filter containing blur
 #   ax.sh mobile | desktop            viewport 375x812 mobile+touch | 1280x900
 #   ax.sh stop                        stop this session's browser bridge
 set -euo pipefail
@@ -65,7 +66,7 @@ case "${1:-}" in
         sleep "$wait"
       done
       rows+="$(axi eval "(() => { const el = [...document.querySelectorAll('a,button')].filter(x => x.matches(':hover')).pop(); if (!el) return 'NONE|' + matchMedia('(hover: hover)').matches + '|||'; const cs = getComputedStyle(el); return [el.textContent.trim().toUpperCase(), matchMedia('(hover: hover)').matches, cs.transform, cs.translate, cs.boxShadow].join('|'); })()" \
-        | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"$'\n'
+        | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
     done
     out="$(python3 -c '
 import re, sys
@@ -90,9 +91,20 @@ for i, (label, hov, tf, tr, sh) in enumerate(rows):
       | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
     echo "$out"
     ! grep -q -E 'NOT-POINTER|NOT-TEXT|MISSING' <<<"$out" ;;
+  hero)
+    out=""
+    for vp in desktop mobile; do
+      "$0" open / >/dev/null
+      "$0" "$vp" >/dev/null
+      res="$(axi eval "(() => { const hero = document.querySelector('header'); if (!hero) return 'HERO MISSING'; const elements = [...hero.querySelectorAll('*')]; const blurred = elements.filter(el => getComputedStyle(el).filter.includes('blur')); return blurred.length === 0 ? 'hero glows: NONE ok' : 'HERO BLUR FOUND: ' + blurred.map(el => el.className).join(' | '); })()" \
+        | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
+      out+="$vp: $res"$'\n'
+    done
+    echo -n "$out"
+    ! grep -q HERO <<<"$out" ;;
   aria) axi snapshot --full >"$2" && echo "$2" ;;
   mobile) axi emulate --viewport "375x812x2,mobile,touch" >/dev/null && echo "viewport 375x812 mobile" ;;
   desktop) axi emulate --viewport "1280x900x1" >/dev/null && echo "viewport 1280x900" ;;
   stop) axi stop ;;
-  *) sed -n '2,17p' "$0"; exit 2 ;;
+  *) sed -n '2,18p' "$0"; exit 2 ;;
 esac

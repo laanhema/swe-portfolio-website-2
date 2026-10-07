@@ -30,6 +30,7 @@ Preconditions:
 - **Logo.** Starting from a scrolled state, run `ax.sh click 'link "laanhema.dev - Back to top"'`, then `sleep 1.2; ax.sh state`. The output shows `"scrollY": 0`.
 - **Cross-page.** Run `ax.sh open /blog`, then `ax.sh click 'link "Work" url=.*/#work'`, then `sleep 1.5; ax.sh state`. The output shows `"path": "/"`, `"hash": "#work"`, and `scrollY` > 0. A screenshot taken right after the click already shows the target section, with no hero (issue #58).
 - **Blog link.** Run `ax.sh click 'link "Blog" url=.*/blog$'`, then `ax.sh state`. The output shows `"path": "/blog"`, `"h1": "Field  Notes."`, and `"scrollY": 0`.
+- **Hero glow check.** Run `ax.sh hero`. The output reports `desktop: hero glows: NONE ok` and `mobile: hero glows: NONE ok`.
 - **Proof.** Run `ax.sh shot "$RUN_DIR/nav-<sub-feature>.png"` after each step.
 
 ## Gotchas
