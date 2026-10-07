@@ -23,6 +23,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Having absorbed the lessons of past projects, I kicked off Tralla with a strict Minimum Viable Product (MVP) and a mobile-first design strategy. If you get your core header and navigation responsive from day one, scaling layouts across tablets and desktops becomes remarkably easier.</p>
 <p>To keep my momentum focused on reactive state architecture rather than re-implementing basic UI primitives, I integrated the Taiga UI component library <code>TuiElements</code>. Styled with modular LESS stylesheets, Taiga UI provided clean, accessible inputs, buttons, and dialogs right out of the box, allowing me to focus directly on data flow and state management.</p>
 
+<div class="brutal-table-wrapper">
 <table>
   <thead>
     <tr>
@@ -54,6 +55,7 @@ export const BLOG_POSTS: BlogPost[] = [
     </tr>
   </tbody>
 </table>
+</div>
 
 <h2>Taming State with NgRx SignalStore</h2>
 <p>Interactive boards with nested columns and drag-and-drop tasks can rapidly degrade into a tangle of mutable references and hard-to-trace bugs. To keep my sanity, I adopted NgRx SignalStore to establish a single, authoritative source of truth.</p>
@@ -133,6 +135,7 @@ export const BLOG_POSTS: BlogPost[] = [
   <li>These generated design briefs can be handed directly to human product designers or fed into autonomous AI coding agents as project guardrails.</li>
 </ul>
 
+<div class="brutal-table-wrapper">
 <table>
   <thead>
     <tr>
@@ -169,6 +172,7 @@ export const BLOG_POSTS: BlogPost[] = [
     </tr>
   </tbody>
 </table>
+</div>
 
 <h2>Color Science: Why Simple Hex Matching Fails</h2>
 <p>Extracting a clean color palette from a live webpage sounds trivial until you run into real-world production CSS: semi-transparent overlays, box shadows, border anti-aliasing, and dynamic CSS-in-JS variables. A single landing page can easily render over a thousand distinct hex codes.</p>
@@ -230,6 +234,7 @@ export const BLOG_POSTS: BlogPost[] = [
   <li><strong>Two developers</strong> (including myself) handled application architecture, state management, and core implementation.</li>
 </ul>
 <p>We tracked daily work using a Trello Kanban board and held formal retrospective meetings at the end of each week to assess our progress and outline the game plan for the upcoming sprint.</p>
+<div class="brutal-table-wrapper">
 <table>
   <thead>
     <tr>
@@ -256,6 +261,7 @@ export const BLOG_POSTS: BlogPost[] = [
     </tr>
   </tbody>
 </table>
+</div>
 
 <h2>Crafting Svelte 5 by Hand</h2>
 <p>We chose to build Froots using Svelte 5 and TypeScript, styled with Tailwind CSS. Svelte 5 had only recently been released when we started. Because the framework&apos;s new runes system was so fresh, large language models had virtually no training data on Svelte 5 syntax. As a result, nearly every line of code had to be written and debugged by hand. We restricted AI tooling strictly to mechanical data work, such as refactoring recipe JSON schemas, where deterministic formatting could be safely automated.</p>
@@ -343,6 +349,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>To ship an Android-compatible application quickly without maintaining separate native codebases, we built a hybrid mobile client using Ionic Capacitor with Angular, bundling the final artifact into an installable Android APK.</p>
 <p>The full-stack architecture was built from the ground up to support authenticated session logging and persistent stats tracking:</p>
 
+<div class="brutal-table-wrapper">
 <table>
   <thead>
     <tr>
@@ -384,6 +391,7 @@ export const BLOG_POSTS: BlogPost[] = [
     </tr>
   </tbody>
 </table>
+</div>
 
 <h2>Leadership and Team Dynamics</h2>
 <p>In this project, our team made extensive use of AI coding agents, which had an unexpected and welcome impact on my role as project lead. By offloading boilerplate scaffolding and repetitive syntax transformations to agents, I was liberated from being perpetually trapped in code editors.</p>
