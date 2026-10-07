@@ -59,6 +59,11 @@ How to add a page, such as a blog, case studies or a uses page, without drifting
   .brutal-prose table { @apply w-full border-4 border-text-primary text-base; }
   .brutal-prose th { @apply bg-text-primary text-white uppercase text-left font-bold p-3; }
   .brutal-prose td { @apply border-t-2 border-text-primary p-3; }
+  .brutal-prose thead { @apply max-md:sr-only; }
+  .brutal-prose :is(table, tbody, tr, td) { @apply max-md:block; }
+  .brutal-prose td { @apply max-md:border-t-0; }
+  .brutal-prose td:first-child { @apply max-md:bg-text-primary max-md:text-white max-md:uppercase; }
+  .brutal-prose td + td + td { @apply max-md:pt-0; }
 }
 ```
 
@@ -68,7 +73,7 @@ How to add a page, such as a blog, case studies or a uses page, without drifting
 - **Lists:** square markers in `accent`.
 - **Blockquote:** the hero lede bar (`border-l-8` accent) with 24px bold text.
 - **Inline code:** white with a 2px ink border. **Code blocks:** ink panels with a 4px border and a 6px shadow, like the About band turned into a card.
-- **Tables:** a 4px frame and an ink header row with white uppercase labels.
+- **Tables:** a 4px frame and an ink header row with white uppercase labels. Below `md`, each row stacks into a block led by its first cell as an ink bar, and the header row is visually hidden. A three-column table cannot fit a 272px to 327px column without breaking words.
 - **Figures:** bordered and shadowed images with an uppercase caption.
 
 ## Code highlighting

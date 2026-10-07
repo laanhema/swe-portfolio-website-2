@@ -9,6 +9,7 @@
 #   ax.sh state                       print {path, hash, scrollY, h1, menuExpanded}
 #   ax.sh shot <file.png> [--full-page]
 #   ax.sh aria <file.txt>             save the full accessibility snapshot
+#   ax.sh tables                      print each .brutal-prose table's width vs its container; exit 1 if any overflows
 #   ax.sh mobile | desktop            viewport 375x812 mobile+touch | 1280x900
 #   ax.sh stop                        stop this session's browser bridge
 set -euo pipefail
@@ -33,9 +34,14 @@ case "${1:-}" in
     # After `emulate`, the CLI reports BROWSER_ERROR even though the file is written; trust the file.
     rm -f "$2"; axi screenshot "$(realpath -m "$2")" "${@:3}" >/dev/null 2>&1 || true
     [[ -s "$2" ]] && echo "saved $2" || { echo "screenshot not written: $2" >&2; exit 1; } ;;
+  tables)
+    out="$(axi eval "[...document.querySelectorAll('.brutal-prose table')].map((t, i) => 'table ' + i + ': width=' + Math.round(t.getBoundingClientRect().width) + ' container=' + t.parentElement.clientWidth + (t.getBoundingClientRect().width > t.parentElement.clientWidth + 0.5 ? ' OVERFLOW' : ' fits')).join('\\n')" \
+      | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
+    echo "${out:-no tables}"
+    ! grep -q OVERFLOW <<<"$out" ;;
   aria) axi snapshot --full >"$2" && echo "$2" ;;
   mobile) axi emulate --viewport "375x812x2,mobile,touch" >/dev/null && echo "viewport 375x812 mobile" ;;
   desktop) axi emulate --viewport "1280x900x1" >/dev/null && echo "viewport 1280x900" ;;
   stop) axi stop ;;
-  *) sed -n '2,15p' "$0"; exit 2 ;;
+  *) sed -n '2,16p' "$0"; exit 2 ;;
 esac
