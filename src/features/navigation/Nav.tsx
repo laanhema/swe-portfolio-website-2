@@ -6,7 +6,12 @@ export const Nav: React.FC = () => {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const toggleMenu = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e && (e.nativeEvent as PointerEvent).pointerType) {
+      e.currentTarget.blur();
+    }
+    setIsOpen((prev) => !prev);
+  };
   const closeMenu = () => {
     if (isOpen) {
       flushSync(() => {
@@ -86,7 +91,7 @@ export const Nav: React.FC = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all cursor-pointer'
+          className='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-75 touch-manipulation cursor-pointer'
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
           aria-controls='mobile-menu'
