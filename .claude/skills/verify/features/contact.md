@@ -25,7 +25,7 @@ Preconditions:
 - **Submit no-op.** Run `ax.sh click 'button "SEND MESSAGE"'`, then `ax.sh state`. The path and hash are unchanged, and no navigation happens.
 - **Hover/press match (desktop).** Run `ax.sh open /`, `ax.sh desktop`, `ax.sh open /`, then `ax.sh buttons`. Every line ends in `ok`, `SEND MESSAGE` is compared against `VIEW WORK`, every `transform=` reads `matrix(1, 0, 0, 1, -3, -3)` with `translate=none` and a `6px 6px` shadow, and the command exits 0 (#56).
 - **Pointer cursor (desktop).** Run `ax.sh open /`, `ax.sh desktop`, `ax.sh open /`, then `ax.sh cursor`. It prints `SEND MESSAGE cursor=pointer ok` and `NAME`/`EMAIL`/`MESSAGE cursor=text ok`, and it exits 0. On the pre-fix code it prints `cursor=default NOT-POINTER` and exits 1 (#86).
-- **Press.** In one `eval`, dispatch `new PointerEvent('pointerdown', {bubbles: true})` on the `SEND MESSAGE` button and return its `getAnimations().length`. Expect `1` (`playPress`, `translate(6px, 6px)`). Say in the report that this probe used `eval`. A real touch tap needs CDP `Input.dispatchTouchEvent` (see `SKILL.md`); read the animations from a `window` `pointerdown` listener, because a listener on the button itself runs before React's root handler.
+- **Press.** Run `ax.sh tap 'button "SEND MESSAGE"'`. It ends with `tap button "SEND MESSAGE": ok` and exits 0, and the JSON shows `"anims":["translate(6px, 6px)"]` (`playPress`), `"events":["pointerdown","pointerup","click"]`, and the same `path` and `hash` before and after.
 - **Narrow.** Run `ax.sh mobile`, `ax.sh open /#contact`, `sleep 1.2`, and then `ax.sh shot "$RUN_DIR/contact-mobile.png"`. Check that the email address wraps inside the viewport.
 
 ## Gotchas

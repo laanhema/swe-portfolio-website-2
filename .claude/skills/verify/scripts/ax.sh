@@ -6,6 +6,9 @@
 #   ax.sh click '<snapshot regex>'    take a fresh snapshot, click the first line matching the ERE
 #                                     e.g. ax.sh click 'link "READ STORY" url=.*/blog/tralla'
 #   ax.sh has '<snapshot regex>'      exit 0 if the current snapshot has a matching line (prints it)
+#   ax.sh tap '<snapshot regex>' [path] [--stuck-active]
+#                                     real touch tap at 375x812 in a separate headless Chrome (touch-tap.mjs); prints the
+#                                     press animation, events, path/hash and popups as JSON; exit 1 on NO-MATCH, MISSED or NOT-AT-REST
 #   ax.sh state                       print {path, hash, scrollY, h1, menuExpanded}
 #   ax.sh shot <file.png> [--full-page]
 #   ax.sh aria <file.txt>             save the full accessibility snapshot
@@ -14,6 +17,7 @@
 #   ax.sh buttons                     hover VIEW WORK, the first card's CODE and READ STORY, and SEND MESSAGE; exit 1 unless all four lift the same (#56)
 #   ax.sh cursor                      print SEND MESSAGE's and the form fields' computed cursor; exit 1 unless the button is pointer and the fields are text (#86)
 #   ax.sh hero                      check hero header across desktop and mobile viewports; exit 1 if any element has computed filter containing blur
+#   ax.sh all                         run tables (on every blog post), nav, buttons, cursor and hero; exit 1 if any fails
 #   ax.sh mobile | desktop            viewport 375x812 mobile+touch | 1280x900
 #   ax.sh stop                        stop this session's browser bridge
 set -euo pipefail
@@ -36,6 +40,7 @@ case "${1:-}" in
     echo "click: $line"
     axi click "@$uid" >/dev/null ;;
   has) axi snapshot --full | grep -E -m1 -- "$2" ;;
+  tap) BASE="http://127.0.0.1:$PORT" node "$(dirname "$0")/touch-tap.mjs" "${@:2}" ;;
   state)
     axi eval "({path: location.pathname, hash: location.hash, scrollY: Math.round(scrollY), h1: document.querySelector('h1')?.textContent?.trim(), menuExpanded: document.querySelector('button[aria-controls=mobile-menu]')?.getAttribute('aria-expanded') ?? null})" \
       | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.dumps(json.loads(json.loads(sys.stdin.read()))))' ;;
@@ -103,9 +108,21 @@ for i, (label, hov, tf, tr, sh) in enumerate(rows):
     done
     echo -n "$out"
     ! grep -q HERO <<<"$out" ;;
+  all)
+    # Each check gets the page and viewport its feature recipe names; a failure does not stop the rest.
+    fail=0
+    run() { echo "== $1${2:+ $2}"; "$0" "$1" || { fail=1; echo "FAILED: $1${2:+ $2}"; }; }
+    "$0" open / >/dev/null; "$0" mobile >/dev/null
+    for slug in $(sed -n "s/^ *slug: '\(.*\)',$/\1/p" "$(git rev-parse --show-toplevel)/src/features/blog/data/posts.ts"); do
+      "$0" open "/blog/$slug" >/dev/null; run tables "/blog/$slug"
+    done
+    for path in / /blog /blog/tralla /blog/does-not-exist; do "$0" open "$path" >/dev/null; run nav "$path"; done
+    "$0" open / >/dev/null; "$0" desktop >/dev/null; "$0" open / >/dev/null
+    run buttons; run cursor; run hero
+    [[ $fail == 0 ]] && echo "all: ok" || { echo "all: FAILED"; exit 1; } ;;
   aria) axi snapshot --full >"$2" && echo "$2" ;;
   mobile) axi emulate --viewport "375x812x2,mobile,touch" >/dev/null && echo "viewport 375x812 mobile" ;;
   desktop) axi emulate >/dev/null && axi resize 1280 900 >/dev/null && echo "viewport 1280x900" ;;
   stop) axi stop ;;
-  *) sed -n '2,18p' "$0"; exit 2 ;;
+  *) sed -n '2,22p' "$0"; exit 2 ;;
 esac

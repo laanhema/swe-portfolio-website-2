@@ -71,6 +71,14 @@ Run ESLint across the codebase:
 npm run lint
 ```
 
+### Checking before a commit
+
+Run lint, the design-system class-string check and the production build in one command. Pull requests run the same command in CI:
+
+```bash
+npm run check
+```
+
 ## Featured Projects
 
 The portfolio showcases four flagship applications:

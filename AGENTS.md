@@ -39,6 +39,9 @@ npm run preview
 
 # Lint
 npm run lint
+
+# Lint, design-system class-string check and build (what the pull-request workflow runs)
+npm run check
 ```
 
 ---
@@ -115,12 +118,11 @@ swe-portfolio-website-2/
 Run before committing any changes:
 
 ```bash
-# Verify no lint errors
-npm run lint
-
-# Verify TypeScript compilation and production build
-npm run build
+# Lint, check that every class string in the design-system component READMEs still appears in src/, and build
+npm run check
 ```
+
+After changing a class string that a component README documents, update the README in the same change, or `npm run check` fails.
 
 ---
 

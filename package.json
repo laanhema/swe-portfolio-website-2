@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "check:design": "node scripts/check-design-system.mjs",
+    "check": "npm run lint && npm run check:design && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {

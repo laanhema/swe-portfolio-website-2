@@ -50,10 +50,12 @@ $A desktop                                            # 1280x900 viewport (defau
 $A mobile                                             # 375x812 mobile+touch viewport
 $A click 'link "READ STORY" url=.*/blog/tralla'       # fresh snapshot + click first matching line
 $A has 'heading "POST NOT FOUND\."'                   # assert a node exists (exit 1 if not)
+$A tap 'button "SEND MESSAGE"' [path] [--stuck-active] # real touch tap at 375x812; JSON proof; exit 1 on NO-MATCH, MISSED or NOT-AT-REST
 $A state                                              # {"path","hash","scrollY","h1","menuExpanded"}
 $A buttons                                            # hover VIEW WORK, CODE, READ STORY, SEND MESSAGE; exit 1 unless they lift alike (#56)
 $A cursor                                             # read SEND MESSAGE's and the form fields' computed cursor; exit 1 unless pointer / text (#86)
 $A hero                                               # check hero header across desktop and mobile viewports; exit 1 if any blur found
+$A all                                                # tables on every post, nav, buttons, cursor and hero in one run; exit 1 if any fails
 $A aria "$RUN_DIR/<name>.aria.txt"                    # full accessibility snapshot to a file
 $A shot "$RUN_DIR/<name>.png" [--full-page]           # screenshot
 ```
@@ -67,7 +69,12 @@ The handles are lines from the accessibility snapshot, matched with an extended 
 - `ax.sh click` takes about 3s (it snapshots first), and the click lands at the end of that time, so the next command starts at an unknown delay after it. To test a short time window after a click, such as the 2s anchor hold (#63), do the click, the change, and the measurement in one async `eval`, and say in the report that the probe used `eval` instead of the user path.
 - `ax.sh` launches the verify Chrome with a mouse (`--blink-settings=primaryHoverType=2,…`), so `desktop` matches `(hover: hover)` and `mobile` (touch) does not. After `ax.sh click`, the mouse rests on the clicked element, so desktop screenshots show real hover states. The flag applies only when the session's browser starts: after pulling this change, run `ax.sh stop` once. To override it, export `CHROME_DEVTOOLS_AXI_CHROME_ARGS` yourself (set it empty for the old pointer-less browser).
 - External links (GitHub, LinkedIn, project repos) open new tabs. Assert their `url=` in the snapshot. Do not click them.
-- `ax.sh` cannot touch-tap a link, follow the new tab, and return. To prove that a press style resets after that round trip, drive a separate headless Chrome over CDP: `Input.dispatchTouchEvent` for the tap, `Target.closeTarget` on the popup, then `CSS.forcePseudoState` with `active` to model a browser that leaves `:active` set. Save the script in `$RUN_DIR` so the proof can be rerun.
+- For a touch tap, run `ax.sh tap '<regex>' [path]`. It opens `path` (default `/`) at 375x812 mobile+touch in its own headless Chrome, because `chrome-devtools-axi` has no touch input, so it does not see or change the page that the other `ax.sh` commands drive. The regex matches the same `role "name" url="…"` lines as `click`. Keep the JSON line as the proof: `after.anims` holds the press keyframe that `playPress` started (`translate(6px, 6px)`), `after.events` the events that reached the control, `after.path`, `after.hash` and `after.menuExpanded` the result, and `popups` the new tabs it opened and closed. Add `--stuck-active` to force `:active` after the tap, which models a browser that leaves it set once a tap opens a new tab (#72); `after.stuckActive` must then still read `transform: none`.
+- Run `ax.sh all` after any change to shared styles, the nav, or a button, and before you report a UI change as verified. It sets the page and viewport for each check itself and leaves the session on `/` at the mobile viewport.
+
+## Real device
+
+Mobile bugs are reported from Firefox on an Android phone, which runs the Gecko engine. The verify Chrome and `ax.sh tap` run Blink, so a bug that only Gecko shows does not reproduce here. When a mobile bug has not reproduced after a few runs, stop: say in the report that it does not reproduce in headless Chrome, and ask the user to check it on the phone. Do not install another browser engine to chase it, and never WebKit, which is neither engine. Desktop Firefox (`/usr/bin/firefox`) shares the phone's engine and can inspect the phone through `about:debugging` over USB, but that needs `adb`, which this host does not have, and `ax.sh` cannot drive Firefox.
 
 ## Evidence
 
@@ -100,6 +107,7 @@ ls "$RUN_DIR"  # evidence must still be here
 | Script | Invocation |
 | --- | --- |
 | `scripts/verify-server.sh` | `start [dev\|preview]`, `doctor`, `stop` |
-| `scripts/ax.sh` | `open <path>`, `click '<regex>'`, `has '<regex>'`, `state`, `shot <png> [--full-page]`, `aria <txt>`, `tables`, `nav`, `buttons`, `cursor`, `hero`, `mobile`, `desktop`, `stop` |
+| `scripts/ax.sh` | `open <path>`, `click '<regex>'`, `has '<regex>'`, `tap '<regex>' [path] [--stuck-active]`, `state`, `shot <png> [--full-page]`, `aria <txt>`, `tables`, `nav`, `buttons`, `cursor`, `hero`, `all`, `mobile`, `desktop`, `stop` |
+| `scripts/touch-tap.mjs` | called by `ax.sh tap`; do not run it directly |
 
 Run either script with no arguments to print its usage.
