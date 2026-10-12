@@ -2,8 +2,9 @@
 
 ## Project: Software Engineer Portfolio Website (`laanhema.dev`)
 
-- **Document Version**: 1.0.0
-- **Status**: Ready for Implementation
+- **Document Version**: 1.1.0
+- **Status**: Implemented
+- **Last Updated**: 2026-10-13
 - **Author**: Lauri Makkonen (`laanhema`)
 - **Target Repository**: `laanhema/swe-portfolio-website-2`
 - **Output Location**: `.agents/PRDs/PRD.md`
@@ -80,35 +81,35 @@ To present a memorable, authentic, and technically rigorous software engineering
 ### 4.1 In Scope
 
 #### Core Functionality
-- [ ] **Sticky Navigation Bar**: Responsive top bar with personal branding (`laanhema.dev`), desktop anchor links (Work, About, Contact), and a mobile hamburger menu drawer with toggle state.
-- [ ] **Hero Section**: High-impact introduction featuring developer title, outline headline ("Building Robust Systems"), personalized engineering values paragraph, "View Work" primary CTA, social icon links (GitHub, Twitter/X, LinkedIn), and author portrait.
-- [ ] **About & Metrics Section**: "The Dev Behind The Code" summary highlighting professional journey since 2019, accompanied by neo-brutalist metric cards (2019 Coding Since, 25 Public Repos, 2000+ Contributions).
-- [ ] **Curated Work Showcase**: "Selected Works" section displaying 4 featured projects (GymBro App, Tralla, Froots Smoothie App, Distill Design Scraper) with clean tech stack tags, concise descriptions, GitHub source links, and live demo / APK download buttons.
-- [ ] **Contact Section**: "Let's Build Something Awesome." contact hub with direct email address link (`lahmakkonen@gmail.com`) and an interactive contact form ready for messaging.
-- [ ] **Footer**: Consistent site footer with copyright, branding mark, and outbound social channels.
+- [x] **Sticky Navigation Bar**: Responsive top bar with personal branding (`laanhema.dev`), desktop anchor links (Work, About, Contact, Blog), and a mobile hamburger menu drawer with toggle state.
+- [x] **Hero Section**: High-impact introduction featuring developer title, outline headline ("Building Robust Systems"), personalized engineering values paragraph, "View Work" primary CTA, social icon links (GitHub, LinkedIn), and author portrait.
+- [x] **About & Metrics Section**: "The Dev Behind The Code" summary highlighting professional journey since 2019, accompanied by neo-brutalist metric cards (2019 Coding Since, 25 Public Repos, 2000+ Contributions).
+- [x] **Curated Work Showcase**: "Selected Works" section displaying 4 featured projects (GymBro App, Tralla, Froots Smoothie App, Distill Design Scraper) with clean tech stack tags, concise descriptions, GitHub source links, and Read Story devlog links.
+- [x] **Contact Section**: "Let's Build Something Awesome." contact hub with direct email address link (`lahmakkonen@gmail.com`) and an interactive contact form ready for messaging.
+- [x] **Footer**: Consistent site footer with copyright, branding mark, and outbound social channels.
+- [x] **Technical Blog & Devlogs**: Responsive client-side blog routing (`/blog`, `/blog/:slug`) with `.brutal-prose` typography and devlog case studies for each featured project.
 
 #### Technical & Design System
-- [ ] React 19 + TypeScript (strict mode) with Vite 8.
-- [ ] Tailwind CSS v4 setup with custom theme variables, custom shadow tokens (`--shadow-brutal`), and component utilities (`brutal-border`, `brutal-shadow`, `brutal-shadow-hover`).
-- [ ] Noto Sans Variable font typography integration.
-- [ ] GSAP scroll animations (`ScrollTrigger`) with stagger and batch effects.
-- [ ] Mobile-first responsive optimization across 320px, 375px, 768px, 1024px, and 1440px+ breakpoints.
+- [x] React 19 + TypeScript (strict mode) with Vite 8.
+- [x] Tailwind CSS v4 setup with custom theme variables, custom shadow tokens (`--shadow-brutal`), and component utilities (`brutal-border`, `brutal-shadow`, `brutal-shadow-hover`, `brutal-prose`).
+- [x] React Router `^8.4.0` for SPA client navigation.
+- [x] Noto Sans Variable font typography integration.
+- [x] GSAP scroll animations (`ScrollTrigger`) with stagger and batch effects.
+- [x] Mobile-first responsive optimization across 320px, 375px, 768px, 1024px, and 1440px+ breakpoints.
 
 #### Integration & Deployment
-- [ ] Outbound links to verified GitHub repositories (`laanhema`, `jamktiko`).
-- [ ] Outbound links to live application deployments (AWS S3, Netlify).
-- [ ] `mailto:` link protocol for native email client launching.
-- [ ] Production build verified via `tsc -b && vite build`.
-- [ ] Static deployment readiness for custom domain `laanhema.dev`.
+- [x] Outbound links to verified GitHub repositories (`laanhema`, `jamktiko`).
+- [x] Outbound links to live application deployments (AWS S3, Netlify).
+- [x] `mailto:` link protocol for native email client launching.
+- [x] Production build verified via `tsc -b && vite build`.
+- [x] Static deployment readiness for custom domain `laanhema.dev`.
 
 ### 4.2 Out of Scope (Deferred to Future Releases)
 
 - [ ] **Server-side Contact API**: Backend handling for form submissions (e.g., Resend, SendGrid, or AWS SES API) — MVP uses `mailto:` and client-side form interface.
-- [ ] **Technical Blog Engine**: Markdown-based articles, RSS feeds, or CMS integration for engineering essays.
 - [ ] **Live GitHub API Polling**: Real-time dynamic fetch of repository stars, commit history, and pinned repositories.
 - [ ] **Dark / Light Theme Toggle**: Standardized on signature neo-brutalist dark/light hybrid color scheme.
 - [ ] **Web Analytics Dashboard**: Custom telemetry or privacy-friendly tracking (e.g., Plausible, PostHog).
-- [ ] **Full Case Study Deep-Dives**: Dedicated subpages for in-depth architectural post-mortems.
 
 ---
 
@@ -158,8 +159,8 @@ swe-portfolio-website-2/
 ├── .agents/
 │   ├── PRDs/
 │   │   └── PRD.md                      # Product Requirements Document (this document)
-│   └── stories/
-│       └── todo-stories.md             # Issue & backlog story tracking
+│   └── issues/
+│       └── todo-issues.md             # Issue & backlog tracking
 ├── public/
 │   ├── favicon.svg
 │   └── CNAME
@@ -167,19 +168,26 @@ swe-portfolio-website-2/
 │   ├── assets/
 │   │   └── lauri-makkonen-portrait.jpg # Hero portrait asset
 │   ├── components/
-│   │   └── Icons.tsx                   # SVG iconography (Github, Twitter, Linkedin, Mail)
+│   │   ├── Icons.tsx                   # SVG iconography (Github, Linkedin, Mail)
+│   │   └── playPress.ts                # Mobile pointerdown press animation helper
 │   ├── features/
+│   │   ├── blog/
+│   │   │   ├── components/             # ArticleHeader, PostCard
+│   │   │   ├── data/                   # Blog post datasets & markdown content
+│   │   │   ├── BlogIndex.tsx           # Devlog listing page (/blog)
+│   │   │   ├── BlogPost.tsx            # Devlog article reader (/blog/:slug)
+│   │   │   └── types.ts                # BlogPost data types
 │   │   ├── contact/
 │   │   │   └── ContactForm.tsx         # Contact section and messaging form
 │   │   ├── navigation/
 │   │   │   └── Nav.tsx                 # Navigation bar and mobile menu drawer
 │   │   └── showcase/
-│   │       └── ProjectCard.tsx         # Showcase project card component
+│   │       └── ProjectCard.tsx         # Showcase project card component (Code & Read Story)
 │   ├── hooks/
 │   │   └── useGsapAnimations.ts        # GSAP ScrollTrigger lifecycle integration
 │   ├── styles/
-│   │   └── global.css                  # Tailwind CSS v4 directives, theme tokens, brutal utilities
-│   ├── App.tsx                         # Main portfolio page layout & project data
+│   │   └── global.css                  # Tailwind CSS v4 directives, theme tokens, brutal prose utilities
+│   ├── App.tsx                         # Main portfolio page layout, router, and project data
 │   └── main.tsx                        # React 19 application root
 ├── index.html                          # Entry HTML with metadata & viewport configuration
 ├── package.json                        # Dependencies, scripts, and engine specifications
@@ -190,9 +198,9 @@ swe-portfolio-website-2/
 
 ### 6.3 Key Design Patterns & Principles
 
-1. **Feature-Sliced Component Organization**: Components are grouped by feature domain (`features/navigation`, `features/showcase`, `features/contact`) rather than flat component folders, promoting high cohesion and loose coupling.
-2. **Design Token Centralization**: Neo-brutalist styling rules (border thickness, hard shadows, brand palette) are defined via CSS custom properties and Tailwind v4 `@theme` layers in `src/styles/global.css`.
-3. **Controlled Animation Lifecycle**: All DOM-dependent animations are contained inside the custom hook `useGsapAnimations`, ensuring proper cleanup, scroll trigger refreshes, and prevention of memory leaks or duplicate animation instances.
+1. **Feature-Sliced Component Organization**: Components are grouped by feature domain (`features/navigation`, `features/showcase`, `features/blog`, `features/contact`) rather than flat component folders, promoting high cohesion and loose coupling.
+2. **Design Token Centralization**: Neo-brutalist styling rules (border thickness, hard shadows, brand palette, `.brutal-prose`) are defined via CSS custom properties and Tailwind v4 `@theme` layers in `src/styles/global.css`.
+3. **Controlled Animation Lifecycle**: All DOM-dependent animations are contained inside the custom hook `useGsapAnimations`, ensuring proper cleanup, scroll trigger refreshes, and prevention of memory leaks or duplicate animation instances. Touch interactions trigger tactile feedback via `playPress` on pointerdown.
 4. **Defensive Mobile Layouts**: Flexible containers use responsive modifiers (`flex-col md:flex-row`, `items-start md:items-end`, `break-all sm:break-normal`) to guarantee zero overflow across extreme screen dimensions (320px–4K).
 
 ---
@@ -200,13 +208,13 @@ swe-portfolio-website-2/
 ## 7. Tools / Features Breakdown
 
 ### Feature 1: Navigation & Mobile Drawer (`src/features/navigation/Nav.tsx`)
-- **Desktop Navigation**: Sticky top navigation bar featuring high-contrast brand mark `laanhema.dev` with orange dot accent, and anchor links (`#work`, `#about`, `#contact`) with hover underline animations.
-- **Mobile Menu Drawer**: High-contrast button toggling an animated drawer menu with accessible ARIA attributes (`aria-expanded`, `aria-label="Toggle navigation"`), smoothly scrolling to target anchors upon selection.
+- **Desktop Navigation**: Sticky top navigation bar featuring high-contrast brand mark `laanhema.dev` with orange dot accent, anchor links (`#work`, `#about`, `#contact`), and route link (`/blog`) with hover underline animations.
+- **Mobile Menu Drawer**: High-contrast button toggling an animated drawer menu with accessible ARIA attributes (`aria-expanded`, `aria-label="Toggle navigation"`), smoothly scrolling to target anchors or navigating to routes upon selection.
 
 ### Feature 2: Hero Section (`src/App.tsx`)
 - **Visual Impact**: Bold headline with dual-style treatment (solid black text and stroked hollow text `Building Robust Systems`).
 - **Personal Value Statement**: Authentic paragraph reflecting engineering philosophy and software delivery approach.
-- **Primary Actions**: Neo-brutalist "View Work" button linking to `#work` alongside prominent social media icon buttons (GitHub, Twitter, LinkedIn).
+- **Primary Actions**: Neo-brutalist "View Work" button linking to `#work` alongside prominent social media icon buttons (GitHub, LinkedIn).
 - **Hero Portrait**: High-quality portrait (`lauri-makkonen-portrait.jpg`) positioned above the fold with brutalist border and offset shadow.
 
 ### Feature 3: About & Credibility Metrics (`src/App.tsx`)
@@ -220,17 +228,21 @@ swe-portfolio-website-2/
 ### Feature 4: Project Showcase (`src/features/showcase/ProjectCard.tsx`)
 - **Section Heading**: "Selected Works" with subtitle "A curated selection of my recent projects."
 - **Featured Projects**:
-  1. **GymBro App**: Gamified gym-tracker app for Android (Angular, Ionic, Express, MongoDB) with APK download and GitHub repository links.
-  2. **Tralla**: Trello-like Kanban board application (Angular, Taiga UI, NgRx SignalStore) with GitHub repository link.
-  3. **Froots Smoothie App**: Smoothie recipe and nutritional exploration app (Svelte, TypeScript, Tailwind) with Netlify live demo and GitHub repository links.
-  4. **Distill Design Scraper**: Design system scraper and color extractor (Next.js, React, Playwright, Sharp, Culori, Zod) with GitHub repository link.
-- **Card Design**: Distinct background color per card (`#ff3e00`, `#00e5ff`, `#facc15`, `#a855f7`), white pill badges for tech stack tags, and brutalist dual-action buttons.
+  1. **GymBro App**: Gamified gym-tracker app for Android (Angular, Ionic, Express, MongoDB).
+  2. **Tralla**: Trello-like Kanban board application (Angular, Taiga UI, NgRx SignalStore).
+  3. **Froots Smoothie App**: Smoothie recipe and nutritional exploration app (Svelte, TypeScript, Tailwind).
+  4. **Distill Design Scraper**: Design system scraper and color extractor (Next.js, React, Playwright, Sharp, Culori, Zod).
+- **Card Design**: Distinct background color per card (`#ff3e00`, `#00e5ff`, `#facc15`, `#a855f7`), white pill badges for tech stack tags, and brutalist dual-action buttons ("Code" linking to repository and "Read Story" linking to devlog article).
 
 ### Feature 5: Contact Hub & Form (`src/features/contact/ContactForm.tsx`)
 - **Headline**: "Let's Build Something Awesome." with orange accent.
 - **Status Statement**: "I'm currently open to new job offers! Drop a message and lets chat about it."
 - **Direct Mail Contact**: `lahmakkonen@gmail.com` with Mail icon, responsive stacking, and word-break prevention on mobile.
-- **Interactive Form**: Inputs for Name, Email, and Message with brutalist border styling, focus states, and client-side handling.
+- **Interactive Form**: Inputs for Name, Email, and Message with brutalist border styling, focus states, pointer cursor on submit, and client-side handling.
+
+### Feature 6: Engineering Blog & Devlogs (`src/features/blog/`)
+- **Devlog Index (`/blog`)**: Displays header "Field Notes", intro narrative, and grid of `PostCard` entries linking to individual devlog articles.
+- **Article Reader (`/blog/:slug`)**: Displays article header, publish date, read time, tech tags, and formatted `.brutal-prose` content with responsive tables and code snippets.
 
 ---
 
@@ -244,6 +256,7 @@ swe-portfolio-website-2/
 | **DOM Renderer** | React DOM | `^19.2.7` | DOM rendering engine |
 | **Language** | TypeScript | `~6.0.2` | Static type safety and strict checking |
 | **Build Tool** | Vite | `^8.1.1` | Ultra-fast HMR and production bundling |
+| **Routing** | React Router | `^8.4.0` | Client-side routing for SPA and devlog views |
 | **Styling** | Tailwind CSS | `^4.3.2` | Utility-first CSS engine with `@tailwindcss/vite` |
 | **Animations** | GSAP | `^3.15.0` | High-performance scroll and timeline animations |
 | **Typography** | `@fontsource-variable/noto-sans` | `^5.3.0` | Self-hosted variable font for optimal typography |
@@ -312,20 +325,20 @@ As a client-side single-page portfolio application, MVP interactions leverage cl
 ## 11. Success Criteria
 
 ### 11.1 Functional Verification Checklist
-- [ ] Top bar "Menu" button opens and closes the mobile navigation menu smoothly on screens < 768px.
-- [ ] Navigating via mobile drawer scrolls to the correct section and dismisses the drawer.
-- [ ] Hero description features personalized engineering values rather than placeholder text.
-- [ ] "Robust" stroked outline text thickness scales appropriately on mobile devices.
-- [ ] "2019 Coding Since" metric card content is centered vertically and horizontally on mobile.
-- [ ] Hero social media icon buttons form a clean, straight row on all screen sizes.
-- [ ] Hero portrait is positioned prominently above the fold on initial load.
-- [ ] "Selected Works" heading is left-aligned on mobile to match previous section headers.
-- [ ] Showcase subtitle reads "A curated selection of my recent projects."
-- [ ] Email link in contact section never clips or truncates on 320px mobile viewports.
-- [ ] Contact section headline reads "Let's Build Something Awesome."
-- [ ] Contact paragraph reads "I'm currently open to new job offers! Drop a message and lets chat about it."
-- [ ] "Download APK" button text is centered without overflow on mobile cards.
-- [ ] GymBro App tags read concisely: `Angular`, `Ionic`, `Express`, `MongoDB`.
+- [x] Top bar "Menu" button opens and closes the mobile navigation menu smoothly on screens < 768px.
+- [x] Navigating via mobile drawer scrolls to the correct section and dismisses the drawer.
+- [x] Hero description features personalized engineering values rather than placeholder text.
+- [x] "Robust" stroked outline text thickness scales appropriately on mobile devices.
+- [x] "2019 Coding Since" metric card content is centered vertically and horizontally on mobile.
+- [x] Hero social media icon buttons form a clean, straight row on all screen sizes.
+- [x] Hero portrait is positioned prominently above the fold on initial load.
+- [x] "Selected Works" heading is left-aligned on mobile to match previous section headers.
+- [x] Showcase subtitle reads "A curated selection of my recent projects."
+- [x] Email link in contact section never clips or truncates on 320px mobile viewports.
+- [x] Contact section headline reads "Let's Build Something Awesome."
+- [x] Contact paragraph reads "I'm currently open to new job offers! Drop a message and lets chat about it."
+- [x] Project card dual-action buttons provide "Code" and "Read Story" links.
+- [x] GymBro App tags read concisely: `Angular`, `Ionic`, `Express`, `MongoDB`.
 
 ### 11.2 Quality & Performance Indicators
 - **Lighthouse Performance Score**: $\ge$ 95 on desktop, $\ge$ 90 on mobile.
@@ -344,60 +357,79 @@ gantt
     title Portfolio Implementation Roadmap
     dateFormat  YYYY-MM-DD
     section Phase 1: Mobile & Layout
-    Mobile Navigation Drawer (#2)           :p1_1, 2026-10-05, 1d
-    Mobile Stroke & Metric Alignment (#4, #5):p1_2, after p1_1, 1d
-    Social Icons & Portrait Placement (#6, #7):p1_3, after p1_2, 1d
-    Section Alignment & Download Button (#8, #13):p1_4, after p1_3, 1d
+    Mobile Navigation Drawer (#2)           :done, p1_1, 2026-10-05, 1d
+    Mobile Stroke & Metric Alignment (#4, #5):done, p1_2, after p1_1, 1d
+    Social Icons & Portrait Placement (#6, #7):done, p1_3, after p1_2, 1d
+    Section Alignment & Download Button (#8, #13):done, p1_4, after p1_3, 1d
     section Phase 2: Copy & Branding
-    Hero Values Replacement (#3)            :p2_1, 2026-10-09, 1d
-    Showcase Subtitle & Badges (#9, #14)    :p2_2, after p2_1, 1d
-    Contact Section Updates (#10, #11, #12) :p2_3, after p2_2, 1d
+    Hero Values Replacement (#3)            :done, p2_1, 2026-10-09, 1d
+    Showcase Subtitle & Badges (#9, #14)    :done, p2_2, after p2_1, 1d
+    Contact Section Updates (#10, #11, #12) :done, p2_3, after p2_2, 1d
     section Phase 3: Performance & Polish
-    GSAP Animation Tuning & Reduced Motion  :p3_1, 2026-10-12, 1d
-    Accessibility & Meta Tags Audit         :p3_2, after p3_1, 1d
+    GSAP Animation Tuning & Reduced Motion  :done, p3_1, 2026-10-12, 1d
+    Accessibility & Meta Tags Audit         :done, p3_2, after p3_1, 1d
     section Phase 4: Production Deployment
-    Production Build Verification           :p4_1, 2026-10-14, 1d
-    DNS & Custom Domain Verification        :p4_2, after p4_1, 1d
+    Production Build Verification           :done, p4_1, 2026-10-14, 1d
+    DNS & Custom Domain Verification        :done, p4_2, after p4_1, 1d
+    section Phase 5: Blog & Mobile Polish
+    React Router & Devlog Architecture (#36-#44):done, p5_1, 2026-10-15, 2d
+    Touch & Button Feedback Harmonization (#56-#75):done, p5_2, after p5_1, 2d
 ```
 
 ### Phase 1: Mobile Responsiveness & Layout Stabilization
+- **Status**: Completed
 - **Goal**: Resolve all functional and visual bugs across mobile and desktop viewports.
 - **Deliverables**:
-  - [ ] Implement mobile navigation toggle drawer in `src/features/navigation/Nav.tsx` (#2).
-  - [ ] Adjust stroked "Robust" text styling for responsive stroke width (#4).
-  - [ ] Center "2019 Coding Since" metric content on mobile (#5).
-  - [ ] Guarantee flex alignment and prevent wrapping on hero social icons (#6).
-  - [ ] Elevate hero portrait positioning for immediate above-the-fold visibility (#7).
-  - [ ] Align "Selected Works" heading to left on mobile (#8).
-  - [ ] Fix "Download APK" button text centering and container padding in `ProjectCard.tsx` (#13).
+  - [x] Implement mobile navigation toggle drawer in `src/features/navigation/Nav.tsx` (#2).
+  - [x] Adjust stroked "Robust" text styling for responsive stroke width (#4).
+  - [x] Center "2019 Coding Since" metric content on mobile (#5).
+  - [x] Guarantee flex alignment and prevent wrapping on hero social icons (#6).
+  - [x] Elevate hero portrait positioning for immediate above-the-fold visibility (#7).
+  - [x] Align "Selected Works" heading to left on mobile (#8).
+  - [x] Fix "Download APK" button text centering and container padding in `ProjectCard.tsx` (#13).
 - **Validation**: Test viewports at 320px, 375px, 768px, and 1280px in responsive browser preview.
 
 ### Phase 2: Content Personalization & Branding Alignment
+- **Status**: Completed
 - **Goal**: Replace all placeholder copy and refine project badges to present an authentic professional narrative.
 - **Deliverables**:
-  - [ ] Draft and replace hero description with real engineering values and background (#3).
-  - [ ] Update showcase section subtitle to "A curated selection of my recent projects." (#9).
-  - [ ] Refactor project tags to concise identifiers (e.g. GymBro App: `['Angular', 'Ionic', 'Express', 'MongoDB']`) (#14).
-  - [ ] Stack mail icon cleanly above email address on mobile screens to prevent truncation (#10).
-  - [ ] Update contact section headline to "Let's Build Something Awesome." (#11).
-  - [ ] Update contact paragraph to emphasize availability for new job offers (#12).
+  - [x] Draft and replace hero description with real engineering values and background (#3).
+  - [x] Update showcase section subtitle to "A curated selection of my recent projects." (#9).
+  - [x] Refactor project tags to concise identifiers (e.g. GymBro App: `['Angular', 'Ionic', 'Express', 'MongoDB']`) (#14).
+  - [x] Stack mail icon cleanly above email address on mobile screens to prevent truncation (#10).
+  - [x] Update contact section headline to "Let's Build Something Awesome." (#11).
+  - [x] Update contact paragraph to emphasize availability for new job offers (#12).
 - **Validation**: Content review across all sections; ensure zero placeholder text remains.
 
 ### Phase 3: Performance, SEO & Accessibility Audit
+- **Status**: Completed
 - **Goal**: Optimize load times, animation performance, search engine metadata, and assistive technology support.
 - **Deliverables**:
-  - [ ] Audit GSAP animations with `ScrollTrigger.refresh()` and `prefers-reduced-motion` support.
-  - [ ] Add rich SEO metadata in `index.html` (description, OpenGraph image, Twitter card).
-  - [ ] Verify keyboard tab order and focus rings on all interactive buttons and inputs.
+  - [x] Audit GSAP animations with `ScrollTrigger.refresh()` and `prefers-reduced-motion` support.
+  - [x] Add rich SEO metadata in `index.html` (description, OpenGraph image, Twitter card).
+  - [x] Verify keyboard tab order and focus rings on all interactive buttons and inputs.
 - **Validation**: Google Lighthouse score $\ge 90$ across Performance, Accessibility, and SEO.
 
 ### Phase 4: Production Deployment & Verification
+- **Status**: Completed
 - **Goal**: Deploy the validated build to static hosting with custom domain routing.
 - **Deliverables**:
-  - [ ] Verify `npm run build` and `npm run lint` pass cleanly with zero warnings.
-  - [ ] Deploy static bundle to GitHub Pages / hosting infrastructure.
-  - [ ] Verify DNS and SSL certificate for `laanhema.dev`.
+  - [x] Verify `npm run build` and `npm run lint` pass cleanly with zero warnings.
+  - [x] Deploy static bundle to GitHub Pages / hosting infrastructure.
+  - [x] Verify DNS and SSL certificate for `laanhema.dev`.
 - **Validation**: Public site live and verified on real mobile and desktop hardware.
+
+### Phase 5: Engineering Blog & Mobile Interaction Polish
+- **Status**: Completed
+- **Goal**: Introduce project devlogs, client-side routing, `.brutal-prose` typography, and solve mobile touch/interaction edge cases.
+- **Deliverables**:
+  - [x] Install React Router and establish SPA redirection for GitHub Pages (#36, #43).
+  - [x] Add design tokens and `.brutal-prose` typography styles (#35).
+  - [x] Create devlog models, PostCard, ArticleHeader, BlogIndex, and BlogPost article reader (#37-#41).
+  - [x] Update ProjectCard to 2-button layout linking to Devlogs ("Read Story") and code (#42).
+  - [x] Refine mobile touch feedback and pointerdown animations via `playPress` (#56, #71-#73).
+  - [x] Stack blog post prose tables responsively on narrow viewports (#74).
+  - [x] Remove soft blurred glows behind hero to enforce clean neo-brutalist aesthetic (#88).
 
 ---
 
@@ -406,19 +438,19 @@ gantt
 1. **Serverless Contact Form Dispatcher**: Integrate a lightweight serverless handler (e.g., Cloudflare Workers or Vercel Functions with Resend) to deliver messages directly to email inbox without requiring an email client.
 2. **Dynamic GitHub Live Activity**: Connect to GitHub REST/GraphQL API to show real-time commit activity, recent repository pushes, and live star counts.
 3. **Interactive Project Demos / Modals**: Provide expanded case study overlays with architecture diagrams, challenge summaries, and tech stack breakdowns for each flagship project.
-4. **Engineering Blog**: Integrate Markdown/MDX articles documenting technical challenges (e.g., NgRx SignalStore patterns, web scraping architecture, GSAP micro-interactions).
-5. **Theme Switcher**: Provide an optional dark/light neo-brutalist theme toggle while maintaining signature contrast.
+4. **Theme Switcher**: Provide an optional dark/light neo-brutalist theme toggle while maintaining signature contrast.
 
 ---
 
 ## 14. Risks & Mitigations
 
-| Risk | Impact | Likelihood | Mitigation Strategy |
-|---|---|---|---|
-| **R-1: Mobile Layout Regressions** | High | Medium | Use strict mobile-first Tailwind utilities and enforce automated cross-breakpoint visual checks (320px, 375px, 768px, 1024px). |
-| **R-2: GSAP Performance Jitter on Low-End Devices** | Medium | Low | Limit animations to hardware-accelerated CSS properties (`transform`, `opacity`). Support `prefers-reduced-motion` media query to disable heavy motion. |
-| **R-3: Broken External Demo / Repo Links** | High | Low | Conduct automated link validation in CI/CD pipeline and maintain stable CDN URLs for hosted artifacts (AWS S3, Netlify). |
-| **R-4: Visual Inconsistency in Brutalist Elements** | Medium | Medium | Maintain centralized Tailwind `@theme` variables (`--shadow-brutal`, `--border-brutal`) and reusable component abstractions rather than ad-hoc inline styles. |
+| Risk | Impact | Likelihood | Status | Mitigation Strategy |
+|---|---|---|---|---|
+| **R-1: Mobile Layout Regressions** | High | Medium | Mitigated | Use strict mobile-first Tailwind utilities and enforce automated cross-breakpoint visual checks (320px, 375px, 768px, 1024px). |
+| **R-2: GSAP Performance Jitter on Low-End Devices** | Medium | Low | Mitigated | Limit animations to hardware-accelerated CSS properties (`transform`, `opacity`). Support `prefers-reduced-motion` media query to disable heavy motion. |
+| **R-3: Broken External Demo / Repo Links** | High | Low | Mitigated | Conduct automated link validation in CI/CD pipeline and maintain stable CDN URLs for hosted artifacts (AWS S3, Netlify). |
+| **R-4: Visual Inconsistency in Brutalist Elements** | Medium | Medium | Mitigated | Maintain centralized Tailwind `@theme` variables (`--shadow-brutal`, `--border-brutal`) and reusable component abstractions rather than ad-hoc inline styles. |
+| **R-5: Mobile Contact Submit Tap Inconsistency** | Medium | Low | Investigating | Known issue TODO-43: First tap on Send Message on mobile touch screens may be swallowed when soft keyboard shifts layout or sticky hover occurs. |
 
 ---
 
@@ -426,7 +458,7 @@ gantt
 
 ### 15.1 Related Documents
 - Source Task Backlog: [`TODO.md`](file:///home/lauri/github/swe-portfolio-website-2/TODO.md)
-- GitHub Issue Stories: [`.agents/stories/todo-stories.md`](file:///home/lauri/github/swe-portfolio-website-2/.agents/stories/todo-stories.md)
+- Tracked Issue Backlog: [`.agents/issues/todo-issues.md`](file:///home/lauri/github/swe-portfolio-website-2/.agents/issues/todo-issues.md)
 - Global Styles & Design System: [`src/styles/global.css`](file:///home/lauri/github/swe-portfolio-website-2/src/styles/global.css)
 
 ### 15.2 Featured Project Repository Links

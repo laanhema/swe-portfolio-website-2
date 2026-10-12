@@ -18,6 +18,7 @@ Follow .agents/design-system/laanhema-design-system/DESIGN.md and BUILDING-PAGES
 | TypeScript `~6.0.2` | Static type safety and strict compiler checks |
 | Vite `^8.1.1` | Build tool, dev server, and HMR |
 | Tailwind CSS `^4.3.2` | Utility-first styling with `@tailwindcss/vite` |
+| React Router `^8.4.0` | Client-side routing for SPA and blog devlogs |
 | GSAP `^3.15.0` | Scroll-triggered entrance animations |
 | `@fontsource-variable/noto-sans` `^5.3.0` | Self-hosted typography |
 | ESLint `^10.6.0` | Code quality and style linting |
@@ -51,15 +52,16 @@ swe-portfolio-website-2/
 ├── .agents/
 │   ├── PRDs/
 │   │   └── PRD.md                      # Product Requirements Document
-│   └── stories/
-│       └── todo-stories.md             # Issue & backlog story tracking
+│   └── issues/
+│       └── todo-issues.md             # Issue & backlog tracking
 ├── public/
 │   ├── favicon.svg                     # Site favicon
 │   └── CNAME                           # Custom domain configuration (laanhema.dev)
 ├── src/
 │   ├── assets/                         # Static media (e.g., portrait image)
-│   ├── components/                     # Shared presentational UI (Icons.tsx)
+│   ├── components/                     # Shared presentational UI (Icons.tsx, playPress.ts)
 │   ├── features/                       # Domain feature modules
+│   │   ├── blog/                       # Blog index, post views & data models
 │   │   ├── contact/                    # Contact section & interactive form
 │   │   ├── navigation/                 # Navigation bar & mobile menu drawer
 │   │   └── showcase/                   # Featured project cards
@@ -81,12 +83,13 @@ swe-portfolio-website-2/
 ### Naming Conventions
 - **Components**: PascalCase (`Nav.tsx`, `ProjectCard.tsx`, `ContactForm.tsx`).
 - **Custom Hooks**: camelCase prefixed with `use` (`useGsapAnimations.ts`).
-- **CSS Utility Classes**: kebab-case (`brutal-border`, `brutal-shadow`, `animate-on-scroll`).
+- **CSS Utility Classes**: kebab-case (`brutal-border`, `brutal-shadow`, `animate-on-scroll`, `brutal-prose`).
 - **Constants**: UPPER_SNAKE_CASE (`PROJECTS`).
 
 ### Neo-Brutalist Styling
 - Use `.brutal-border` for all brutalist elements (maps to `border-4 border-text-primary`).
 - Use `.brutal-shadow` (`6px 6px 0px 0px #121212`) and `.brutal-shadow-hover` (`translate(-3px, -3px)`) for clickable cards and buttons.
+- Use `.brutal-prose` for article / blog typography styling.
 - Design palette tokens:
   - Background Canvas: `#f8f9fa`
   - Text Primary: `#121212`
@@ -99,6 +102,7 @@ swe-portfolio-website-2/
 - Define explicit TypeScript interfaces for props (e.g. `interface ProjectCardProps`).
 - External links must always include `target="_blank"` and `rel="noopener noreferrer"`.
 - Keep layout responsive with mobile-first Tailwind utilities (`flex-col md:flex-row`, `px-6 md:px-12`).
+- On mobile/touch viewports, wire button presses via `onPointerDown={playPress}` from `src/components/playPress.ts` because mobile browsers may skip `:active` or freeze hover states.
 
 ### Animations
 - Elements requiring entrance animations should use the class `.animate-on-scroll`.
@@ -124,11 +128,14 @@ npm run build
 
 | File | Purpose |
 | --- | --- |
-| `src/App.tsx` | Main layout container, hero narrative, and project showcase data |
-| `src/styles/global.css` | Tailwind v4 `@theme` tokens and neo-brutalist utility classes |
+| `src/App.tsx` | Main layout container, route setup, and project showcase data |
+| `src/styles/global.css` | Tailwind v4 `@theme` tokens, brutalist utilities, and prose styles |
 | `src/features/navigation/Nav.tsx` | Sticky navbar and mobile drawer menu |
 | `src/features/showcase/ProjectCard.tsx` | Reusable project card with tech badges and action links |
+| `src/features/blog/BlogIndex.tsx` | Devlog index page listing articles |
+| `src/features/blog/BlogPost.tsx` | Full-page article reader for project deep dives |
 | `src/features/contact/ContactForm.tsx` | Contact section and messaging form |
+| `src/components/playPress.ts` | Mobile-friendly pointerdown press animation helper |
 | `src/hooks/useGsapAnimations.ts` | GSAP ScrollTrigger setup and cleanup |
 | `.agents/PRDs/PRD.md` | Authoritative Product Requirements Document |
 
@@ -139,7 +146,7 @@ npm run build
 | Topic | File |
 | --- | --- |
 | Product Requirements Document | [`.agents/PRDs/PRD.md`](.agents/PRDs/PRD.md) |
-| Backlog Tasks & Stories | [`.agents/stories/todo-stories.md`](.agents/stories/todo-stories.md) |
+| Backlog Tasks & Issues | [`.agents/issues/todo-issues.md`](.agents/issues/todo-issues.md) |
 | Task List | [`TODO.md`](TODO.md) |
 
 ---

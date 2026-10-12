@@ -54,6 +54,7 @@ case "${1:-}" in
     echo "$out"
     ! grep -q WRONG-FONT <<<"$out" ;;
   buttons)
+    "$0" desktop >/dev/null
     # Hover each button with a real CDP mouse move, then read the hovered control's computed lift.
     # The first hover scrolls the target into view and GSAP slides its section up 50px for 0.8s,
     # so wait, re-snapshot (refs are generation-tagged), hover again, and wait out the 100ms transition.
@@ -66,7 +67,7 @@ case "${1:-}" in
         sleep "$wait"
       done
       rows+="$(axi eval "(() => { const el = [...document.querySelectorAll('a,button')].filter(x => x.matches(':hover')).pop(); if (!el) return 'NONE|' + matchMedia('(hover: hover)').matches + '|||'; const cs = getComputedStyle(el); return [el.textContent.trim().toUpperCase(), matchMedia('(hover: hover)').matches, cs.transform, cs.translate, cs.boxShadow].join('|'); })()" \
-        | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
+        | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"$'\n'
     done
     out="$(python3 -c '
 import re, sys
@@ -104,7 +105,7 @@ for i, (label, hov, tf, tr, sh) in enumerate(rows):
     ! grep -q HERO <<<"$out" ;;
   aria) axi snapshot --full >"$2" && echo "$2" ;;
   mobile) axi emulate --viewport "375x812x2,mobile,touch" >/dev/null && echo "viewport 375x812 mobile" ;;
-  desktop) axi emulate --viewport "1280x900x1" >/dev/null && echo "viewport 1280x900" ;;
+  desktop) axi emulate >/dev/null && axi resize 1280 900 >/dev/null && echo "viewport 1280x900" ;;
   stop) axi stop ;;
   *) sed -n '2,18p' "$0"; exit 2 ;;
 esac
