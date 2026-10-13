@@ -32,7 +32,9 @@ export const useGsapAnimations = () => {
 
     // Clean up ScrollTrigger instances on unmount
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => {
+        trigger.kill();
+      });
     };
   }, []);
 };

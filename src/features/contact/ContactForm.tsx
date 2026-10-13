@@ -25,7 +25,7 @@ const ContactForm: React.FC = () => {
             </a>
           </div>
           
-          <form className="animate-on-scroll flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="animate-on-scroll flex flex-col gap-6" onSubmit={(e) => { e.preventDefault(); }}>
             <div className="flex flex-col gap-2">
               <label htmlFor="name" className="font-bold uppercase tracking-wider">Name</label>
               <input 

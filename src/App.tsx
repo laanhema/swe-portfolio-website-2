@@ -54,8 +54,9 @@ let isPageReload = false;
 if (typeof performance !== 'undefined') {
   const navEntries = performance.getEntriesByType('navigation');
   isPageReload = navEntries.length > 0
-    ? (navEntries[0] as PerformanceNavigationTiming).type === 'reload'
-    : (performance as unknown as { navigation?: { type?: number } }).navigation?.type === 1;
+    ? navEntries[0] instanceof PerformanceNavigationTiming && navEntries[0].type === 'reload'
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    : performance.navigation.type === 1;
   isPageReload &&= window.location.pathname === '/';
 }
 
@@ -81,11 +82,15 @@ function holdAnchor(target: HTMLElement, root: HTMLElement): () => void {
   function stop() {
     observer.disconnect();
     clearTimeout(timer);
-    inputs.forEach((type) => window.removeEventListener(type, stop));
+    inputs.forEach((type) => {
+      window.removeEventListener(type, stop);
+    });
     window.removeEventListener('scroll', onScroll);
   }
 
-  inputs.forEach((type) => window.addEventListener(type, stop, { passive: true }));
+  inputs.forEach((type) => {
+    window.addEventListener(type, stop, { passive: true });
+  });
   window.addEventListener('scroll', onScroll, { passive: true });
   observer.observe(root);
   return stop;
@@ -115,7 +120,7 @@ function HomePage() {
       if (window.location.hash) {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       return;
     }
 
@@ -126,7 +131,7 @@ function HomePage() {
         return holdAnchor(target, rootRef.current);
       }
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
   }, [location.pathname, location.hash]);
 
@@ -267,7 +272,7 @@ function HomePage() {
             {PROJECTS.map((project, index) => (
               <div
                 key={project.title}
-                className={`${index % 2 === 1 ? 'md:translate-y-16' : ''}`}
+                className={index % 2 === 1 ? 'md:translate-y-16' : undefined}
               >
                 <ProjectCard {...project} />
               </div>
