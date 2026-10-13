@@ -3,6 +3,30 @@ import { MailIcon } from '../../components/Icons';
 import { playPress } from '../../components/playPress';
 
 const ContactForm: React.FC = () => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
+
+    if (typeof name !== 'string' || typeof email !== 'string' || typeof message !== 'string') {
+      return;
+    }
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      return;
+    }
+
+    const subject = encodeURIComponent(`Contact from ${trimmedName}`);
+    const body = encodeURIComponent(`Name: ${trimmedName}\nEmail: ${trimmedEmail}\n\nMessage:\n${trimmedMessage}`);
+    window.location.href = `mailto:lahmakkonen@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <section id="contact" className="py-24 px-6 md:px-12 bg-white border-t-4 border-[#121212]">
       <div className="max-w-4xl mx-auto">
@@ -25,12 +49,15 @@ const ContactForm: React.FC = () => {
             </a>
           </div>
           
-          <form className="animate-on-scroll flex flex-col gap-6" onSubmit={(e) => { e.preventDefault(); }}>
+          <form className="animate-on-scroll flex flex-col gap-6" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
               <label htmlFor="name" className="font-bold uppercase tracking-wider">Name</label>
               <input 
                 type="text" 
                 id="name" 
+                name="name"
+                required
+                autoComplete="name"
                 className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all"
                 placeholder="John Doe"
               />
@@ -41,6 +68,9 @@ const ContactForm: React.FC = () => {
               <input 
                 type="email" 
                 id="email" 
+                name="email"
+                required
+                autoComplete="email"
                 className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all"
                 placeholder="john@example.com"
               />
@@ -50,6 +80,9 @@ const ContactForm: React.FC = () => {
               <label htmlFor="message" className="font-bold uppercase tracking-wider">Message</label>
               <textarea 
                 id="message" 
+                name="message"
+                required
+                autoComplete="off"
                 rows={4}
                 className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all resize-none"
                 placeholder="How can I help you?"
