@@ -9,6 +9,8 @@ import { BlogPost } from './features/blog/BlogPost';
 import { useGsapAnimations } from './hooks/useGsapAnimations';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
 import { playPress } from './components/playPress';
+import Footer from './components/Footer';
+import { scrollToSection } from './features/navigation/navHelpers';
 import portrait from './assets/lauri-makkonen-portrait.jpg';
 
 const PROJECTS = [
@@ -138,13 +140,7 @@ function HomePage() {
 
   const handleViewWork = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const element = document.getElementById('work');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      if (window.location.hash !== '#work') {
-        history.pushState(null, '', '#work');
-      }
-    }
+    scrollToSection('work');
   };
 
   return (
@@ -286,30 +282,7 @@ function HomePage() {
       <ContactForm />
 
       {/* Footer */}
-      <footer className='bg-[#121212] text-white py-12 px-6 md:px-12 border-t-4 border-white'>
-        <div className='max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6'>
-          <div className='text-2xl font-bold uppercase tracking-tighter'>
-            Dev<span className='text-[#ff3e00]'>.</span>Portfolio
-          </div>
-          <p className='font-bold'>
-            © {new Date().getFullYear()} All rights reserved.
-          </p>
-          <div className='flex gap-6 font-bold uppercase'>
-            <a
-              href='https://github.com/laanhema'
-              className='hover:text-[#ff3e00] transition-colors'
-            >
-              GitHub
-            </a>
-            <a
-              href='https://www.linkedin.com/in/laanhema'
-              className='hover:text-[#ff3e00] transition-colors'
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
