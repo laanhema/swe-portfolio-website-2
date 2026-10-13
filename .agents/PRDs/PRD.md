@@ -13,29 +13,29 @@
 
 ## 1. Executive Summary
 
-The Software Engineer Portfolio Website (`laanhema.dev`) is a high-performance, single-page web application built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It serves as the primary professional digital flagship and personal brand platform for Lauri Makkonen, a full-stack software engineer active since 2019. The application showcases full-stack engineering proficiency, architectural judgment, and craftsmanship in building interactive, high-reliability software.
+The portfolio website (`laanhema.dev`) is a single-page web application built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It presents projects, engineering background, and contact options for full-stack engineer Lauri Makkonen, who has been coding since 2019.
 
-Unlike conventional, generic portfolio templates, `laanhema.dev` utilizes a bold Neo-Brutalist design language characterized by high-contrast typography, 4px solid borders, intentional offset drop-shadows, vivid accent colors, and tactile micro-interactions. This aesthetic establishes an immediate, memorable visual identity while communicating uncompromising attention to detail and frontend engineering capability.
+Unlike standard portfolio templates, `laanhema.dev` uses a bold Neo-Brutalist design language with high-contrast typography, 4px solid borders, offset drop shadows, vivid accent colors, and tactile button interactions. This styling makes the site memorable while demonstrating attention to detail and frontend craft.
 
 **Core Value Proposition**:  
-Provides hiring managers, engineering leaders, and technical recruiters with an authentic, frictionless, and compelling demonstration of full-stack engineering capabilities, featuring direct links to production-grade applications, open-source repositories, and verified engineering metrics.
+Gives hiring managers and recruiters a direct look at full-stack engineering skills, linking to working applications, open-source repositories, and verified experience.
 
 **MVP Goal Statement**:  
-Deliver a production-ready, fully responsive, and accessible single-page portfolio that articulates real engineering values, highlights 4 flagship applications, resolves all known mobile and alignment issues, and drives inbound opportunities for full-time software engineering roles.
+Ship a responsive, accessible single-page portfolio that highlights four projects, fixes known mobile layout issues, and provides direct contact paths.
 
 ---
 
 ## 2. Mission
 
 ### 2.1 Product Mission Statement
-To present a memorable, authentic, and technically rigorous software engineering narrative that converts visitors (technical recruiters, engineering directors, and collaborative peers) into high-value professional conversations and software engineering job offers.
+Present an authentic, technically grounded portfolio that turns visits from recruiters and engineering leads into job conversations.
 
 ### 2.2 Core Principles
 
-1. **Substance Over Platitudes**: Replace generic placeholder copy with concrete engineering philosophies, real architecture decisions, working code repositories, and verifiable experience.
-2. **Neo-Brutalist Craftsmanship**: Embrace an unmistakable, tactile design system that balances bold, playful styling with disciplined typography, high legibility, and seamless responsiveness across all screen sizes.
-3. **Zero-Friction Engagement**: Allow prospective employers and recruiters to assess core competencies within 10 seconds of landing and initiate contact with a single interaction.
-4. **Performance & Code Quality**: Maintain blazing-fast load times, zero layout shifts, strict TypeScript safety, clean component boundaries, and high accessibility standards (WCAG AA).
+1. **Substance Over Platitudes**: Replace generic claims with concrete architecture choices, working code repositories, and verifiable experience.
+2. **Neo-Brutalist Craftsmanship**: Use an unmistakable design system that balances bold styling with disciplined typography and responsiveness across screen sizes.
+3. **Zero-Friction Engagement**: Allow prospective employers and recruiters to assess core competencies within 10 seconds of landing and reach out with a single click.
+4. **Performance & Code Quality**: Maintain fast load times, zero layout shifts, strict TypeScript checks, clean component boundaries, and high accessibility standards (WCAG AA).
 
 ---
 

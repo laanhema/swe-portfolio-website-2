@@ -6,18 +6,18 @@ export const BLOG_POSTS = [
     title: 'Rebuilding Trello with Angular and SignalStore',
     titleHighlight: 'SignalStore.',
     summary:
-      'Ditching bloated project boards to build a distraction-free Kanban app with SignalStore and Taiga UI.',
+      'Replacing slow, paywalled project boards with a lightweight Kanban app built in Angular and SignalStore.',
     author: 'Lauri Makkonen',
     date: '2026-09-18',
     readingTime: '6 min read',
     tags: ['Angular', 'NgRx', 'SignalStore', 'TypeScript'],
     accentColor: '#00e5ff',
-    content: `<p>Kanban boards have become one of the most critical daily instruments in my development toolkit. Far beyond simple to-do lists, a well-structured board provides spatial clarity over complex, concurrent tasks.</p>
-<p>However, industry standards like Atlassian&apos;s Trello have increasingly placed core functionality behind enterprise paywalls. Tralla began as an unabashedly personal project born out of that frustration: I wanted to build a lean, distraction-free Kanban web application tailored precisely to my own workflow, retaining the features I use every day.</p>
+    content: `<p>I rely on Kanban boards every day. A flat to-do list doesn&apos;t show what&apos;s actually in progress or stuck. But tools like Trello keep locking basic features behind paid plans, and commercial boards feel sluggish.</p>
+<p>Tralla started because I wanted a fast, focused board for my own workflow. No enterprise upsells, just columns and cards that move when you tell them to.</p>
 
-<h2>Architectural Foundation: Mobile-First</h2>
-<p>Having absorbed the lessons of past projects, I kicked off Tralla with a strict Minimum Viable Product (MVP) and a mobile-first design strategy. If you get your core header and navigation responsive from day one, scaling layouts across tablets and desktops becomes remarkably easier.</p>
-<p>To keep my momentum focused on reactive state architecture rather than re-implementing basic UI primitives, I integrated the Taiga UI component library <code>TuiElements</code>. Styled with modular LESS stylesheets, Taiga UI provided clean, accessible inputs, buttons, and dialogs right out of the box, allowing me to focus directly on data flow and state management.</p>
+<h2>Architectural foundation: mobile-first</h2>
+<p>I built Tralla mobile-first. If navigation and headers work on a phone screen, expanding them to a monitor takes very little effort. Doing it the other way around usually means rewriting half the layout.</p>
+<p>Instead of building inputs and dialogs from scratch, I pulled in Taiga UI (<code>TuiElements</code>) styled with LESS. That gave me accessible buttons, inputs, and modals so I could spend my time on state management instead of reinventing form controls.</p>
 
 <div class="brutal-table-wrapper">
 <table>
@@ -25,37 +25,37 @@ export const BLOG_POSTS = [
     <tr>
       <th>Component</th>
       <th>Technology</th>
-      <th>Role &amp; Architecture Purpose</th>
+      <th>Role</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>Frontend Framework</strong></td>
       <td>Angular + TypeScript</td>
-      <td>Modern standalone architecture with native signals and control flow</td>
+      <td>Standalone architecture with signals and control flow</td>
     </tr>
     <tr>
       <td><strong>State Management</strong></td>
       <td>NgRx SignalStore</td>
-      <td>Centralized reactive store managing boards, lists and tasks</td>
+      <td>Central store for boards, lists, and tasks</td>
     </tr>
     <tr>
       <td><strong>UI Components</strong></td>
       <td>Taiga UI</td>
-      <td>Accessible inputs, buttons, and dialogs</td>
+      <td>Inputs, buttons, and dialogs</td>
     </tr>
     <tr>
       <td><strong>Styling Engine</strong></td>
       <td>LESS</td>
-      <td>Modular component styling and design customization</td>
+      <td>Modular component styling</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2>Taming State with NgRx SignalStore</h2>
-<p>Interactive boards with nested columns and drag-and-drop tasks can rapidly degrade into a tangle of mutable references and hard-to-trace bugs. To keep my sanity, I adopted NgRx SignalStore to establish a single, authoritative source of truth.</p>
-<p>The board store operates as a globally accessible singleton service managing boards, lists, and tasks. Instead of mutating arrays in place, state updates are strictly dispatched through store actions and <code>patchState</code>.</p>
+<h2>Managing state with NgRx SignalStore</h2>
+<p>Boards with nested columns and drag-and-drop cards turn into a mess of mutable references quickly if state isn&apos;t centralized. I used NgRx SignalStore as a singleton store for the whole board.</p>
+<p>Instead of mutating arrays in place, state changes go through store actions and <code>patchState</code>. That keeps mutations in one place and makes board state predictable.</p>
 
 <pre><code><span class="text-gray-400">// creates a new task</span>
 <span class="text-[#00e5ff]">createNewTask</span>(boardId: <span class="text-[#facc15]">number</span>, listId: <span class="text-[#facc15]">number</span>) {
@@ -87,21 +87,21 @@ export const BLOG_POSTS = [
   <span class="text-[#00e5ff]">patchState</span>(store, { boards: update });
 }</code></pre>
 
-<h2>Modern Angular Mechanics</h2>
-<p>Tralla has served as a proving ground for modern Angular concepts:</p>
+<h2>Modern Angular features</h2>
+<p>Tralla was my testbed for recent Angular features:</p>
 <ul>
-  <li><strong>Reactivity &amp; Control Flow:</strong> Embracing Angular&apos;s new built-in control flow <code>@if</code>, <code>@else</code>, <code>@for</code> alongside signal primitives and reactive <code>effects</code>.</li>
-  <li><strong>Moving Data Between Components:</strong> Using property binding and signal-based inputs as props to pass data down to child components.</li>
-  <li><strong>Form Binding:</strong> Combining <code>[(ngModel)]</code> two-way bindings for rapid in-place text edits with dynamic property and class bindings for interactive styling.</li>
-  <li><strong>Routing:</strong> Setting up <code>ActivatedRoute</code> and <code>routerLink</code> within the top navigation bar to switch between distinct project boards without page reloads.</li>
-  <li><strong>Data Fetching:</strong> Utilizing Angular&apos;s <code>HttpClient</code> and RxJS <code>Observable</code> streams to handle asynchronous operations flexibly.</li>
+  <li>Built-in control flow (<code>@if</code>, <code>@else</code>, <code>@for</code>) and signal primitives replaced older RxJS patterns in templates.</li>
+  <li>Signal-based inputs pass data down to child components cleanly.</li>
+  <li>Two-way <code>[(ngModel)]</code> bindings handle inline title edits, paired with dynamic class bindings for visual state.</li>
+  <li><code>ActivatedRoute</code> and <code>routerLink</code> switch boards in the top navigation without full page reloads.</li>
+  <li><code>HttpClient</code> handles async API calls with RxJS streams.</li>
 </ul>
 
-<h2>What&apos;s Next for Tralla</h2>
-<p>While the frontend interface and local SignalStore logic are stable, Tralla is still an evolving project. The immediate roadmap includes:</p>
+<h2>What comes next</h2>
+<p>The frontend and local store work well. The next steps are:</p>
 <ol>
-  <li>Building out a dedicated backend service to handle remote synchronization and user profiles (currently deciding between a Node.js/Express + MongoDB stack or revisiting relational modeling with MySQL).</li>
-  <li>Packaging and deploying the frontend to production.</li>
+  <li>Writing a backend service for sync and user accounts, weighing Express and MongoDB against MySQL.</li>
+  <li>Deploying the frontend to production.</li>
 </ol>`,
   },
   {
@@ -109,22 +109,21 @@ export const BLOG_POSTS = [
     title: 'Scraping design tokens with Playwright and Culori',
     titleHighlight: 'Culori.',
     summary:
-      'Inside Distill: rendering a page, sampling every computed colour and clustering them into a palette.',
+      'Rendering a live page, sampling computed colors, and clustering them into a design palette with Playwright and Culori.',
     author: 'Lauri Makkonen',
     date: '2026-08-30',
     readingTime: '5 min read',
     tags: ['Next.js', 'Playwright', 'Culori', 'Design Tokens'],
     accentColor: '#a855f7',
-    content: `<p>Started in the summer of 2026, Distill Design Scraper marks a fundamental shift in how I build software: it is my first project developed entirely through an agentic software engineering methodology.</p>
-<p>Rather than writing all implementation code by hand, this project became an exploration in working at a higher level of abstraction: managing context windows, optimizing token consumption, crafting reusable prompt skills, and dynamically selecting the right AI model for each specific subtask. Throughout this project, I relied extensively on Claude Opus 4.8 (high) within Claude Code to rapidly architect, test, and iterate on different versions of the application.</p>
+    content: `<p>I started Distill Design Scraper in summer 2026. It was my first project built mainly with AI coding agents. Instead of writing every line manually, I spent most of my time directing agent workflows: structuring context, building prompt skills, and verifying generated code against live sites.</p>
 
-<h2>The Problem: Extracting Design Intelligence</h2>
-<p>Every designer knows the feeling of starting a brand new project and seeking visual inspiration from existing digital products. However, manually inspecting stylesheets to deconstruct a design system is tedious, while blindly copying code is uninspiring.</p>
-<p>Distill was conceived to automate this reverse-engineering pipeline:</p>
+<h2>Extracting design tokens from real sites</h2>
+<p>When you find a site with great visual polish, inspecting its styles by hand is painful. Sifting through utility classes, CSS variables, and bundled stylesheets takes hours, and copying raw CSS doesn&apos;t show you the underlying design rules.</p>
+<p>Distill automates that breakdown:</p>
 <ul>
-  <li>The tool analyzes a target website (or infers layout from a visual screenshot) to capture the &ldquo;big picture&rdquo; macro-structure - examining layout hierarchies, spacing cadences, and colors.</li>
-  <li>Instead of plagiarizing implementation code, it synthesizes rendered public data into clean, structured Markdown specifications.</li>
-  <li>These generated design briefs can be handed directly to human product designers or fed into autonomous AI coding agents as project guardrails.</li>
+  <li>It visits a target site in headless Chromium, samples computed styles across the DOM tree, and takes a full-page screenshot.</li>
+  <li>Instead of copying stylesheet code, it turns computed values into a structured Markdown design spec covering typography, spacing, and colors.</li>
+  <li>You can use that spec as a design brief or hand it to a coding agent as styling rules for a new project.</li>
 </ul>
 
 <div class="brutal-table-wrapper">
@@ -133,46 +132,46 @@ export const BLOG_POSTS = [
     <tr>
       <th>Component</th>
       <th>Technology</th>
-      <th>Role &amp; Architecture Purpose</th>
+      <th>Role</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>Web Scraping Engine</strong></td>
       <td>Playwright (Chromium)</td>
-      <td>Live DOM style evaluation and visual screenshot capture</td>
+      <td>DOM style evaluation and full-page screenshot capture</td>
     </tr>
     <tr>
       <td><strong>Color Science Engine</strong></td>
       <td>Culori</td>
-      <td>CIELAB perceptual space conversion and Delta-E distance clustering</td>
+      <td>CIELAB color conversion and Delta-E distance clustering</td>
     </tr>
     <tr>
       <td><strong>Design Synthesis</strong></td>
       <td>Multimodal LLMs (BYOK)</td>
-      <td>Ingests rendered data and screenshots to generate structured Markdown specifications</td>
+      <td>Generates Markdown design specs from rendered data and screenshots</td>
     </tr>
     <tr>
       <td><strong>Frontend UI</strong></td>
       <td>Next.js + TypeScript</td>
-      <td>Minimal, practical interface for target inspection and palette review</td>
+      <td>Interface for target inspection and palette review</td>
     </tr>
     <tr>
       <td><strong>Local Deployment</strong></td>
       <td>Docker</td>
-      <td>Self-hosted sandbox ensuring external API keys remain private</td>
+      <td>Local container so API keys stay on your machine</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2>Color Science: Why Simple Hex Matching Fails</h2>
-<p>Extracting a clean color palette from a live webpage sounds trivial until you run into real-world production CSS: semi-transparent overlays, box shadows, border anti-aliasing, and dynamic CSS-in-JS variables. A single landing page can easily render over a thousand distinct hex codes.</p>
-<p>Furthermore, naive Euclidean RGB distance formulas fail because human vision perceives color non-linearly. To solve this:</p>
+<h2>Color clustering: why naive hex matching fails</h2>
+<p>Pulling a clean palette from a website sounds simple until you inspect real production CSS. Semi-transparent overlays, box shadows, anti-aliased borders, and CSS variables mean a single landing page can easily return over a thousand hex values.</p>
+<p>Simple RGB distance math fails because human eyes do not perceive color differences linearly. Two shades that look nearly identical to a computer can look visibly different to a person, and vice versa. Distill works around this in three steps:</p>
 <ol>
-  <li>Distill leverages Playwright to run headless Chromium instances, evaluating computed styles directly in the live DOM.</li>
-  <li>Extracted colors are mapped into the perceptual CIELAB color space.</li>
-  <li>Using the Culori color library and Delta-E color-difference algorithms, raw sampled swatches are mathematically clustered into unified semantic roles (such as primary, background, surface, and accent tokens).</li>
+  <li>Playwright evaluates computed styles directly on rendered DOM elements.</li>
+  <li>Extracted colors are converted from sRGB into the perceptual CIELAB color space.</li>
+  <li>Culori calculates Delta-E color differences to group raw color swatches into semantic roles like background, surface, text, and accent.</li>
 </ol>
 
 <pre><code><span class="text-gray-400">/** Nearest palette role for a measured CSS color, or null if nothing is close enough. */</span>
@@ -197,80 +196,81 @@ export const BLOG_POSTS = [
   <span class="text-[#ff3e00]">return</span> bestDist &lt;= ROLE_MATCH_DELTA_E ? best : <span class="text-[#ff3e00]">null</span>;
 }</code></pre>
 
-<h2>The Road Ahead</h2>
-<p>Distill continues to move forward as an active work in progress. Right now, I am exploring different deployment options so others can easily run and use the tool.</p>
-<p>The main consideration revolves around the vision analysis pipeline, which requires an external API key. Expecting users to paste their private API keys into a hosted public frontend is something I want to avoid. Because of this, providing a local Docker instance looks like a much better option - it allows users to keep their API keys completely private on their own machines without having to trust an external web host.</p>`,
+<h2>Deployment plans</h2>
+<p>Distill is still an active project. The next step is making it easy for other people to run.</p>
+<p>The vision analysis step requires an LLM API key. Asking people to paste private API keys into a hosted public web app is a bad idea. A self-hosted Docker container is a safer fit because keys stay on the user&apos;s machine.</p>`,
   },
   {
     slug: 'froots-smoothie-app',
     title: 'Svelte reactivity and nutritional math in Froots',
     titleHighlight: 'Froots.',
     summary:
-      'Building a snappy nutritional calculator with Svelte runes and keeping UI state delightfully simple.',
+      'Building a snappy nutritional calculator with Svelte runes and keeping UI state simple without a backend.',
     author: 'Lauri Makkonen',
     date: '2026-08-05',
     readingTime: '6 min read',
     tags: ['Svelte', 'TypeScript', 'Tailwind', 'State'],
     accentColor: '#facc15',
-    content: `<p>Our goal with Froots was to create a smoothie recipe app that is fun, fresh, and accessible to users of all ages. The app allows users to browse a collection of smoothie recipes complete with nutritional information, and also create and save their own recipes.</p>
+    content: `<p>Froots is a smoothie recipe app built by our student team. You can look up nutritional stats for different ingredients, mix your own recipes, and save custom blends.</p>
 
-<h2>Sprint Breakdown</h2>
-<p>We were given a four-week sprint to take Froots from initial concept to a fully deployed application. As the lead developer, my core responsibilities centered around managing our Git repository, enforcing a disciplined feature-branch workflow, reviewing pull requests, and orchestrating code integration.</p>
-<p>To keep momentum high, we split our four-person team down the middle:</p>
+<h2>Sprint structure</h2>
+<p>We had four weeks to take the project from zero to a deployed app. As lead developer, I managed the repository, reviewed pull requests, and kept merges from breaking main.</p>
+<p>We split our four-person team in two:</p>
 <ul>
-  <li><strong>Two teammates</strong> focused on UI/UX design in Figma, branding, and comprehensive project documentation.</li>
-  <li><strong>Two developers</strong> (including myself) handled application architecture, state management, and core implementation.</li>
+  <li>Two teammates designed UI in Figma, built branding, and handled project documentation.</li>
+  <li>Two of us handled frontend implementation, state management, and API calls.</li>
 </ul>
-<p>We tracked daily work using a Trello Kanban board and held formal retrospective meetings at the end of each week to assess our progress and outline the game plan for the upcoming sprint.</p>
+<p>We used a Trello board for daily tasks and ran a short retro every Friday to check what was left.</p>
+
 <div class="brutal-table-wrapper">
 <table>
   <thead>
     <tr>
       <th>Phase</th>
       <th>Timeline</th>
-      <th>Focus &amp; Key Deliverables</th>
+      <th>Deliverables</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>Planning</strong></td>
       <td>Week 1</td>
-      <td>Brainstorming, concept experimentation, and architectural planning</td>
+      <td>Concept experimentation and architecture</td>
     </tr>
     <tr>
       <td><strong>Core Build</strong></td>
       <td>Weeks 2&ndash;3</td>
-      <td>Heavy implementation, component construction, and data pipeline integration</td>
+      <td>Implementation, component layout, and API calls</td>
     </tr>
     <tr>
       <td><strong>Launch</strong></td>
       <td>Week 4</td>
-      <td>Marketing video, presentation decks, documentation, and post-project reflections</td>
+      <td>Video demo, slide deck, documentation, and Netlify deployment</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2>Crafting Svelte 5 by Hand</h2>
-<p>We chose to build Froots using Svelte 5 and TypeScript, styled with Tailwind CSS. Svelte 5 had only recently been released when we started. Because the framework&apos;s new runes system was so fresh, large language models had virtually no training data on Svelte 5 syntax. As a result, nearly every line of code had to be written and debugged by hand. We restricted AI tooling strictly to mechanical data work, such as refactoring recipe JSON schemas, where deterministic formatting could be safely automated.</p>
-<p>Diving headfirst into Svelte 5 gave me a profound appreciation for modern frontend reactivity. Over the course of the project, I developed hands-on mastery with:</p>
+<h2>Building with Svelte 5 by hand</h2>
+<p>We picked Svelte 5, TypeScript, and Tailwind. Svelte 5 had just been released, and its runes syntax was brand new. Because AI models had almost no training data on runes yet, they kept generating broken Svelte 4 code. We had to write and debug almost everything by hand, only using AI for repetitive JSON formatting.</p>
+<p>Writing Svelte 5 manually turned out to be the best way to understand its reactive model:</p>
 <ul>
-  <li>State runes <code>$state</code>, <code>$derived</code>, <code>$derived.by</code>, and <code>$effect</code> to build reactive state variables.</li>
-  <li>Moving data between components with <code>$props</code> and <code>$bindable()</code>.</li>
-  <li>Modern templating constructs, including snippets, <code>@if</code>, <code>@render</code>, and <code>{#each}</code> blocks.</li>
-  <li>Effortless reactive console logging using <code>$inspect</code> during development.</li>
-  <li>Smooth layout animations with <code>svelte/transition</code>.</li>
+  <li>Runes like <code>$state</code>, <code>$derived</code>, <code>$derived.by</code>, and <code>$effect</code> handle reactivity without compiler magic.</li>
+  <li>Component props pass cleanly with <code>$props</code> and <code>$bindable()</code>.</li>
+  <li>Snippets, <code>@if</code>, <code>@render</code>, and <code>{#each}</code> blocks make templates readable.</li>
+  <li><code>$inspect</code> provides reactive console logging without manual subscriptions.</li>
+  <li><code>svelte/transition</code> handles animations without external libraries.</li>
 </ul>
 
-<h2>Asynchronous Data and Client-Side Persistence</h2>
-<p>One of the project&apos;s core requirements was fetching external data asynchronously. We integrated the FruityVice API to retrieve dynamic nutritional profiles for a wide spectrum of fruits.</p>
-<p>Because our team had not yet ventured into backend web development at that point in our studies, we leaned into a pragmatic, offline-first persistence strategy:</p>
+<h2>Data fetching and local storage</h2>
+<p>We connected the FruityVice API to fetch nutritional data for fruits.</p>
+<p>Our team had not taken backend courses yet, so we handled persistence directly in the browser:</p>
 <ul>
-  <li>Default smoothie recipes are bundled in a static JSON file.</li>
-  <li>On initialization, recipes are seeded into the browser&apos;s <code>LocalStorage</code>.</li>
-  <li>Whenever a user invents a new smoothie or customizes ingredient quantities, the updated collection is pushed directly to <code>LocalStorage</code>.</li>
+  <li>Default recipes live in a bundled JSON file.</li>
+  <li>On first visit, the app seeds those recipes into <code>LocalStorage</code>.</li>
+  <li>When a user creates a new smoothie or changes amounts, the update saves directly to <code>LocalStorage</code>.</li>
 </ul>
-<p>This design gave users immediate data persistence across browser reloads without requiring an external database.</p>
+<p>Recipes persist across reloads without needing a server or database.</p>
 
 <pre><code><span class="text-gray-400">// luo uuden smoothien ja uuden smoothieKortin ja lis&auml;&auml; kummatkin globaleihin taulukoihin + poistuu takaisin etusivulle</span>
 <span class="text-[#ff3e00]">function</span> <span class="text-[#00e5ff]">createSmoothie</span>() {
@@ -294,44 +294,44 @@ export const BLOG_POSTS = [
   <span class="text-[#00e5ff]">homePage</span>();
 }</code></pre>
 
-<h2>Roadblocks, Bugs, and Hard-Earned Lessons</h2>
-<p>No project is complete without technical hurdles, and Froots provided several invaluable lessons:</p>
+<h2>What broke and what we learned</h2>
+<p>Several things went wrong during development:</p>
 <ol>
-  <li><strong>The Asynchronous Timing Trap:</strong> During our initial API integration, a subtle keyword omission caused our data fetch to execute half-asynchronously and half-synchronously. This desynchronized Svelte&apos;s reactive updates (execution ticks fell out of alignment) and broke the recipe rendering pipeline.</li>
-  <li><strong>The Hidden Weight of Images:</strong> Even today, the current build still suffers from noticeable load latency caused entirely by uncompressed image assets. Images are almost always the heaviest assets in any web application. This project was a clear lesson for me: always convert photographic assets to modern formats like WebP or compressed JPG, and compress them as small as possible before bundling.</li>
-  <li><strong>Cross-Browser Layout Quirks:</strong> We encountered unexpected styling inconsistencies where Chrome and Firefox rendered our background images differently, reinforcing the necessity of testing against multiple browser engines during development.</li>
-  <li><strong>Balancing Technical Focus with Leadership:</strong> Looking back on my collaboration, I realized that I occasionally dove too deep into the code at the expense of step-back communication with my teammates. While our delivery was successful, it highlighted an area of personal growth on my part.</li>
-  <li><strong>The Power of the MVP:</strong> Froots proved why starting with a strict Minimum Viable Product is non-negotiable. Establishing core features first gave us the breathing room to build responsive, mobile-first layouts, fight scope creep, and even sneak in a hidden Rickroll easter egg for attentive users before deploying the final build to Netlify.</li>
+  <li>A missing <code>await</code> broke rendering. During initial API work, an un-awaited call ran half-sync and half-async. Svelte updated the view before data arrived, blanking the recipe list.</li>
+  <li>Heavy images slowed down page loads. The build still has noticeable load delay because we bundled raw photos. It was a clear reminder to convert photos to WebP and compress them before bundling.</li>
+  <li>Chrome and Firefox rendered background images differently, proving why cross-browser testing matters during early development.</li>
+  <li>I spent too much time heads-down in the editor and should have communicated more with teammates during tricky integration days.</li>
+  <li>Starting with a small MVP kept us on schedule. Getting the core calculator working early gave us time to build mobile layouts, squash responsive bugs, and sneak in a Rickroll easter egg before deploying to Netlify.</li>
 </ol>
 
-<h2>Final Takeaways</h2>
-<p>I could not be prouder of how Froots turned out or how hard our team worked. Everyone pulled their weight, and navigating bleeding-edge framework releases under tight deadlines taught me how to embrace uncertainty with confidence.</p>`,
+<h2>Final takeaways</h2>
+<p>Shipping on a brand new framework under a four-week deadline was demanding, but seeing the whole thing run cleanly made the effort worth it.</p>`,
   },
   {
     slug: 'gymbro-app',
     title: 'Shipping an Android APK from an S3 bucket',
     titleHighlight: 'S3 bucket.',
     summary:
-      "The low-budget distribution path behind GymBro, and what I'd do with a real store listing.",
+      'Shipping an Android workout tracker with Ionic and Angular, distributing the APK from S3, and managing team scope.',
     author: 'Lauri Makkonen',
     date: '2026-07-12',
     readingTime: '5 min read',
     tags: ['Ionic', 'Angular', 'Express', 'AWS'],
     accentColor: '#ff3e00',
-    content: `<p>With GymBro, our five-person team set out to inject genuine RPG gamification into the workout experience. Every completed exercise session rewards the user with experience points, advances their level, and unlocks achievements. By pairing session tracking with visual progression, GymBro turns grueling gym consistency into an engaging habit.</p>
+    content: `<p>GymBro was a five-person student project where we wanted to turn workout logging into an RPG. Finishing an exercise session awards XP, raises your level, and unlocks achievements. The idea was to make consistent gym tracking feel rewarding rather than repetitive.</p>
 
-<h2>A Feature-Packed Architecture</h2>
-<p>GymBro was designed as a comprehensive workout companion:</p>
+<h2>Core application features</h2>
+<p>GymBro covers the main tools you need during training:</p>
 <ul>
-  <li><strong>Custom Training Programs:</strong> Users can construct personalized training programs and add custom moves.</li>
-  <li><strong>Active Session Tracking:</strong> Session logging with a customizable rest timer and interactive calendar views.</li>
-  <li><strong>Data Analytics:</strong> Deep performance visualization powered by Chart.js, enabling lifters to review personal records and assess training balance across different muscle groups.</li>
-  <li><strong>Fitting Aesthetic:</strong> Designed in a high-contrast dark-and-yellow color scheme that feels right at home in dimly lit basement gyms.</li>
+  <li>Custom workout routines with user-defined exercises and sets.</li>
+  <li>Live workout tracking with built-in rest timers and a calendar log.</li>
+  <li>Volume and personal record charts powered by Chart.js to track progress across muscle groups.</li>
+  <li>A high-contrast dark and yellow theme that stays legible in dim gym lighting.</li>
 </ul>
 
-<h2>Full-Stack Engineering from Ground Up</h2>
-<p>To ship an Android-compatible application quickly without maintaining separate native codebases, we built a hybrid mobile client using Ionic Capacitor with Angular, bundling the final artifact into an installable Android APK.</p>
-<p>The full-stack architecture was built from the ground up to support authenticated session logging and persistent stats tracking:</p>
+<h2>Full-stack mobile setup</h2>
+<p>To build an Android app without maintaining separate native codebases, we used Ionic Capacitor with Angular and generated an APK.</p>
+<p>The architecture supports user logins, synced workout logs, and stats tracking:</p>
 
 <div class="brutal-table-wrapper">
 <table>
@@ -339,47 +339,46 @@ export const BLOG_POSTS = [
     <tr>
       <th>System Layer</th>
       <th>Technology</th>
-      <th>Role &amp; Architecture Purpose</th>
+      <th>Role</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>Mobile Client</strong></td>
       <td>Ionic Capacitor + Angular</td>
-      <td>Cross-platform hybrid app bundled into installable Android APK</td>
+      <td>Hybrid mobile app compiled into an installable Android APK</td>
     </tr>
     <tr>
       <td><strong>Backend API</strong></td>
       <td>Node.js + Express</td>
-      <td>REST endpoints for workout logging, XP engine, and user accounts</td>
+      <td>REST endpoints for workout logging, XP calculations, and accounts</td>
     </tr>
     <tr>
       <td><strong>Database</strong></td>
       <td>MongoDB Atlas</td>
-      <td>Cloud document store with custom Mongoose schemas mirroring frontend models</td>
+      <td>Document store with Mongoose schemas matching frontend data models</td>
     </tr>
     <tr>
       <td><strong>Authentication</strong></td>
       <td>Google OAuth + JWT</td>
-      <td>Secure token verification middleware, HTTP interceptors, and route guards</td>
+      <td>Token verification middleware, HTTP interceptors, and route guards</td>
     </tr>
     <tr>
       <td><strong>Data Analytics</strong></td>
       <td>Chart.js</td>
-      <td>Dynamic volume, PR tracking, and muscle group balance charts</td>
+      <td>Volume, PR, and muscle group charts</td>
     </tr>
     <tr>
       <td><strong>Cloud &amp; Hosting</strong></td>
       <td>AWS</td>
-      <td>Cloud hosting and production backend API deployment</td>
+      <td>API hosting and deployment</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2>Leadership and Team Dynamics</h2>
-<p>In this project, our team made extensive use of AI coding agents, which had an unexpected and welcome impact on my role as project lead. By offloading boilerplate scaffolding and repetitive syntax transformations to agents, I was liberated from being perpetually trapped in code editors.</p>
-<p>This extra bandwidth allowed me to focus on the human side of leadership: checking in regularly with teammates, unblocking peers, reviewing architectural direction, and maintaining an encouraging, social team atmosphere. It was a transformative leadership experience that helped me grow significantly as both an engineer and a teammate.</p>
+<h2>Managing a team while using AI coding tools</h2>
+<p>We used AI coding tools for boilerplate, which changed how I spent my time as project lead. Instead of writing every CRUD route and data transform by hand, I spent more time reviewing PRs, checking in on teammates, and unblocking people when work stalled. It made the role feel much more like coordinating an engineering team than just churning out syntax.</p>
 
 <pre><code><span class="text-[#ff3e00]">const</span> jwt = <span class="text-[#00e5ff]">require</span>(<span class="text-[#facc15]">"jsonwebtoken"</span>);
 
@@ -402,16 +401,16 @@ export const BLOG_POSTS = [
 
 module.exports = verifyToken;</code></pre>
 
-<h2>CI/CD Mishaps and Scope Creep</h2>
-<p>Ambitious projects inevitably encounter turbulence, and GymBro gave us our share of trial by fire:</p>
+<h2>Deployment bugs and scope creep</h2>
+<p>We ran into several messy problems along the way:</p>
 <ol>
-  <li><strong>The CI/CD Deployment Bug:</strong> Halfway into our sprint, development ground to a halt when all team branches suddenly stopped working. After hours of hair-pulling debugging, we discovered the culprit in our AWS CI/CD script: the deployment trigger only fired when files inside the backend directory changed, rather than on every merge to <code>main</code>. A faulty backend version had slipped into production unmonitored while our local branches assumed they were hitting stable APIs.</li>
-  <li><strong>The Cost of Lax Early Planning:</strong> We initially approached our frontend design too casually. Early in our sprint, the lack of architectural clarity caught up with us, forcing our entire team to halt development for a full day to realign on UI layout and screen flow. While the pivot saved the project, it proved that thorough upfront documentation pays massive dividends.</li>
-  <li><strong>The Infamous Scope Creep:</strong> With achievements, level curves, custom charts, break timers, and dozens of distinct views, our feature set ballooned. Even during the final week, our team was working through the weekend to polish styles and resolve layout quirks before submission.</li>
+  <li>A broken CI/CD trigger stopped everyone. Mid-sprint, team branches started failing against the API. After hours of debugging, we found the issue in our AWS script: deploys only ran when files inside the backend directory changed. An earlier broken build had slipped in, and later merges had never replaced it.</li>
+  <li>Skipping early planning cost us a full day. We started writing components before settling on screen navigation. Two weeks in, screens didn&apos;t connect logically, and the entire team had to stop coding for a day to map out user flows on a whiteboard.</li>
+  <li>Scope creep caught up with us. Adding level curves, custom charts, rest timers, and achievement badges expanded the backlog. We ended up working through the final weekend to fix layout bugs before the deadline.</li>
 </ol>
 
 <h2>Reflections</h2>
-<p>Despite the weekend crunch and the CI/CD firefighting, GymBro was an overwhelming success. Our team demonstrated remarkable grit, every member stepped up to deliver their piece, and seeing our gamified APK running smoothly on real Android devices made every hour of effort worthwhile.</p>`,
+<p>Seeing the APK install and run smoothly on our phones made the crunch worth it, and navigating those setbacks taught us a lot about team planning and deployment discipline.</p>`,
   },
 ] as const satisfies readonly BlogPost[];
 

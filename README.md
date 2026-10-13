@@ -1,19 +1,19 @@
-# laanhema.dev — Software Engineer Portfolio Website
+# laanhema.dev: Software Engineer Portfolio Website
 
-A high-performance, single-page portfolio web application built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It serves as the professional digital presence and personal brand platform for Lauri Makkonen, a full-stack software engineer active since 2019. The application showcases full-stack engineering proficiency, architectural judgment, and craftsmanship in building interactive, high-reliability software using a bold Neo-Brutalist design language.
+Personal portfolio website for Lauri Makkonen, built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It uses a Neo-Brutalist design (4px borders, hard drop shadows, and high-contrast typography) to present projects, experience since 2019, and contact details.
 
-For full project specifications and requirements, see the [Product Requirements Document](.agents/PRDs/PRD.md).
+For specifications and requirements, see the [Product Requirements Document](.agents/PRDs/PRD.md).
 
 ## Highlights
 
-- Neo-brutalist aesthetic with high-contrast typography, 4px solid borders, and tactile drop shadows
-- Responsive navigation bar with desktop anchors, route links, and mobile drawer menu
-- Hero section with custom typography, engineering values narrative, social links (GitHub, LinkedIn), and author portrait
-- Engineering experience metrics highlighting track record since 2019 and 2000+ GitHub contributions
-- Curated project showcase featuring 4 flagship applications with concise tech stack badges and dual action links ("Code" and "Read Story")
-- Engineering devlog and blog platform with deep-dive articles for each flagship project
-- Direct contact hub featuring quick email outreach and interactive messaging form
-- Smooth scroll-triggered reveal animations powered by GSAP
+- Neo-brutalist styling with high-contrast typography, 4px solid borders, and offset drop shadows
+- Responsive navbar with desktop section anchors, page routing, and a mobile drawer
+- Hero section with engineering background, social links (GitHub, LinkedIn), and portrait
+- Experience stats showing work since 2019 and 2000+ GitHub contributions
+- Project grid with tech stack badges and links to source code and devlogs
+- Devlog section with write-ups on four major projects
+- Contact section with email link and prefilled message form
+- Scroll-triggered entrance animations powered by GSAP
 
 ## Tech Stack
 
@@ -81,12 +81,12 @@ npm run check
 
 ## Featured Projects
 
-The portfolio showcases four flagship applications:
+Four applications in the portfolio:
 
-- **GymBro App**: Gamified gym-tracker app for Android with workout sessions, XP progression, and unlockable achievements. (Angular, Ionic, Express, MongoDB) — [Source](https://github.com/jamktiko/gymbroapp) | [Read Story](https://laanhema.dev/blog/gymbro-app)
-- **Tralla**: Trello-like Kanban board application built with Angular. (Angular, Taiga UI, NgRx SignalStore) — [Source](https://github.com/laanhema/tralla) | [Read Story](https://laanhema.dev/blog/tralla)
-- **Froots Smoothie App**: Smoothie recipe app for browsing recipes with nutritional info and custom blends. (Svelte, TypeScript, Tailwind) — [Source](https://github.com/jamktiko/smoothie_testi) | [Read Story](https://laanhema.dev/blog/froots-smoothie-app)
-- **Distill Design Scraper**: Web developer tool that scrapes color schemes, fonts, layouts, and components from any website. (Next.js, React, Playwright, Sharp, Culori, Zod) — [Source](https://github.com/laanhema/distill-design-scraper) | [Read Story](https://laanhema.dev/blog/distill-design-scraper)
+- **GymBro App**: Gamified gym-tracker app for Android with workout sessions, XP progression, and unlockable achievements. (Angular, Ionic, Express, MongoDB) - [Source](https://github.com/jamktiko/gymbroapp) | [Read Story](https://laanhema.dev/blog/gymbro-app)
+- **Tralla**: Trello-like Kanban board application built with Angular. (Angular, Taiga UI, NgRx SignalStore) - [Source](https://github.com/laanhema/tralla) | [Read Story](https://laanhema.dev/blog/tralla)
+- **Froots Smoothie App**: Smoothie recipe app for browsing recipes with nutritional info and custom blends. (Svelte, TypeScript, Tailwind) - [Source](https://github.com/jamktiko/smoothie_testi) | [Read Story](https://laanhema.dev/blog/froots-smoothie-app)
+- **Distill Design Scraper**: Web developer tool that scrapes color schemes, fonts, layouts, and components from any website. (Next.js, React, Playwright, Sharp, Culori, Zod) - [Source](https://github.com/laanhema/distill-design-scraper) | [Read Story](https://laanhema.dev/blog/distill-design-scraper)
 
 ## Out of Scope
 

@@ -141,11 +141,10 @@ function HomePage() {
               Systems.
             </h1>
             <p className='text-xl md:text-2xl max-w-2xl font-medium mb-12 border-l-8 border-[#ff3e00] pl-6 animate-on-scroll'>
-              Full-stack software engineer dedicated to building dependable
-              systems and high-craft digital experiences. Since 2019, I&apos;ve
-              paired technical rigor with clear communication to take software
-              from concept to production with maintainable architecture, and
-              attention to detail.
+              Full-stack software engineer building fast, reliable web
+              applications. Coding since 2019, I focus on clean architecture,
+              responsive interfaces, and seeing projects through from first
+              sketch to production.
             </p>
 
             <div className='flex flex-wrap items-center gap-6 animate-on-scroll'>
@@ -206,10 +205,10 @@ function HomePage() {
               <br /> The Code.
             </h2>
             <p className='text-xl leading-relaxed font-medium'>
-              I&apos;ve been coding since 2019, specializing in full-stack web
-              development and project leadership. I combine technical skill
-              with professional soft skills to take projects from idea to
-              delivery.
+              I have been coding since 2019, building full-stack web apps and
+              leading student teams. I care about writing maintainable code,
+              keeping git history clean, and communicating clearly so projects
+              actually ship.
             </p>
           </div>
           <div className='flex-1 grid grid-cols-2 gap-6 animate-on-scroll w-full'>
