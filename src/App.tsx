@@ -238,7 +238,7 @@ function HomePage() {
               Selected <br /> <span className='text-[#ff3e00]'>Works.</span>
             </h2>
             <p className='max-w-sm text-xl font-bold pb-4'>
-              A curated selection of my recent projects.
+              A few projects I&apos;ve built recently.
             </p>
           </div>
 

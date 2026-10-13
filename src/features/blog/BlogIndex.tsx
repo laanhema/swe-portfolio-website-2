@@ -22,7 +22,7 @@ export const BlogIndex: React.FC = () => {
               Field <br /> <span className="text-[#ff3e00]">Notes.</span>
             </h1>
             <p className="max-w-sm text-xl font-bold pb-4">
-              Write-ups from the projects: what worked, what broke, what I&apos;d do again.
+              What worked, what broke, and what I learned building them.
             </p>
           </div>
 
