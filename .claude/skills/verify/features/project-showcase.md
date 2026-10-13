@@ -7,7 +7,7 @@ The `SELECTED WORKS.` section (`#work`) on `/` shows four colored project cards:
 - `showcase-cards`: the four cards render with their h3 title, description, and tech badges.
 - `showcase-code-link`: `CODE` points at the project's repo and opens in a new tab.
 - `showcase-read-story`: `READ STORY` routes in-app to `/blog/<slug>` with the page at the top.
-- `showcase-layout`: the grid has two columns at `md` and up, with odd cards offset down. It has one column on mobile.
+- `showcase-layout`: the grid has two columns at `md` and up, with the second and fourth cards offset down. It has one column on mobile.
 
 ## How to get to it (user POV)
 
@@ -30,4 +30,4 @@ Preconditions:
 - Every card has a `CODE` link and a `READ STORY` link. Always add `url=` to the pattern, or you click GymBro's.
 - Cards fade in on scroll. A screenshot taken before the scroll animation finishes shows half-transparent cards.
 - A browser session started before `ax.sh` launched Chrome with a mouse reports `(hover: none)`. `ax.sh buttons` then prints `NO-HOVER`. Run `ax.sh stop` and retry.
-- Card data lives in `PROJECTS` in `src/App.tsx`. If a `postSlug` is missing from `BLOG_POSTS`, `READ STORY` lands on the blog 404.
+- Card data lives in `PROJECTS` in `src/App.tsx`. `postSlug` is typed from the slugs in `BLOG_POSTS`, so a slug with no post fails `npm run build` (and `start preview`). The dev server does not type-check, so there `READ STORY` lands on the blog 404.

@@ -68,7 +68,7 @@ swe-portfolio-website-2/
 │   │   ├── contact/                    # Contact section & interactive form
 │   │   ├── navigation/                 # Navigation bar & mobile menu drawer
 │   │   └── showcase/                   # Featured project cards
-│   ├── hooks/                          # Custom React hooks (useGsapAnimations.ts)
+│   ├── hooks/                          # Custom React hooks (useGsapAnimations.ts, useScrollReset.ts)
 │   ├── styles/                         # CSS layers & design tokens (global.css)
 │   ├── App.tsx                         # Main layout orchestrator & project dataset
 │   └── main.tsx                        # React application root
@@ -106,6 +106,7 @@ swe-portfolio-website-2/
 - External links must always include `target="_blank"` and `rel="noopener noreferrer"`.
 - Keep layout responsive with mobile-first Tailwind utilities (`flex-col md:flex-row`, `px-6 md:px-12`).
 - On mobile/touch viewports, wire button presses via `onPointerDown={playPress}` from `src/components/playPress.ts` because mobile browsers may skip `:active` or freeze hover states.
+- Don't write type assertions (`as Type`): ESLint runs `strictTypeChecked` with `consistent-type-assertions` set to `never`, so narrow with type guards instead. `as const` is allowed.
 
 ### Animations
 - Elements requiring entrance animations should use the class `.animate-on-scroll`.

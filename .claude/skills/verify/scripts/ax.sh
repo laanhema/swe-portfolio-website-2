@@ -16,8 +16,10 @@
 #   ax.sh nav                         print the nav logo and menu button boxes and font; exit 1 unless the font is Noto Sans Variable
 #   ax.sh buttons                     hover VIEW WORK, the first card's CODE and READ STORY, and SEND MESSAGE; exit 1 unless all four lift the same (#56)
 #   ax.sh cursor                      print SEND MESSAGE's and the form fields' computed cursor; exit 1 unless the button is pointer and the fields are text (#86)
+#   ax.sh submit [path]               submit the contact form empty, then filled; exit 1 unless the empty submit is blocked and the filled one
+#                                     navigates to the prefilled mailto: URL (the navigation is recorded and cancelled, so no mail client opens) (#99)
 #   ax.sh hero                      check hero header across desktop and mobile viewports; exit 1 if any element has computed filter containing blur
-#   ax.sh all                         run tables (on every blog post), nav, buttons, cursor and hero; exit 1 if any fails
+#   ax.sh all                         run tables (on every blog post), nav, buttons, cursor, submit and hero; exit 1 if any fails
 #   ax.sh mobile | desktop            viewport 375x812 mobile+touch | 1280x900
 #   ax.sh stop                        stop this session's browser bridge
 set -euo pipefail
@@ -97,6 +99,35 @@ for i, (label, hov, tf, tr, sh) in enumerate(rows):
       | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))')"
     echo "$out"
     ! grep -q -E 'NOT-POINTER|NOT-TEXT|MISSING' <<<"$out" ;;
+  submit)
+    # A valid submit sets location.href to a mailto: URL, which a browser hands to the system mail handler.
+    # A `navigate` listener records and cancels every non-http navigation, so the click is real and nothing opens.
+    "$0" open "${2:-/}" >/dev/null
+    ev() { axi eval "$1" | sed -n 's/^result: //p' | python3 -c 'import json,sys; print(json.loads(json.loads(sys.stdin.read())))'; }
+    uid_of() { axi snapshot --full | grep -E -m1 -- "$1" | grep -o 'uid=[^ ]*' | head -1 | cut -d= -f2; }
+    [[ "$(ev "document.querySelector('#contact form') ? 'form' : 'MISSING'")" == form ]] || { echo "submit: contact form MISSING on ${2:-/}"; exit 1; }
+    ev "(() => { window.__mailto = []; navigation.addEventListener('navigate', e => { if (!/^https?:/.test(e.destination.url)) { window.__mailto.push(e.destination.url); e.preventDefault(); } }); return 'capturing'; })()" >/dev/null
+    # The hover scrolls the form into view and GSAP slides it up for 0.8s; wait before clicking (refs are re-read each time).
+    axi hover "@$(uid_of 'button "SEND MESSAGE"')" >/dev/null; sleep 1.2
+    press() { axi click "@$(uid_of 'button "SEND MESSAGE"')" >/dev/null; sleep 0.3; }
+    read_form="JSON.stringify({urls: window.__mailto, invalid: [...document.querySelectorAll('#contact :invalid')].map(e => e.id).filter(Boolean)})"
+    press; empty="$(ev "$read_form")"
+    for field in 'NAME|Jane Smith' 'EMAIL|jane@example.com' 'MESSAGE|Hello & welcome?'; do
+      axi fill "@$(uid_of "textbox \"${field%%|*}\"")" "${field#*|}" >/dev/null
+    done
+    press; filled="$(ev "$read_form")"
+    out="$(python3 -c '
+import json, sys
+empty, filled = (json.loads(a) for a in sys.argv[1:3])
+want = "mailto:lahmakkonen@gmail.com?subject=Contact%20from%20Jane%20Smith&body=Name%3A%20Jane%20Smith%0AEmail%3A%20jane%40example.com%0A%0AMessage%3A%0AHello%20%26%20welcome%3F"
+blocked = not empty["urls"] and empty["invalid"] == ["name", "email", "message"]
+print("empty submit: navigations=%d invalid=%s %s" % (len(empty["urls"]), ",".join(empty["invalid"]), "ok" if blocked else "NOT-BLOCKED"))
+urls = filled["urls"]
+status = "ok" if urls == [want] else "WRONG-URL" if urls else "NO-MAILTO"
+print("valid submit: %s %s" % (urls[-1] if urls else "no navigation", status))
+' "$empty" "$filled")"
+    echo "$out"
+    ! grep -q -E 'NOT-BLOCKED|WRONG-URL|NO-MAILTO' <<<"$out" ;;
   hero)
     out=""
     for vp in desktop mobile; do
@@ -118,11 +149,11 @@ for i, (label, hov, tf, tr, sh) in enumerate(rows):
     done
     for path in / /blog /blog/tralla /blog/does-not-exist; do "$0" open "$path" >/dev/null; run nav "$path"; done
     "$0" open / >/dev/null; "$0" desktop >/dev/null; "$0" open / >/dev/null
-    run buttons; run cursor; run hero
+    run buttons; run cursor; run submit; run hero
     [[ $fail == 0 ]] && echo "all: ok" || { echo "all: FAILED"; exit 1; } ;;
   aria) axi snapshot --full >"$2" && echo "$2" ;;
   mobile) axi emulate --viewport "375x812x2,mobile,touch" >/dev/null && echo "viewport 375x812 mobile" ;;
   desktop) axi emulate >/dev/null && axi resize 1280 900 >/dev/null && echo "viewport 1280x900" ;;
   stop) axi stop ;;
-  *) sed -n '2,22p' "$0"; exit 2 ;;
+  *) sed -n '2,24p' "$0"; exit 2 ;;
 esac

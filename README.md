@@ -1,6 +1,6 @@
 # laanhema.dev: Software Engineer Portfolio Website
 
-Personal portfolio website for Lauri Makkonen, built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It uses a Neo-Brutalist design (4px borders, hard drop shadows, and high-contrast typography) to present projects, experience since 2019, and contact details.
+Personal portfolio website for Lauri Makkonen, built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It uses a Neo-Brutalist design (4px borders, hard drop shadows, and high-contrast typography) to present projects, experience since 2019, and contact details. The site is live at [laanhema.dev](https://laanhema.dev).
 
 For specifications and requirements, see the [Product Requirements Document](.agents/PRDs/PRD.md).
 
@@ -32,7 +32,7 @@ For specifications and requirements, see the [Product Requirements Document](.ag
 
 ### Prerequisites
 
-- Node.js (v18 or higher recommended)
+- Node.js v22.22 or higher (the minimum that React Router 8 declares; Vite 8 needs at least v20.19)
 - npm
 
 ### Installation
@@ -79,6 +79,8 @@ Run lint, the documentation checks (design-system class strings and `AGENTS.md` 
 npm run check
 ```
 
+A push to `main` runs the check and then deploys the build to GitHub Pages.
+
 ## Featured Projects
 
 Four applications in the portfolio:
@@ -103,20 +105,25 @@ swe-portfolio-website-2/
 ├── .agents/
 │   ├── PRDs/
 │   │   └── PRD.md                      # Product Requirements Document
+│   ├── design-system/                  # Design reference (DESIGN.md, component READMEs and previews)
 │   └── issues/
 │       └── todo-issues.md             # Issue & backlog tracking
+├── .github/
+│   └── workflows/                      # Pull-request check and GitHub Pages deploy
 ├── public/
+│   ├── 404.html                        # GitHub Pages fallback that sends deep links to the app
 │   ├── favicon.svg
 │   └── CNAME                           # Custom domain configuration (laanhema.dev)
+├── scripts/                            # Documentation checks run by `npm run check`
 ├── src/
 │   ├── assets/                         # Static image assets (e.g. portrait)
-│   ├── components/                     # Shared UI (Icons.tsx, playPress.ts)
+│   ├── components/                     # Shared UI (Footer.tsx, Icons.tsx, playPress.ts)
 │   ├── features/
 │   │   ├── blog/                       # Devlogs index and post article views
 │   │   ├── contact/                    # Contact section & form
 │   │   ├── navigation/                 # Navigation bar & mobile drawer
 │   │   └── showcase/                   # Project showcase cards
-│   ├── hooks/                          # Custom hooks (GSAP animations)
+│   ├── hooks/                          # Custom hooks (GSAP animations, scroll reset)
 │   ├── styles/                         # Global Tailwind styles & design tokens
 │   ├── App.tsx                         # Main portfolio layout orchestrator & router
 │   └── main.tsx                        # React application entry point
@@ -130,4 +137,6 @@ swe-portfolio-website-2/
 
 - [Product Requirements Document (PRD)](.agents/PRDs/PRD.md)
 - [Tracked Issues](.agents/issues/todo-issues.md)
-- [Task List](TODO.md)
+- [Design System](.agents/design-system/laanhema-design-system/DESIGN.md)
+- [Agent Rules](AGENTS.md)
+- Task List: `TODO.md`, a local file that git does not track

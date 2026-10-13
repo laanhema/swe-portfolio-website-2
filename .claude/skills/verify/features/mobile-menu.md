@@ -17,12 +17,13 @@ Below the `md` breakpoint, the nav bar collapses to an orange `MENU` button. The
 
 Preconditions:
 
-- Doctor is healthy. Run `ax.sh mobile`, then `ax.sh open /`. Set the viewport before you open the page, so the layout is mobile from the first paint.
+- Doctor is healthy. Run `ax.sh open /`, `ax.sh mobile`, then `ax.sh open /` again. `ax.sh mobile` exits 1 when the session has no page open, and the second `open` gives a mobile layout from the first paint.
 
 - **Open.** Run `ax.sh click 'button "Open menu"'`, then `ax.sh state`. The output shows `"menuExpanded": "true"`. `ax.sh has 'link "CONTACT" url=.*#contact'` succeeds.
 - **Section link.** Run `ax.sh click 'link "CONTACT"'`, then `sleep 1.2; ax.sh state`. The output shows `"hash": "#contact"`, `scrollY` > 0, and `"menuExpanded": "false"`. The screenshot shows the contact form under a `MENU` button.
 - **Close.** Reopen the drawer, then run `ax.sh click 'button "Close menu"'`, then `ax.sh state`. The output shows `"menuExpanded": "false"`. `ax.sh has 'link "WORK"'` fails.
 - **Blog.** Reopen the drawer, then run `ax.sh click 'link "BLOG"'`, then `ax.sh state`. The output shows `"path": "/blog"` and `"menuExpanded": "false"`.
+- **Touch tap.** Run `ax.sh tap 'button "Open menu"'`. It ends with `tap button "Open menu": ok`, and the JSON shows `"events":["pointerdown","pointerup","click"]` and `"menuExpanded":"true"` under `after`.
 - **Narrow layout.** Run `CHROME_DEVTOOLS_AXI_SESSION=verify chrome-devtools-axi emulate --viewport "320x640x2,mobile,touch"`, then `ax.sh open /`, then `ax.sh shot "$RUN_DIR/menu-320.png"`. Read the PNG and confirm the logo and the `MENU` button sit on one row.
 
 ## Gotchas

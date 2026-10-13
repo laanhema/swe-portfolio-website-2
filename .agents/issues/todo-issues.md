@@ -7,7 +7,7 @@
 
 ## Status
 
-Reconciled 45 tracked issues against GitHub state and the codebase. Currently, 44 issues are completed and verified on the default branch (`main`), 1 issue remains pending, 0 are in progress, and 0 are not planned. A total of 184 of 188 acceptance criteria are verified and ticked.
+Reconciled 53 tracked issues against GitHub state and the codebase. Currently, 50 issues are completed and verified on the default branch (`main`), 3 remain pending, 0 are in progress, and 0 are not planned. A total of 213 of 229 acceptance criteria are verified and ticked.
 
 | Issue | Title | Pull request | Status | Acceptance criteria ticked |
 | --- | --- | --- | --- | --- |
@@ -38,7 +38,6 @@ Reconciled 45 tracked issues against GitHub state and the codebase. Currently, 4
 | #42 | [TODO-25] Update ProjectCard to 2-button layout with Code and Read Story links | #52 | done | 5 of 5 |
 | #43 | [TODO-26] Configure React Router in App.tsx and extract HomePage component | #53 | done | 4 of 4 |
 | #44 | [TODO-27] Run full build and lint validation for blog feature | #54 | done | 3 of 3 |
-| #55 | [TODO-28] Refine and polish hero introductory paragraph copy | — | pending | 0 of 4 |
 | #56 | [TODO-29] Make the "Code", "Read Story" and "Send Message" buttons hover and press like "View Work" | #89 | done | 7 of 7 |
 | #57 | [TODO-30] Remove Twitter / X buttons and social links across the site | #60 | done | 5 of 5 |
 | #58 | [TODO-31] Fix hero flash and scroll jump when navigating from blog to homepage section anchors | #62 | done | 4 of 4 |
@@ -56,17 +55,25 @@ Reconciled 45 tracked issues against GitHub state and the codebase. Currently, 4
 | #87 | [TODO-43] Fix the first tap on "Send Message" being ignored on mobile | — | done | 5 of 5 |
 | #88 | [TODO-44] Remove the blurred glows behind the hero | #93 | done | 5 of 5 |
 | #91 | [TODO-45] Bring the design-system button strings back in line with the code | #92 | done | 5 of 5 |
+| #94 | [TODO-46] Remove dead code and avoidable type casts, and enable stricter TypeScript and lint settings | #100 | done | 5 of 5 |
+| #95 | [TODO-47] Tighten the blog and project types | #101 | done | 5 of 5 |
+| #96 | [TODO-48] Share one footer, one scroll-reset hook and one set of nav helpers | #102 | done | 5 of 5 |
+| #97 | [TODO-49] Split the blog routes out of the home page bundle and scope the GSAP animations | #103 | done | 5 of 5 |
+| #98 | [TODO-50] Check whether the reload handling in App.tsx is redundant, and remove it if so | #104 | done | 4 of 4 |
+| #99 | [TODO-51] Make the contact form open a prefilled email on submit | #105 | done | 5 of 5 |
+| #107 | [TODO-52] Add live-demo links to the GymBro and Froots devlogs | — | pending | 0 of 5 |
+| #108 | [TODO-53] Fix the contrast of accent text and accent-filled controls | — | pending | 0 of 7 |
+| #109 | [TODO-54] Add SEO metadata to index.html | — | pending | 0 of 4 |
 
 Verification methodology rests on repository code inspection, static build and lint validation, and automated test harnesses documented in completed plans under `.agents/plans/completed/`, implementation reports under `.agents/reports/`, and reviews under `.agents/reviews/`.
 
 ### Open Items Without an Issue
 
-- Untracked requirement from `TODO.md:35`: "Make all text on the website better - Run blog post texts through a Hermes Agent /humanize skill or pstacks /noslop."
-- Open issue: #55 (`[TODO-28] Refine and polish hero introductory paragraph copy`).
+- None. The open issues are #107, #108 and #109.
 
 ### Skipped Tasks
 - Tasks 1–17 (`TODO.md:1-17`): Already tracked as GitHub issues #2 through #14 and #28 through #31, and marked complete.
-- Tasks 18–22 (`TODO.md:18-22`): Already tracked as GitHub issues #55 through #59.
+- Tasks 19–22 (`TODO.md:19-22`): Already tracked as GitHub issues #56 through #59.
 - Tasks 23–24 (`TODO.md:23-24`): Already tracked as GitHub issues #63 and #64 (TODO-33, TODO-34).
 - Tasks 25–26 (`TODO.md:25-26`): Already tracked as GitHub issues #66 and #68 (TODO-35, TODO-36).
 - Tasks 27–31 (`TODO.md:27-31`): Already tracked as GitHub issues #71 through #75 (TODO-37 to TODO-41).
@@ -147,6 +154,7 @@ The current hero description text ("I specialize in architecting scalable backen
 ### As Built
 
 - Implemented and verified in default branch via PR #16.
+- The hero paragraph was rewritten later (commit `7593d30`). It now opens "Full-stack software engineer building fast, reliable web applications." and keeps the `border-l-8 border-[#ff3e00]` accent and `text-xl md:text-2xl`.
 
 ### Dependencies
 
@@ -225,6 +233,7 @@ In the about section, the text inside the yellow "2019 Coding Since" stat card i
 ### As Built
 
 - Implemented and verified in default branch via PR #18.
+- #28 (PR #34) later left-aligned the card to match the other two: it is `flex flex-col justify-center` now, so the text is centered vertically only.
 
 ### Dependencies
 
@@ -379,6 +388,7 @@ The showcase section subtitle currently reads "A curated selection of my recent 
 ### As Built
 
 - Implemented and verified in default branch via PR #22.
+- The subtitle was rewritten later (commit `a04e78c`) and now reads "A few projects I've built recently." Its classes (`max-w-sm text-xl font-bold pb-4`) are unchanged.
 
 ### Dependencies
 
@@ -493,6 +503,7 @@ Update the introductory paragraph next to the email contact area to specifically
 ### As Built
 
 - Implemented and verified in default branch via PR #25.
+- The paragraph in `ContactForm.tsx` reads "I'm currently open to new job offers! Drop me a message and lets chat about it." ("Drop me a message", not "Drop a message").
 
 ### Dependencies
 
@@ -532,6 +543,7 @@ In the GymBro App project card, the "Download APK" action button text becomes mi
 ### As Built
 
 - Implemented and verified in default branch via PR #26.
+- #42 (PR #52) replaced the card's second button: `ProjectCard.tsx` renders "Code" and "Read Story" and has no "Download APK" button now.
 
 ### Dependencies
 
@@ -1158,42 +1170,6 @@ Run full TypeScript compilation, ESLint check, and Vite production bundle build 
 ### Skipped Tasks
 - Tasks 1–13 (`TODO.md:1-13`): Already tracked as GitHub issues #2 through #14 (`[TODO-1]` through `[TODO-13]`) and marked complete.
 - Tasks 14–17 (`TODO.md:14-17`): Already tracked as GitHub issues #28 through #31 (`[TODO-14]` through `[TODO-17]`).
-
----
-
-## [TODO-28] Refine and polish hero introductory paragraph copy
-
-**GitHub**: #55
-**Status**: pending
-**Type**: Enhancement
-**GitHub Label**: enhancement
-**Priority**: Medium
-**Complexity**: Small
-**Phase**: Backlog
-**Labels**: enhancement, frontend
-**Source**: `TODO.md:18` — "- [ ] The hero paragraph still needs some work."
-
-### Description
-
-The hero section introductory bio paragraph currently describes full-stack software engineering background and core values since 2019, but needs further refinement to enhance tone, punchiness, and personal brand voice. Revise the copy to clearly communicate engineering strengths, values, and career trajectory while maintaining visual harmony with the display headline.
-
-### Acceptance Criteria
-
-- [ ] Review current hero bio paragraph in `src/App.tsx` and revise copy for clarity, impact, and concise personal branding.
-- [ ] Ensure revised copy maintains the bold brutalist tone and reads naturally across mobile, tablet, and desktop viewports.
-- [ ] Preserve the 8px orange left border accent (`border-[#ff3e00]`) and responsive typography (`text-xl md:text-2xl`).
-- [ ] Verify copy does not introduce awkward line breaks or excessive vertical height on mobile viewports.
-
-### Technical Notes
-
-- Key implementation details: Update the `<p>` element text within the hero `<header>` in `src/App.tsx`.
-- Files likely to be modified: `src/App.tsx`.
-- Patterns to follow: Follow voice and content guidelines in `.agents/design-system/laanhema-design-system/DESIGN.md` (first person, confident, plain, no buzzword fluff).
-
-### Dependencies
-
-- Blocked by: None
-- Blocks: None
 
 ---
 
@@ -1913,7 +1889,7 @@ Some button class strings in the design system (`.agents/design-system/laanhema-
 ## [TODO-46] Remove dead code and avoidable type casts, and enable stricter TypeScript and lint settings
 
 **GitHub**: #94
-**Status**: pending
+**Status**: done — issue closed, PR #100 merged
 
 **Type**: Technical
 **GitHub Label**: technical
@@ -1928,11 +1904,11 @@ Clean-up batch from the React/TS code review of 2026-10-13 (findings R2, R6, R7,
 
 ### Acceptance Criteria
 
-- [ ] The table-wrapping code in the `BlogPost.tsx` effect, the `useInRouterContext` fallback link in `ProjectCard.tsx` and `src/features/blog/components/index.ts` are removed.
-- [ ] `src/` has no type cast other than `as const`, and `main.tsx` has no non-null assertion.
-- [ ] `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` are on in `tsconfig.app.json`, and ESLint runs the `strictTypeChecked` preset with no errors.
-- [ ] `src/App.css`, `src/index.css`, `src/assets/hero.png`, `src/assets/react.svg` and `src/assets/vite.svg` are deleted, and `package.json` is named `swe-portfolio-website-2`.
-- [ ] `npm run check` passes, and the pages look and behave as before, including blog tables scrolling sideways on mobile.
+- [x] The table-wrapping code in the `BlogPost.tsx` effect, the `useInRouterContext` fallback link in `ProjectCard.tsx` and `src/features/blog/components/index.ts` are removed.
+- [x] `src/` has no type cast other than `as const`, and `main.tsx` has no non-null assertion.
+- [x] `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` are on in `tsconfig.app.json`, and ESLint runs the `strictTypeChecked` preset with no errors.
+- [x] `src/App.css`, `src/index.css`, `src/assets/hero.png`, `src/assets/react.svg` and `src/assets/vite.svg` are deleted, and `package.json` is named `swe-portfolio-website-2`.
+- [x] `npm run check` passes, and the pages look and behave as before, including blog tables scrolling sideways on mobile.
 
 ### Technical Notes
 
@@ -1949,6 +1925,13 @@ Clean-up batch from the React/TS code review of 2026-10-13 (findings R2, R6, R7,
 - X2: only `src/main.tsx:4` imports a stylesheet (`./styles/global.css`), and nothing imports the five files. Renaming the package also changes the `name` fields in `package-lock.json`.
 - `npm run check` also compares AGENTS.md with the repository; update AGENTS.md in the same change if a path it lists changes.
 
+### As Built
+
+- `BlogPost.tsx` has no effect and no ref, `ProjectCard.tsx` renders the "Read Story" button as a `Link` only, and `src/features/blog/components/index.ts`, `src/App.css`, `src/index.css` and the three template images are gone.
+- `eslint.config.js` runs `tseslint.configs.strictTypeChecked` with `projectService`, and `@typescript-eslint/consistent-type-assertions` set to `assertionStyle: 'never'`, so a new `as` cast fails lint. `as const` stays allowed.
+- `tsconfig.app.json` has `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`; `strict` was added after this issue. `main.tsx` throws `Root element not found` in place of the non-null assertion.
+- The last criterion rests on `npm run check` passing in this run and on the `ax.sh all` and `ax.sh tables` passes in the implementation report (2026-10-13). On mobile the tables stack; `.brutal-table-wrapper` scrolls sideways only where a table is wider than its column.
+
 ### Dependencies
 
 - Blocked by: None
@@ -1960,7 +1943,7 @@ Clean-up batch from the React/TS code review of 2026-10-13 (findings R2, R6, R7,
 ## [TODO-47] Tighten the blog and project types
 
 **GitHub**: #95
-**Status**: pending
+**Status**: done — issue closed, PR #101 merged
 
 **Type**: Technical
 **GitHub Label**: technical
@@ -1975,11 +1958,11 @@ From the React/TS code review of 2026-10-13 (findings T1, T4 and T5). `PostCard`
 
 ### Acceptance Criteria
 
-- [ ] `PostCard` and `ArticleHeader` take a required `post: BlogPost` and no per-field props, so `<PostCard />` without `post` fails to compile.
-- [ ] A `postSlug` in `PROJECTS` that matches no post in `BLOG_POSTS` fails `npm run build`.
-- [ ] The `BlogPost` type has no `projectTitle` and stores the post date once and the summary text once; dates and text on `/blog` and the post pages read as before.
-- [ ] The design-system `components/PostCard/README.md` describes the new props.
-- [ ] `npm run check` passes.
+- [x] `PostCard` and `ArticleHeader` take a required `post: BlogPost` and no per-field props, so `<PostCard />` without `post` fails to compile.
+- [x] A `postSlug` in `PROJECTS` that matches no post in `BLOG_POSTS` fails `npm run build`.
+- [x] The `BlogPost` type has no `projectTitle` and stores the post date once and the summary text once; dates and text on `/blog` and the post pages read as before.
+- [x] The design-system `components/PostCard/README.md` describes the new props.
+- [x] `npm run check` passes.
 
 ### Technical Notes
 
@@ -1988,6 +1971,13 @@ From the React/TS code review of 2026-10-13 (findings T1, T4 and T5). `PostCard`
 - T4: `PROJECTS` is at `src/App.tsx:13-50`. One way: declare `BLOG_POSTS` with `as const satisfies readonly BlogPost[]` (this needs `tags: readonly string[]` in the type), derive `type PostSlug = (typeof BLOG_POSTS)[number]['slug']`, type `ProjectCardProps.postSlug` as `PostSlug`, and add `satisfies readonly ProjectCardProps[]` to `PROJECTS`. Use `import type` in `App.tsx` so it does not pull `posts.ts` into the home page bundle (this matters for TODO-49). The accent colours (`color`, `accentColor`) could become a union of the four palette values in the same way; that is optional.
 - T5: `src/features/blog/types.ts`. `displayDate` repeats `date`; the current strings look like `Sep 18, 2026`, so a module-level `Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })` reproduces them. `summary` and `excerpt` are identical in all four posts. `projectTitle` is never read.
 - Assumption, approved by the author: the `titleHighlight` convention and the string matching in `ArticleHeader.tsx:39-76` stay as they are.
+
+### As Built
+
+- `PostCardProps` and `ArticleHeaderProps` are `post: BlogPost` plus an optional `className`. The card fill is `post.accentColor`, with white for an empty value.
+- `BLOG_POSTS` is `as const satisfies readonly BlogPost[]`, `PostSlug` is derived from it in `posts.ts`, `ProjectCardProps.postSlug` is `PostSlug`, and `PROJECTS` is `as const satisfies readonly ProjectCardProps[]`. `ProjectCard.tsx` imports the type with `import type`.
+- `BlogPost` in `types.ts` holds `date` and `summary` once and has no `projectTitle`, `displayDate` or `excerpt`. `formatDate` in `src/features/blog/formatDate.ts` renders the date with a module-level `Intl.DateTimeFormat` in UTC.
+- The two compile-failure criteria rest on the type declarations read in this run and on the negative probes in the implementation report (TS2741 and TS2322).
 
 ### Dependencies
 
@@ -2000,7 +1990,7 @@ From the React/TS code review of 2026-10-13 (findings T1, T4 and T5). `PostCard`
 ## [TODO-48] Share one footer, one scroll-reset hook and one set of nav helpers
 
 **GitHub**: #96
-**Status**: pending
+**Status**: done — issue closed, PR #102 merged
 
 **Type**: Technical
 **GitHub Label**: technical
@@ -2015,11 +2005,11 @@ From the React/TS code review of 2026-10-13 (findings R3, R5 and R7). The footer
 
 ### Acceptance Criteria
 
-- [ ] One `Footer` component renders on the home page, the blog index, the post page and the post-not-found view; the footer markup exists once in `src/`.
-- [ ] Every external link in the footer has `target="_blank"` and `rel="noopener noreferrer"`.
-- [ ] The blog index and the post page reset scroll through one shared hook that runs before paint.
-- [ ] The scroll-to-section logic exists once, used by the nav links and the "View Work" button, and the desktop and mobile menus render from one list of links.
-- [ ] `npm run check` passes, and the `/verify` section-navigation, mobile-menu and blog checks pass.
+- [x] One `Footer` component renders on the home page, the blog index, the post page and the post-not-found view; the footer markup exists once in `src/`.
+- [x] Every external link in the footer has `target="_blank"` and `rel="noopener noreferrer"`.
+- [x] The blog index and the post page reset scroll through one shared hook that runs before paint.
+- [x] The scroll-to-section logic exists once, used by the nav links and the "View Work" button, and the desktop and mobile menus render from one list of links.
+- [x] `npm run check` passes, and the `/verify` section-navigation, mobile-menu and blog checks pass.
 
 ### Technical Notes
 
@@ -2031,6 +2021,14 @@ From the React/TS code review of 2026-10-13 (findings R3, R5 and R7). The footer
 - The design-system READMEs quote class strings from these components, and `npm run check` fails if a quoted string disappears from `src/`. AGENTS.md lists component files in its layout and Key Files sections; add `Footer` there if it becomes a key file.
 - Verify with the `/verify` skill: `features/section-navigation.md`, `features/mobile-menu.md` and `features/blog.md`.
 
+### As Built
+
+- `src/components/Footer.tsx` is the only `<footer>` in `src/`. It takes an optional `className` (the blog index passes `mt-24`), and both of its links carry `target="_blank"` and `rel="noopener noreferrer"`.
+- `useScrollReset` in `src/hooks/useScrollReset.ts` scrolls to the top in a `useLayoutEffect` keyed on `pathname`. `BlogIndex` and `BlogPost` call it.
+- `src/features/navigation/navHelpers.ts` exports `NAV_LINKS` and `scrollToSection`. `Nav.tsx` maps `NAV_LINKS` for the desktop bar and the drawer, and `handleViewWork` in `App.tsx` calls `scrollToSection('work')`.
+- No layout route was added: each page renders `Nav` and `Footer` itself.
+- The `/verify` part of the last criterion rests on the `ax.sh all` pass in the implementation report of #98, which ran after this change (2026-10-13).
+
 ### Dependencies
 
 - Blocked by: None
@@ -2041,7 +2039,7 @@ From the React/TS code review of 2026-10-13 (findings R3, R5 and R7). The footer
 ## [TODO-49] Split the blog routes out of the home page bundle and scope the GSAP animations
 
 **GitHub**: #97
-**Status**: pending
+**Status**: done — issue closed, PR #103 merged
 
 **Type**: Enhancement
 **GitHub Label**: enhancement
@@ -2056,11 +2054,11 @@ From the React/TS code review of 2026-10-13 (findings R1 and R4). The whole site
 
 ### Acceptance Criteria
 
-- [ ] `BlogIndex` and `BlogPost` load with `React.lazy`, and the post content in `posts.ts` is not in the JavaScript the home page loads.
-- [ ] The entry chunk is smaller than today's 402 kB (136 kB gzip), with before and after sizes in the PR.
-- [ ] `useGsapAnimations` reverts only the animations it created (a `gsap.context()`) and no longer calls `ScrollTrigger.getAll()`.
-- [ ] With `prefers-reduced-motion: reduce`, `.animate-on-scroll` elements are visible and do not animate.
-- [ ] `/blog` and `/blog/:slug` work on direct load and in-app navigation, and `npm run check` passes.
+- [x] `BlogIndex` and `BlogPost` load with `React.lazy`, and the post content in `posts.ts` is not in the JavaScript the home page loads.
+- [x] The entry chunk is smaller than today's 402 kB (136 kB gzip), with before and after sizes in the PR.
+- [x] `useGsapAnimations` reverts only the animations it created (a `gsap.context()`) and no longer calls `ScrollTrigger.getAll()`.
+- [x] With `prefers-reduced-motion: reduce`, `.animate-on-scroll` elements are visible and do not animate.
+- [x] `/blog` and `/blog/:slug` work on direct load and in-app navigation, and `npm run check` passes.
 
 ### Technical Notes
 
@@ -2071,6 +2069,13 @@ From the React/TS code review of 2026-10-13 (findings R1 and R4). The whole site
 - `src/hooks/useGsapAnimations.ts:35` calls `ScrollTrigger.getAll().forEach((trigger) => trigger.kill())`, and leaves the tweens and their inline `opacity` and `transform` styles behind. Create the animations inside `gsap.context()` and return `() => ctx.revert()`.
 - Reduced motion: `gsap.matchMedia()` with `(prefers-reduced-motion: no-preference)`. `src/styles/global.css:30` only handles `scroll-behavior` today.
 - `HomePage`, `BlogIndex` and `BlogPost` all use the hook.
+
+### As Built
+
+- `App.tsx` loads `BlogIndex` and `BlogPost` through `lazy()` inside `<Suspense fallback={null}>`.
+- Build of this run: the entry chunk `index-*.js` is 364.08 kB (124.55 kB gzip), and the post text is in the shared lazy chunk `useScrollReset-*.js` (22.79 kB), not in the entry chunk. PR #103 records 402.29 kB before and 364.08 kB after.
+- `useGsapAnimations` uses `gsap.matchMedia()` in place of the `gsap.context()` that the criterion names: it registers the reveals under `(prefers-reduced-motion: no-preference)` and returns `mm.revert()`. `ScrollTrigger.getAll()` is not called anywhere in `src/`.
+- The reduced-motion and navigation criteria rest on the code and on the headless Chrome checks in the implementation report (2026-10-13).
 
 ### Dependencies
 
@@ -2083,7 +2088,7 @@ From the React/TS code review of 2026-10-13 (findings R1 and R4). The whole site
 ## [TODO-50] Check whether the reload handling in App.tsx is redundant, and remove it if so
 
 **GitHub**: #98
-**Status**: pending
+**Status**: done — issue closed, PR #104 merged
 
 **Type**: Technical
 **GitHub Label**: technical
@@ -2098,10 +2103,10 @@ From the React/TS code review of 2026-10-13 (finding T3). `index.html` has an in
 
 ### Acceptance Criteria
 
-- [ ] The PR records what happens on a reload of `/` and `/#work` with the `isPageReload` code removed, on a desktop and a mobile viewport.
-- [ ] If the behaviour is the same as today (top of the page, hash removed), the `isPageReload` block and its branch in the `HomePage` effect are removed. If it differs, they stay and a comment says what `index.html` does not cover.
-- [ ] Cross-page hash landings (for example Blog to About) still land on the section.
-- [ ] `npm run check` passes.
+- [x] The PR records what happens on a reload of `/` and `/#work` with the `isPageReload` code removed, on a desktop and a mobile viewport.
+- [x] If the behaviour is the same as today (top of the page, hash removed), the `isPageReload` block and its branch in the `HomePage` effect are removed. If it differs, they stay and a comment says what `index.html` does not cover.
+- [x] Cross-page hash landings (for example Blog to About) still land on the section.
+- [x] `npm run check` passes.
 
 ### Technical Notes
 
@@ -2112,6 +2117,12 @@ From the React/TS code review of 2026-10-13 (finding T3). `index.html` has an in
 - `landedAt` (`App.tsx:99-107`) exists because StrictMode re-runs the effect in development; check the dev server as well as a production build.
 - Verify with the `/verify` skill, `features/section-navigation.md`.
 - Removing the block also removes the two casts at `App.tsx:57-58`, which TODO-46 may already have replaced.
+
+### As Built
+
+- `App.tsx` has no `isPageReload`. A reload is handled by the inline script in `index.html` alone: it sets `history.scrollRestoration = 'manual'`, strips the hash and scrolls to the top.
+- PR #104 records the reload test on `/` and `/#work` at 1280x900 and 375x812, with the same result as before the removal.
+- The landing criterion rests on the `ax.sh` cross-page checks in the implementation report (2026-10-13). The hash landing and the anchor hold (`holdAnchor`, `ANCHOR_HOLD_MS`) in `App.tsx` are unchanged.
 
 ### Dependencies
 
@@ -2124,7 +2135,7 @@ From the React/TS code review of 2026-10-13 (finding T3). `index.html` has an in
 ## [TODO-51] Make the contact form open a prefilled email on submit
 
 **GitHub**: #99
-**Status**: pending
+**Status**: done — issue closed, PR #105 merged
 
 **Type**: Enhancement
 **GitHub Label**: enhancement
@@ -2139,11 +2150,11 @@ From the React/TS code review of 2026-10-13 (finding X1). The contact form's sub
 
 ### Acceptance Criteria
 
-- [ ] Submitting the form opens the visitor's mail client with a new message to the site's contact address.
-- [ ] The name, email and message from the form are in the subject and body, URL-encoded.
-- [ ] Name, email and message are required; submitting with one empty shows the browser's validation message and opens nothing.
-- [ ] The inputs have `name` and `autocomplete` attributes.
-- [ ] `npm run check` passes, and the button's press animation still plays.
+- [x] Submitting the form opens the visitor's mail client with a new message to the site's contact address.
+- [x] The name, email and message from the form are in the subject and body, URL-encoded.
+- [x] Name, email and message are required; submitting with one empty shows the browser's validation message and opens nothing.
+- [x] The inputs have `name` and `autocomplete` attributes.
+- [x] `npm run check` passes, and the button's press animation still plays.
 
 ### Technical Notes
 
@@ -2155,8 +2166,136 @@ From the React/TS code review of 2026-10-13 (finding X1). The contact form's sub
 - Update the Notes section of AGENTS.md only if its wording about the contact CTA becomes wrong.
 - Verify with the `/verify` skill, `features/contact.md`.
 
+### As Built
+
+- `handleSubmit` in `ContactForm.tsx` reads the fields with `FormData`, trims them, returns when one is empty, and sets `window.location.href` to `mailto:lahmakkonen@gmail.com` with the subject `Contact from {name}` and a body of name, email and message, each part through `encodeURIComponent`.
+- The three fields have `name`, `required` and `autoComplete` (`name`, `email`, `off`).
+- The form shows no confirmation after submit, and nothing happens for a visitor without a mail client. The email link beside the form is the fallback.
+- The submit button keeps its class string and `onPointerDown={playPress}`.
+
 ### Dependencies
 
 - Blocked by: None
 - Blocks: None
 - Related: #56, #86
+
+---
+
+## [TODO-52] Add live-demo links to the GymBro and Froots devlogs
+
+**GitHub**: #107
+**Status**: pending
+
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:41` — "- [ ] Add a live-demo link inside the GymBro and Froots blog posts."
+
+### Description
+
+No page of the site links to a running application or to the GymBro APK any more: the project cards carry "Code" and "Read Story" only, and the devlogs hold no outbound link (PRD US-4, R-6). The author decided on 2026-10-13 (PRD OQ-1) that the links go inside the devlogs and that the cards keep their two buttons. Add a live-demo link to the GymBro post and to the Froots post.
+
+### Acceptance Criteria
+
+- [ ] The GymBro post (`/blog/gymbro-app`) links to `https://staticwebsiteforgymbroapp.s3.eu-north-1.amazonaws.com/index.html`, the page that offers the APK.
+- [ ] The Froots post (`/blog/froots-smoothie-app`) links to `https://froots-smoothies.netlify.app/`.
+- [ ] Both links open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`.
+- [ ] The project cards on `/` still show "Code" and "Read Story" only.
+- [ ] `npm run check` passes.
+
+### Technical Notes
+
+- The post bodies are HTML strings in the `content` field of `src/features/blog/data/posts.ts` (`gymbro-app` and `froots-smoothie-app`), rendered by `BlogPost.tsx` inside `.brutal-prose`. `.brutal-prose a` in `src/styles/global.css` already styles a link (bold, accent underline, yellow hover), so a plain `<a>` in the body needs no class.
+- Both URLs answered 200 on 2026-10-13. The GymBro page is titled "GymBro App" and links to `app-debug.apk` in the same bucket. They are the `liveUrl` values that `PROJECTS` held before #42 (commit `9ccf6d4`).
+- Tralla and Distill Design Scraper get no link: the git history holds no live URL for them.
+- AGENTS.md requires `target="_blank"` and `rel="noopener noreferrer"` on every external link.
+- After the change, update the PRD: US-4, the "live application deployments" item of section 4.1, and R-6.
+- Verify with the `/verify` skill, `features/blog.md`. Assert the links' `url=` in the snapshot and do not click them.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-53] Fix the contrast of accent text and accent-filled controls
+
+**GitHub**: #108
+**Status**: pending
+
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Medium
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:42` — "- [ ] Fix the colour contrast of the mobile \"Menu\" button and of the nav link hover colour."
+
+### Description
+
+Several accent treatments are below the 4.5:1 contrast that WCAG 2.1 AA asks of normal-size text (PRD R-7, principle 4). White text on a `#ff3e00` fill is 3.53:1: the mobile "Menu" button (16px bold), and the "404 Error" badge (14px bold) and the "← Back to All Posts" button (18px bold) of the "Post Not Found" card. `#ff3e00` text on the `#f8f9fa` canvas is 3.35:1, and on white it is 3.53:1: the hover color of the nav links (18px bold), of the "← All posts" link (16px bold), and of the contact email link at its mobile size (18px bold). All of them should reach 4.5:1.
+
+### Acceptance Criteria
+
+- [ ] The label of the mobile "Menu" / "Close" button has a contrast of at least 4.5:1 against its `#ff3e00` fill.
+- [ ] A hovered nav link (logo, desktop links, drawer links) has a text contrast of at least 4.5:1 and still looks different from its resting state.
+- [ ] The hovered "← All posts" link on a post page has a text contrast of at least 4.5:1 and still looks different from its resting state.
+- [ ] The hovered email link of the contact section has a text contrast of at least 4.5:1 below the `sm` breakpoint and still looks different from its resting state.
+- [ ] The "404 Error" badge and the "← Back to All Posts" button of the "Post Not Found" card have a text contrast of at least 4.5:1 against their fill.
+- [ ] The Menu button's press behaviour and the underline bars of the desktop nav links and of the "← All posts" link are unchanged.
+- [ ] The design-system docs that quote these classes (`Button`, `NavBar`, `MobileMenu` and `Footer` READMEs where they change, and "Known contrast misses" in `DESIGN.md`) match the new classes, and `npm run check` passes.
+
+### Technical Notes
+
+- White on accent: `src/features/navigation/Nav.tsx:103` (Menu button), `src/features/blog/BlogPost.tsx:25` (badge) and `:36` (button), all `bg-[#ff3e00] text-white`. `text-[#121212]` on the accent fill reads 5.3:1 (DESIGN.md, "Known contrast misses").
+- Accent hover text, `hover:text-[#ff3e00]`: `Nav.tsx:65` (logo), `:86` (desktop links), `:131` (drawer links), `src/features/blog/components/ArticleHeader.tsx:61` ("← All posts") and `src/features/contact/ContactForm.tsx:45` (email link).
+- The desktop nav links and the "← All posts" link already grow a 4px accent bar on hover (`group-hover:w-full`), so the color change can go there without losing the hover cue. The logo, the drawer links and the email link have no other cue today. DESIGN.md suggests an accent underline in place of accent text.
+- What already passes and stays as it is: the footer link hover is on the ink ground at 5.3:1. "Send Message" (`ContactForm.tsx:94`) is 20px bold, and the email link from `sm` up is 24px bold; both count as large text, which needs 3:1. The accent words in the headings are large text too.
+- `npm run check` fails when a class string in a design-system component README no longer appears in `src/`. `Button/README.md` quotes the whole Menu button string, and `NavBar/README.md`, `MobileMenu/README.md` and `Footer/README.md` quote link classes.
+- Verify with the `/verify` skill: `features/mobile-menu.md`, `features/section-navigation.md`, `features/blog.md` (the back link and the 404 card) and `features/contact.md`. `ax.sh all` must still exit 0.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-54] Add SEO metadata to index.html
+
+**GitHub**: #109
+**Status**: pending
+
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:43` — "- [ ] Add SEO metadata to index.html: a meta description, OpenGraph tags with an image, and a Twitter card."
+
+### Description
+
+`index.html` holds only the title "laanhema.dev", the favicon link and the viewport tag, so a search result or a shared link shows no description and no preview image. PRD Phase 3 lists this metadata as a deliverable, and it was never built. Add a description, OpenGraph tags with an image, and a Twitter card.
+
+### Acceptance Criteria
+
+- [ ] `index.html` has a `<meta name="description">` that describes the site.
+- [ ] `index.html` has the OpenGraph tags `og:title`, `og:description`, `og:type`, `og:url` (`https://laanhema.dev/`) and `og:image`, with an absolute URL to an image in `public/`.
+- [ ] `index.html` has a `twitter:card` of `summary_large_image` with title, description and image.
+- [ ] The production build serves the image at the URL the tags name, and `npm run check` passes.
+
+### Technical Notes
+
+- `index.html` is the only HTML document of the site, and `public/404.html` redirects deep links to it, so one static set of tags serves every route. Tags per blog post would need prerendering and are not part of this issue.
+- No share image exists: `public/` holds `404.html`, `CNAME`, `favicon.svg` and `icons.svg`. Make a 1200x630 image in the site's style (`.agents/design-system/laanhema-design-system/DESIGN.md`) and put it in `public/`, so Vite copies it to the root of `dist/` under a stable name.
+- Crawlers need absolute URLs for `og:image` and `og:url`. The domain is `laanhema.dev` (`public/CNAME`).
+- Keep the inline script of `index.html` (the SPA redirect restore and the reload handling) as it is.
+- `index.html` changes, so verify with `verify-server.sh start preview`.
+- After the change, tick the SEO deliverable of Phase 3 in the PRD.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None

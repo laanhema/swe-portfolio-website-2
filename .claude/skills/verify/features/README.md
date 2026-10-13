@@ -32,4 +32,4 @@ Each feature file has an H1, one descriptive paragraph, and then four H2 section
 - [Mobile menu](./mobile-menu.md): the `Menu`/`Close` drawer below the `md` breakpoint.
 - [Project showcase](./project-showcase.md): the four project cards with their tech badges, `CODE` repo links, and `READ STORY` links.
 - [Blog](./blog.md): the `/blog` index, `/blog/:slug` articles, the back link, and the 404 for unknown slugs.
-- [Contact](./contact.md): the `mailto:` CTA and the non-submitting message form.
+- [Contact](./contact.md): the `mailto:` CTA and the message form, which opens a prefilled email draft on submit.

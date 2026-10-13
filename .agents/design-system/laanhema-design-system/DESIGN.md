@@ -12,11 +12,11 @@ Every new element should use at least the first three:
 
 ## Content fundamentals
 
-- **Voice.** First person, confident and plain: "I've been coding since 2019…", "Drop a message if you want to chat." Address the reader as "you" only in calls to action.
-- **Headings** are short, uppercase and **end with a period**: "Building Robust Systems.", "The Dev Behind The Code.", "Selected Works.", "Let's Build Something Epic." Break them over 2–3 lines with `<br />`.
+- **Voice.** First person, confident and plain: "I have been coding since 2019…", "Drop me a message and lets chat about it." Address the reader as "you" only in calls to action.
+- **Headings** are short, uppercase and **end with a period**: "Building Robust Systems.", "The Dev Behind The Code.", "Selected Works.", "Let's Build Something Awesome." Break them over 2–3 lines with `<br />`.
 - **Highlight one word per heading.** Use `text-[#ff3e00]` on light grounds, `text-[#00e5ff]` on the dark band, or the outlined `text-transparent text-stroke-robust` in the hero only. Never highlight two words.
 - **Paragraphs** are sentence case and `font-medium`, never uppercase.
-- **Buttons and labels** are 1–2 uppercase words: "View Work", "Code", "Live Demo", "Download APK", "Send Message".
+- **Buttons and labels** are 1–2 uppercase words: "View Work", "Code", "Read Story", "Send Message".
 - **Numbers** are set big and bare: "2019", "25", "2000+". The caption goes underneath in uppercase.
 - No emoji, no exclamation marks.
 
@@ -65,7 +65,7 @@ Every new element should use at least the first three:
 
 - Anything with `.animate-on-scroll` gets one GSAP ScrollTrigger reveal (`useGsapAnimations`): from `y: 50, opacity: 0` to `y: 0, opacity: 1`, `duration: 0.8`, `ease: 'power3.out'`, starting at `top 85%`, `toggleActions: 'play none none reverse'`.
 - **On a new page:** add `animate-on-scroll` to each heading, paragraph group, grid and card, and call `useGsapAnimations()` once in the page component.
-- Not yet done: `prefers-reduced-motion` (the PRD asks for it). Wrap the hook's body in `gsap.matchMedia()` with `(prefers-reduced-motion: no-preference)`.
+- **Reduced motion:** the hook registers the reveals inside `gsap.matchMedia()` under `(prefers-reduced-motion: no-preference)`, so nothing animates for a visitor who asks for reduced motion.
 
 ## Imagery
 
@@ -74,7 +74,7 @@ Every new element should use at least the first three:
 
 ## Iconography
 
-- There are four Lucide-style stroke icons, copied exactly from `src/components/Icons.tsx` (**Icons**): GitHub, Twitter, LinkedIn and Mail. They use a 24px grid, a 2px stroke, round caps and joins, and `stroke="currentColor"`.
+- There are three Lucide-style stroke icons, copied exactly from `src/components/Icons.tsx` (**Icons**): GitHub, LinkedIn and Mail. They use a 24px grid, a 2px stroke, round caps and joins, and `stroke="currentColor"`.
 - **Sizes:** 24px in social buttons (inside `p-4` white brutal boxes), 20px (`w-5 h-5`) in the card Code button, and 32px (`w-8 h-8`) beside the contact email.
 - For new icons, use Lucide at the same 2px stroke. No filled icons and no emoji.
 
@@ -87,6 +87,5 @@ Every new element should use at least the first three:
 ## Not synced
 
 - **Fonts:** only the Latin subset of Noto Sans Variable is included. The site also loads the Cyrillic, Greek and Latin-ext subsets through fontsource.
-- **Unused file:** `src/index.css` is Vite's starter stylesheet with its own tokens (`--accent: #aa3bff` and others). It isn't imported by `main.tsx`, so it's left out. It's safe to delete from the repo.
-- **Components:** they are hand-written static renditions of `Nav.tsx`, `ProjectCard.tsx`, `ContactForm.tsx` and the sections in `App.tsx`. They use the same Tailwind class strings, compiled into `components/bundle.css`. The React components themselves weren't built or run.
-- **Blog components:** PostCard, ArticleHeader, Prose, BlogIndex and BlogArticle are **additions**. They are composed only from the moves above. See **Building new pages**.
+- **Components:** they are hand-written static renditions of `Nav.tsx`, `ProjectCard.tsx`, `ContactForm.tsx` and the sections in `App.tsx`. They use the same Tailwind class strings, compiled into `styles/bundle.css`. The React components themselves weren't built or run.
+- **Blog components:** PostCard, ArticleHeader, Prose, BlogIndex and BlogArticle are static renditions too. The shipped ones live in `src/features/blog/` and are composed only from the moves above. See **Building new pages**.

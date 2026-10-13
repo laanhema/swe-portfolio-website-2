@@ -5,7 +5,7 @@ description: Launch and drive the laanhema.dev portfolio (React/Vite single-page
 
 # Verify laanhema.dev
 
-The only surface is a static web UI. There is no backend, API, CLI, or database: the "contact form" never submits, and contact goes through a `mailto:` link. Every proof is a browser proof: you drive real clicks and record the resulting URL, scroll position, and what is on screen.
+The only surface is a static web UI. There is no backend, API, CLI, or database: the contact form sends nothing to a server. A valid submit navigates to a prefilled `mailto:` URL, and a plain `mailto:` link sits next to the form. Every proof is a browser proof: you drive real clicks and record the resulting URL, scroll position, and what is on screen.
 
 Two helper scripts do all the work. Run them from the repo root:
 
@@ -54,8 +54,9 @@ $A tap 'button "SEND MESSAGE"' [path] [--stuck-active] # real touch tap at 375x8
 $A state                                              # {"path","hash","scrollY","h1","menuExpanded"}
 $A buttons                                            # hover VIEW WORK, CODE, READ STORY, SEND MESSAGE; exit 1 unless they lift alike (#56)
 $A cursor                                             # read SEND MESSAGE's and the form fields' computed cursor; exit 1 unless pointer / text (#86)
+$A submit [path]                                      # submit the contact form empty, then filled; exit 1 unless blocked, then the prefilled mailto: URL (#99)
 $A hero                                               # check hero header across desktop and mobile viewports; exit 1 if any blur found
-$A all                                                # tables on every post, nav, buttons, cursor and hero in one run; exit 1 if any fails
+$A all                                                # tables on every post, nav, buttons, cursor, submit and hero in one run; exit 1 if any fails
 $A aria "$RUN_DIR/<name>.aria.txt"                    # full accessibility snapshot to a file
 $A shot "$RUN_DIR/<name>.png" [--full-page]           # screenshot
 ```
@@ -90,7 +91,7 @@ Standards:
 
 - Drive the real user path: nav links, buttons, and cards. Do not use `eval` to call `scrollIntoView` or to set `location`. Use `eval` and `state` only to read.
 - For a responsive change, prove both viewports (`$A desktop` and `$A mobile`). Mobile widths from 320px to 375px are where this site breaks (AGENTS.md). For 320px, run `chrome-devtools-axi emulate --viewport "320x640x2,mobile,touch"` with the session env set.
-- Side effects: there are none. Nothing is persisted, and the form `onSubmit` calls `preventDefault`. The contact proof is the `mailto:` href, not a sent message.
+- Side effects: nothing is persisted and nothing is sent to a server. A valid form submit sets `location.href` to a `mailto:` URL, which a browser hands to the system mail handler. Submit a filled form only through `ax.sh submit`: it records and cancels that navigation, so no mail client opens. The contact proof is the `mailto:` href of the link and the URL that `ax.sh submit` prints, not a sent message.
 - In dev mode the page shows your working tree. Run `doctor`, which prints the git HEAD and any uncommitted changes, so the proof records which code it ran against.
 
 ## Cleanup
@@ -108,7 +109,7 @@ ls "$RUN_DIR"  # evidence must still be here
 | Script | Invocation |
 | --- | --- |
 | `scripts/verify-server.sh` | `start [dev\|preview]`, `doctor`, `stop` |
-| `scripts/ax.sh` | `open <path>`, `click '<regex>'`, `has '<regex>'`, `tap '<regex>' [path] [--stuck-active]`, `state`, `shot <png> [--full-page]`, `aria <txt>`, `tables`, `nav`, `buttons`, `cursor`, `hero`, `all`, `mobile`, `desktop`, `stop` |
+| `scripts/ax.sh` | `open <path>`, `click '<regex>'`, `has '<regex>'`, `tap '<regex>' [path] [--stuck-active]`, `state`, `shot <png> [--full-page]`, `aria <txt>`, `tables`, `nav`, `buttons`, `cursor`, `submit [path]`, `hero`, `all`, `mobile`, `desktop`, `stop` |
 | `scripts/touch-tap.mjs` | called by `ax.sh tap`; do not run it directly |
 
 Run either script with no arguments to print its usage.

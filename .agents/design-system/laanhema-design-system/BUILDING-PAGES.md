@@ -4,20 +4,21 @@ How to add a page, such as a blog, case studies or a uses page, without drifting
 
 ## Checklist for any new page
 
-- [ ] The page starts with **NavBar**, unchanged, and ends with **Footer**. Add the new link (for example "Blog") to both desktop and mobile nav. On sub-pages, anchors become `/#work`, `/#about`, `/#contact`.
+- [ ] The page starts with **NavBar**, unchanged, and ends with **Footer**. Add the new link (for example "Blog") to `NAV_LINKS` in `src/features/navigation/navHelpers.ts`. The desktop and mobile nav both render from it. On sub-pages, anchors become `/#work`, `/#about`, `/#contact`.
 - [ ] The first heading is a display heading (`text-6xl md:text-8xl font-bold uppercase tracking-tighter`) that ends with a period and has one `text-[#ff3e00]` word.
 - [ ] Content sits in `px-6 md:px-12` and `max-w-6xl mx-auto` for lists, or `max-w-4xl` for reading.
 - [ ] Every card and every image has `brutal-border brutal-shadow`. Every clickable box also has `brutal-shadow-hover`.
 - [ ] Card fills follow the accent rotation (`#ff3e00` → `#00e5ff` → `#facc15` → `#a855f7`), or use white for the quieter list items.
 - [ ] Section seams get `border-y-4` / `border-t-4` in ink. At most one dark (`bg-[#121212] text-white`) band per page, plus the footer.
 - [ ] Blocks that should reveal get `animate-on-scroll`, and the page calls `useGsapAnimations()`.
+- [ ] The page calls `useScrollReset()` (`src/hooks/useScrollReset.ts`), so a route change opens it at the top.
 - [ ] Small links are ink text with an accent underline, not orange text.
 
 ## Blog index (`/blog`)
 
 - **Header:** use the SectionHeading pattern as the page `h1` (for example "Field <br/> <span class='text-[#ff3e00]'>Notes.</span>"), with a one-line `max-w-sm text-xl font-bold` subtitle on the right.
 - **List:** **PostCard**s in `grid md:grid-cols-2 gap-10`, with every second card staggered (`md:translate-y-16`) like the showcase.
-- The newest post is **featured**: it uses an accent fill (rotate per post). Older posts use white fills.
+- Each card is filled with its post's `accentColor`, taken from the accent rotation. A post with an empty `accentColor` gets a white card.
 - PostCard anatomy:
   - a meta row: `<time>` / reading time, `text-sm font-bold uppercase tracking-wider`
   - a title in `heading-card` style, linked
@@ -33,10 +34,10 @@ How to add a page, such as a blog, case studies or a uses page, without drifting
   - the `h1` (`text-5xl md:text-7xl font-bold uppercase leading-[0.9] tracking-tighter`, last word or phrase in accent)
   - a byline row (author / date / reading time)
   - a summary in the hero lede treatment: `text-xl md:text-2xl font-medium border-l-8 border-[#ff3e00] pl-6`
-- **Body:** wrap the rendered Markdown/MDX in `<div class="brutal-prose">`. It styles plain HTML (h2, h3, p, a, lists, code, pre, blockquote, table, figure, hr), so posts need no per-element classes.
+- **Body:** each post's `content` in `src/features/blog/data/posts.ts` is an HTML string, and `BlogPost.tsx` renders it inside `<div class="brutal-prose">`. It styles plain HTML (h2, h3, p, a, lists, code, pre, blockquote, table, figure, hr), so posts need no per-element classes. Wrap each `<table>` in `<div class="brutal-table-wrapper">`.
 - **End of post:** reuse **ContactSection** as the call to action, then the Footer.
 
-## `.brutal-prose`: paste into `src/styles/global.css`
+## `.brutal-prose`, as it is in `src/styles/global.css`
 
 ```css
 @layer components {
@@ -56,7 +57,11 @@ How to add a page, such as a blog, case studies or a uses page, without drifting
   .brutal-prose hr { @apply border-0 border-t-4 border-text-primary my-16; }
   .brutal-prose figure img { @apply border-4 border-text-primary shadow-brutal w-full; }
   .brutal-prose figcaption { @apply mt-4 text-sm font-bold uppercase tracking-wider; }
-  .brutal-prose table { @apply w-full border-4 border-text-primary text-base; }
+  .brutal-table-wrapper {
+    @apply w-full overflow-x-auto my-6;
+    -webkit-overflow-scrolling: touch;
+  }
+  .brutal-prose table { @apply w-full min-w-full border-4 border-text-primary text-base; }
   .brutal-prose th { @apply bg-text-primary text-white uppercase text-left font-bold p-3; }
   .brutal-prose td { @apply border-t-2 border-text-primary p-3; }
   .brutal-prose thead { @apply max-md:sr-only; }
@@ -91,15 +96,7 @@ Code blocks are `#121212` with white text. Map a highlighter theme (Shiki, Prism
 
 ## Optional tidy-up before the blog grows
 
-- Promote the literal accent hexes to `@theme` so new code can write `bg-accent-cyan` instead of `bg-[#00e5ff]`. The PRD already names them:
-
-```css
-@theme {
-  --color-accent-cyan: #00e5ff;
-  --color-accent-yellow: #facc15;
-  --color-accent-purple: #a855f7;
-}
-```
+- Replace the literal accent hexes with the `@theme` tokens that `global.css` already defines (`--color-accent-cyan`, `--color-accent-yellow`, `--color-accent-purple`), so new code can write `bg-accent-cyan` instead of `bg-[#00e5ff]`.
 
 - Turn the repeated class strings into `@utility` rules (Tailwind v4) or small React components:
   - `btn-primary` (the View Work string)
