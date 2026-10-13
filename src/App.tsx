@@ -53,17 +53,6 @@ const PROJECTS = [
   },
 ] as const satisfies readonly ProjectCardProps[];
 
-// Module-level reload detection: evaluated once on script load, then consumed on initial mount
-let isPageReload = false;
-if (typeof performance !== 'undefined') {
-  const navEntries = performance.getEntriesByType('navigation');
-  isPageReload = navEntries.length > 0
-    ? navEntries[0] instanceof PerformanceNavigationTiming && navEntries[0].type === 'reload'
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    : performance.navigation.type === 1;
-  isPageReload &&= window.location.pathname === '/';
-}
-
 // Scroll anchoring does not correct later reflows above the target on this page (measured, #63),
 // so a late reflow (e.g. a font swap) would push the target off the nav bottom.
 const ANCHOR_HOLD_MS = 2000;
@@ -115,18 +104,6 @@ function HomePage() {
     const isInitialLanding = landedAt.current === null || landedAt.current === landing;
     landedAt.current = landing;
     const behavior: ScrollBehavior = isInitialLanding ? 'instant' : 'smooth';
-
-    if (isPageReload) {
-      isPageReload = false;
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-      }
-      if (window.location.hash) {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
-      }
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      return;
-    }
 
     if (location.hash) {
       const target = document.getElementById(location.hash.slice(1));
