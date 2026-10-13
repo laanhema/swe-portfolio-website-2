@@ -70,6 +70,7 @@ Verification methodology rests on repository code inspection, static build and l
 - Tasks 23–24 (`TODO.md:23-24`): Already tracked as GitHub issues #63 and #64 (TODO-33, TODO-34).
 - Tasks 25–26 (`TODO.md:25-26`): Already tracked as GitHub issues #66 and #68 (TODO-35, TODO-36).
 - Tasks 27–31 (`TODO.md:27-31`): Already tracked as GitHub issues #71 through #75 (TODO-37 to TODO-41).
+- Tasks 32–34 and 36 (`TODO.md:32-34`, `TODO.md:36`): Already tracked as GitHub issues #86, #87, #88 and #91 (TODO-42 to TODO-45).
 
 ---
 
@@ -1900,6 +1901,259 @@ Some button class strings in the design system (`.agents/design-system/laanhema-
 ### As Built
 
 - Implemented and verified in default branch via PR #92.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+- Related: #56, #86
+
+---
+
+## [TODO-46] Remove dead code and avoidable type casts, and enable stricter TypeScript and lint settings
+
+**GitHub**: #94
+**Status**: pending
+
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: Medium
+**Complexity**: Medium
+**Labels**: technical, frontend
+**Source**: `TODO.md:37` — "- [ ] Remove dead code and avoidable type casts, and turn on stricter TypeScript and lint settings. From the React/TS code review (R2, R6, R7 barrel file, T2, T6, X2): the table-wrapping effect in BlogPost.tsx, the useInRouterContext fallback in ProjectCard.tsx, the unused blog components barrel file, the casts in App.tsx, Nav.tsx and main.tsx, the unused Vite template files, and the \"temp-dir\" package name. No behaviour change."
+
+### Description
+
+Clean-up batch from the React/TS code review of 2026-10-13 (findings R2, R6, R7, T2, T6 and X2). It removes code that never runs, replaces type casts with narrowing, deletes unused Vite template files, and turns on stricter compiler and lint rules so later changes are written under them. Nothing a visitor sees should change.
+
+### Acceptance Criteria
+
+- [ ] The table-wrapping code in the `BlogPost.tsx` effect, the `useInRouterContext` fallback link in `ProjectCard.tsx` and `src/features/blog/components/index.ts` are removed.
+- [ ] `src/` has no type cast other than `as const`, and `main.tsx` has no non-null assertion.
+- [ ] `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` are on in `tsconfig.app.json`, and ESLint runs the `strictTypeChecked` preset with no errors.
+- [ ] `src/App.css`, `src/index.css`, `src/assets/hero.png`, `src/assets/react.svg` and `src/assets/vite.svg` are deleted, and `package.json` is named `swe-portfolio-website-2`.
+- [ ] `npm run check` passes, and the pages look and behave as before, including blog tables scrolling sideways on mobile.
+
+### Technical Notes
+
+- R2: `src/features/blog/BlogPost.tsx:19-34` wraps each table in `.brutal-table-wrapper` after render. All four tables in `src/features/blog/data/posts.ts` (lines 26, 138, 237, 352) are already wrapped, so the block never does anything. Keep the `window.scrollTo(0, 0)` call; `contentRef` can go if nothing else uses it. The block was added in #74.
+- R6: `useInRouterContext()` at `src/features/showcase/ProjectCard.tsx:23` is always true, because `App.tsx` renders every route inside `BrowserRouter`. Keep the `Link` at `:65-71` and remove the `<a>` fallback at `:73-79`.
+- R7: nothing imports `src/features/blog/components/index.ts`.
+- T2, the casts:
+  - `src/App.tsx:118` and `:129`: `'instant' as ScrollBehavior`. `lib.dom` already includes `'instant'`, and line 72 passes it without a cast.
+  - `src/App.tsx:57`: use `instanceof PerformanceNavigationTiming`.
+  - `src/App.tsx:58`: `lib.dom` already types `performance.navigation`, so the double cast is not needed.
+  - `src/features/navigation/Nav.tsx:28`: use `e.nativeEvent instanceof PointerEvent`. The `e?` parameter of `toggleMenu` is never omitted.
+  - `src/main.tsx:7`: throw when `#root` is missing instead of using `!`.
+- T6: both compiler flags compile with zero errors today. A trial run of `tseslint.configs.strictTypeChecked` gave 13 errors: 12 auto-fixable (`no-confusing-void-expression`, `no-unnecessary-template-expression`) and one `no-non-null-assertion` at `main.tsx:7`. Type-aware linting needs `parserOptions.projectService` (or `project`) in `eslint.config.js`. The preset does not flag `as` casts; `@typescript-eslint/consistent-type-assertions` could enforce the second criterion, but it was not tried.
+- X2: only `src/main.tsx:4` imports a stylesheet (`./styles/global.css`), and nothing imports the five files. Renaming the package also changes the `name` fields in `package-lock.json`.
+- `npm run check` also compares AGENTS.md with the repository; update AGENTS.md in the same change if a path it lists changes.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+- Related: TODO-50 (it may remove the `App.tsx` block that holds two of the casts)
+
+---
+
+## [TODO-47] Tighten the blog and project types
+
+**GitHub**: #95
+**Status**: pending
+
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: Medium
+**Complexity**: Medium
+**Labels**: technical, frontend
+**Source**: `TODO.md:38` — "- [ ] Tighten the blog and project types. From the React/TS code review (T1, T4, T5): make post a required prop on PostCard and ArticleHeader and drop the per-field props, type PROJECTS so postSlug must be a real blog post slug, and remove the duplicate fields from the BlogPost type."
+
+### Description
+
+From the React/TS code review of 2026-10-13 (findings T1, T4 and T5). `PostCard` and `ArticleHeader` accept every field as an optional prop next to an optional `post`, so a card with no data compiles. `PROJECTS` in `App.tsx` is untyped, so a mistyped `postSlug` gives a "Read Story" button that opens the not-found view. The `BlogPost` type also stores some data twice. Tighten the types so the compiler catches these.
+
+### Acceptance Criteria
+
+- [ ] `PostCard` and `ArticleHeader` take a required `post: BlogPost` and no per-field props, so `<PostCard />` without `post` fails to compile.
+- [ ] A `postSlug` in `PROJECTS` that matches no post in `BLOG_POSTS` fails `npm run build`.
+- [ ] The `BlogPost` type has no `projectTitle` and stores the post date once and the summary text once; dates and text on `/blog` and the post pages read as before.
+- [ ] The design-system `components/PostCard/README.md` describes the new props.
+- [ ] `npm run check` passes.
+
+### Technical Notes
+
+- T1: `src/features/blog/components/PostCard.tsx:5-18` and `ArticleHeader.tsx:5-16`. The only call sites are `BlogIndex.tsx:37` (passes `post`, `backgroundColor={post.accentColor}` and `className`) and `BlogPost.tsx:99` (passes `post`). The card background comes from `backgroundColor ?? color ?? post.accentColor ?? featured…` (`PostCard.tsx:42-46`); with `post` required, `post.accentColor` is enough. Keep `className`.
+- `.agents/design-system/laanhema-design-system/components/PostCard/README.md:7` lists `title`, `slug`, `date`, `readingTime`, `excerpt`, `tags[]` and `featured?` as the props. `npm run check` compares the README class strings with `src/`.
+- T4: `PROJECTS` is at `src/App.tsx:13-50`. One way: declare `BLOG_POSTS` with `as const satisfies readonly BlogPost[]` (this needs `tags: readonly string[]` in the type), derive `type PostSlug = (typeof BLOG_POSTS)[number]['slug']`, type `ProjectCardProps.postSlug` as `PostSlug`, and add `satisfies readonly ProjectCardProps[]` to `PROJECTS`. Use `import type` in `App.tsx` so it does not pull `posts.ts` into the home page bundle (this matters for TODO-49). The accent colours (`color`, `accentColor`) could become a union of the four palette values in the same way; that is optional.
+- T5: `src/features/blog/types.ts`. `displayDate` repeats `date`; the current strings look like `Sep 18, 2026`, so a module-level `Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })` reproduces them. `summary` and `excerpt` are identical in all four posts. `projectTitle` is never read.
+- Assumption, approved by the author: the `titleHighlight` convention and the string matching in `ArticleHeader.tsx:39-76` stay as they are.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+- Related: TODO-49
+
+---
+
+## [TODO-48] Share one footer, one scroll-reset hook and one set of nav helpers
+
+**GitHub**: #96
+**Status**: pending
+
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: Medium
+**Complexity**: Medium
+**Labels**: technical, frontend
+**Source**: `TODO.md:39` — "- [ ] Share one page layout: a single Footer component, one scroll-reset hook, and shared nav helpers. From the React/TS code review (R3, R5, R7): the footer is copy-pasted four times and the App.tsx copy lacks target and rel on its links, scroll reset is done three different ways, and the section-scroll handler and the nav links are duplicated."
+
+### Description
+
+From the React/TS code review of 2026-10-13 (findings R3, R5 and R7). The footer markup is copy-pasted four times and the copies have drifted: the home page's footer links lack `target="_blank"` and `rel`, which AGENTS.md requires on external links. Scroll reset is written three ways, and the blog pages do it after paint. The section-scroll handler and the nav links are each written twice. Put each of these in one place.
+
+### Acceptance Criteria
+
+- [ ] One `Footer` component renders on the home page, the blog index, the post page and the post-not-found view; the footer markup exists once in `src/`.
+- [ ] Every external link in the footer has `target="_blank"` and `rel="noopener noreferrer"`.
+- [ ] The blog index and the post page reset scroll through one shared hook that runs before paint.
+- [ ] The scroll-to-section logic exists once, used by the nav links and the "View Work" button, and the desktop and mobile menus render from one list of links.
+- [ ] `npm run check` passes, and the `/verify` section-navigation, mobile-menu and blog checks pass.
+
+### Technical Notes
+
+- Footers: `src/App.tsx:283-306`, `src/features/blog/BlogIndex.tsx:49-76` (this copy has an extra `mt-24`), and `src/features/blog/BlogPost.tsx:62-89` and `:111-138`. The links without `target` and `rel` are at `App.tsx:292-303`.
+- Scroll reset: `BlogIndex.tsx:10-12` and `BlogPost.tsx:16-35` use `useEffect`, which runs after paint. `App.tsx:102-131` uses `useLayoutEffect` and also handles hash landings and the anchor hold from #63; leave that logic alone. New hooks go in `src/hooks/`.
+- Section scroll: `handleViewWork` (`App.tsx:133-142`) and `handleSectionClick` (`Nav.tsx:48-60`) both scroll to an element and push the hash. `Nav` closes the menu with `flushSync` first (the #64 fix); keep that order.
+- Nav links: the desktop list is at `Nav.tsx:76-106` and the mobile list at `:132-159`. The class strings differ between the two lists; the link data (label and target) is the same.
+- Assumption, approved by the author: a layout route with `<Outlet />` is optional, and the home page's hash landings and reload behaviour stay as they are. With a layout route, `Nav` would stay mounted across routes.
+- The design-system READMEs quote class strings from these components, and `npm run check` fails if a quoted string disappears from `src/`. AGENTS.md lists component files in its layout and Key Files sections; add `Footer` there if it becomes a key file.
+- Verify with the `/verify` skill: `features/section-navigation.md`, `features/mobile-menu.md` and `features/blog.md`.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: TODO-49, TODO-50
+
+---
+
+## [TODO-49] Split the blog routes out of the home page bundle and scope the GSAP animations
+
+**GitHub**: #97
+**Status**: pending
+
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Medium
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:40` — "- [ ] Split the blog routes out of the home page bundle and scope the GSAP animations. From the React/TS code review (R1, R4): everything ships in one 402 kB chunk, the GSAP cleanup kills every ScrollTrigger in the app, and the animations ignore prefers-reduced-motion."
+
+### Description
+
+From the React/TS code review of 2026-10-13 (findings R1 and R4). The whole site ships as one 402 kB JavaScript chunk (136 kB gzip), so the home page downloads all the blog post content. The GSAP hook's cleanup kills every ScrollTrigger in the app instead of its own, and the fade-up animations run even when the visitor asks for reduced motion. Load the blog routes on demand and scope the animations.
+
+### Acceptance Criteria
+
+- [ ] `BlogIndex` and `BlogPost` load with `React.lazy`, and the post content in `posts.ts` is not in the JavaScript the home page loads.
+- [ ] The entry chunk is smaller than today's 402 kB (136 kB gzip), with before and after sizes in the PR.
+- [ ] `useGsapAnimations` reverts only the animations it created (a `gsap.context()`) and no longer calls `ScrollTrigger.getAll()`.
+- [ ] With `prefers-reduced-motion: reduce`, `.animate-on-scroll` elements are visible and do not animate.
+- [ ] `/blog` and `/blog/:slug` work on direct load and in-app navigation, and `npm run check` passes.
+
+### Technical Notes
+
+- `src/App.tsx:6-7` imports `BlogIndex` and `BlogPost` statically, and both import `src/features/blog/data/posts.ts` (29 kB of HTML strings). Use `React.lazy` with a `Suspense` boundary around the routes at `App.tsx:314-319`. Both files already have a default export.
+- The `Suspense` fallback must not cause a flash or a layout jump, and the scroll reset on the lazy pages runs when they mount (the shared hook from TODO-48).
+- Anything `App.tsx` needs from the blog feature must be `import type` only (see the `PostSlug` type in TODO-47).
+- Baseline from `npm run build` on 2026-10-13: `dist/assets/index-*.js` is 402.29 kB, 135.86 kB gzip. GSAP core and ScrollTrigger are about 117 kB minified on disk. Replacing GSAP is out of scope.
+- `src/hooks/useGsapAnimations.ts:35` calls `ScrollTrigger.getAll().forEach((trigger) => trigger.kill())`, and leaves the tweens and their inline `opacity` and `transform` styles behind. Create the animations inside `gsap.context()` and return `() => ctx.revert()`.
+- Reduced motion: `gsap.matchMedia()` with `(prefers-reduced-motion: no-preference)`. `src/styles/global.css:30` only handles `scroll-behavior` today.
+- `HomePage`, `BlogIndex` and `BlogPost` all use the hook.
+
+### Dependencies
+
+- Blocked by: TODO-48
+- Blocks: None
+- Related: TODO-47
+
+---
+
+## [TODO-50] Check whether the reload handling in App.tsx is redundant, and remove it if so
+
+**GitHub**: #98
+**Status**: pending
+
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: technical, frontend
+**Source**: `TODO.md:41` — "- [ ] Check whether the reload handling in App.tsx is redundant with the inline script in index.html, and remove it if it is. From the React/TS code review (T3). Not tested yet, and it touches the earlier page-refresh fix."
+
+### Description
+
+From the React/TS code review of 2026-10-13 (finding T3). `index.html` has an inline script that, on a reload, sets `history.scrollRestoration = 'manual'`, strips the hash and scrolls to the top before React loads. `App.tsx` then detects the reload again and repeats the same steps. From reading the code the second copy looks redundant, but this has not been tested and it belongs to the page-refresh fix from #31. Test it in a browser and remove the copy only if the behaviour stays the same.
+
+### Acceptance Criteria
+
+- [ ] The PR records what happens on a reload of `/` and `/#work` with the `isPageReload` code removed, on a desktop and a mobile viewport.
+- [ ] If the behaviour is the same as today (top of the page, hash removed), the `isPageReload` block and its branch in the `HomePage` effect are removed. If it differs, they stay and a comment says what `index.html` does not cover.
+- [ ] Cross-page hash landings (for example Blog to About) still land on the section.
+- [ ] `npm run check` passes.
+
+### Technical Notes
+
+- Inline script: `index.html:28-40`. The copy in the app: the module block at `src/App.tsx:52-60` (`isPageReload`) and the branch at `src/App.tsx:110-120`.
+- Reasoning: once the inline script has stripped the hash, `location.hash` is empty when `HomePage` mounts, so the effect would take the `else` branch at `App.tsx:128-130`, which also scrolls to the top instantly.
+- Things that could differ: the inline script runs on every path and the `App.tsx` block only on `/`; `scrollTo` runs before React renders in one and after in the other; and a reload combined with the GitHub Pages redirect handling at `index.html:11-26`.
+- History: `git log -S isPageReload` gives `555bf18` (#31) and `bd072e5`.
+- `landedAt` (`App.tsx:99-107`) exists because StrictMode re-runs the effect in development; check the dev server as well as a production build.
+- Verify with the `/verify` skill, `features/section-navigation.md`.
+- Removing the block also removes the two casts at `App.tsx:57-58`, which TODO-46 may already have replaced.
+
+### Dependencies
+
+- Blocked by: TODO-48
+- Blocks: None
+- Related: TODO-46, #31
+
+---
+
+## [TODO-51] Make the contact form open a prefilled email on submit
+
+**GitHub**: #99
+**Status**: pending
+
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:42` — "- [ ] The contact form's \"Send Message\" button does nothing on submit. From the React/TS code review (X1). Either build a mailto: link from the form fields or hide the form until real dispatch exists."
+
+### Description
+
+From the React/TS code review of 2026-10-13 (finding X1). The contact form's submit handler only calls `preventDefault`, so "Send Message" does nothing and the form looks broken to a visitor. Real form dispatch is deferred to post-MVP (AGENTS.md), so on submit, open the visitor's mail client with their message filled in.
+
+### Acceptance Criteria
+
+- [ ] Submitting the form opens the visitor's mail client with a new message to the site's contact address.
+- [ ] The name, email and message from the form are in the subject and body, URL-encoded.
+- [ ] Name, email and message are required; submitting with one empty shows the browser's validation message and opens nothing.
+- [ ] The inputs have `name` and `autocomplete` attributes.
+- [ ] `npm run check` passes, and the button's press animation still plays.
+
+### Technical Notes
+
+- `src/features/contact/ContactForm.tsx:28` has `onSubmit={(e) => e.preventDefault()}`. The inputs at `:31-36`, `:41-46` and `:51-56` have an `id` but no `name`, `required` or `autoComplete`.
+- Use the address that is already in the `mailto:` link at `ContactForm.tsx:20`. Build `mailto:<address>?subject=…&body=…` with `encodeURIComponent` and set `window.location.href` in the submit handler. `new FormData(e.currentTarget)` reads the values, so no component state is needed.
+- Decision by the author on 2026-10-13: a `mailto:` link, not hiding the form.
+- A `mailto:` link only works when the visitor has a mail client set up. The visible email link next to the form stays as the fallback.
+- Keep the button's class string and `onPointerDown={playPress}` (#56, #86, #87). The design-system `Button/README.md` quotes that class string.
+- Update the Notes section of AGENTS.md only if its wording about the contact CTA becomes wrong.
+- Verify with the `/verify` skill, `features/contact.md`.
 
 ### Dependencies
 
