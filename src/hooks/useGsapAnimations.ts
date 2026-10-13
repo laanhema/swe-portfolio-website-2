@@ -6,35 +6,35 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const useGsapAnimations = () => {
   useLayoutEffect(() => {
-    // Setup generic fade-in-up animations for sections
-    const elements = gsap.utils.toArray<HTMLElement>('.animate-on-scroll');
+    const mm = gsap.matchMedia();
 
-    elements.forEach((el) => {
-      gsap.fromTo(
-        el,
-        {
-          y: 50,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const elements = gsap.utils.toArray<HTMLElement>('.animate-on-scroll');
+
+      elements.forEach((el) => {
+        gsap.fromTo(
+          el,
+          {
+            y: 50,
+            opacity: 0,
           },
-        }
-      );
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      });
     });
 
-    // Clean up ScrollTrigger instances on unmount
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        trigger.kill();
-      });
+      mm.revert();
     };
   }, []);
 };
