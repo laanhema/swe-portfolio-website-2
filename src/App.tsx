@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router';
 import Nav from './features/navigation/Nav';
 import ProjectCard from './features/showcase/ProjectCard';
+import type { ProjectCardProps } from './features/showcase/ProjectCard';
 import ContactForm from './features/contact/ContactForm';
 import { BlogIndex } from './features/blog/BlogIndex';
 import { BlogPost } from './features/blog/BlogPost';
@@ -47,7 +48,7 @@ const PROJECTS = [
     postSlug: 'distill-design-scraper',
     color: '#a855f7', // Purple accent
   },
-];
+] as const satisfies readonly ProjectCardProps[];
 
 // Module-level reload detection: evaluated once on script load, then consumed on initial mount
 let isPageReload = false;

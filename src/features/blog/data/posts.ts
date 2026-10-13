@@ -1,19 +1,15 @@
 import type { BlogPost } from '../types';
 
-export const BLOG_POSTS: BlogPost[] = [
+export const BLOG_POSTS = [
   {
     slug: 'tralla',
-    projectTitle: 'Tralla',
     title: 'Rebuilding Trello with Angular and SignalStore',
     titleHighlight: 'SignalStore.',
     summary:
       'Ditching bloated project boards to build a distraction-free Kanban app with SignalStore and Taiga UI.',
     author: 'Lauri Makkonen',
     date: '2026-09-18',
-    displayDate: 'Sep 18, 2026',
     readingTime: '6 min read',
-    excerpt:
-      'Ditching bloated project boards to build a distraction-free Kanban app with SignalStore and Taiga UI.',
     tags: ['Angular', 'NgRx', 'SignalStore', 'TypeScript'],
     accentColor: '#00e5ff',
     content: `<p>Kanban boards have become one of the most critical daily instruments in my development toolkit. Far beyond simple to-do lists, a well-structured board provides spatial clarity over complex, concurrent tasks.</p>
@@ -110,17 +106,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'distill-design-scraper',
-    projectTitle: 'Distill Design Scraper',
     title: 'Scraping design tokens with Playwright and Culori',
     titleHighlight: 'Culori.',
     summary:
       'Inside Distill: rendering a page, sampling every computed colour and clustering them into a palette.',
     author: 'Lauri Makkonen',
     date: '2026-08-30',
-    displayDate: 'Aug 30, 2026',
     readingTime: '5 min read',
-    excerpt:
-      'Inside Distill: rendering a page, sampling every computed colour and clustering them into a palette.',
     tags: ['Next.js', 'Playwright', 'Culori', 'Design Tokens'],
     accentColor: '#a855f7',
     content: `<p>Started in the summer of 2026, Distill Design Scraper marks a fundamental shift in how I build software: it is my first project developed entirely through an agentic software engineering methodology.</p>
@@ -211,17 +203,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'froots-smoothie-app',
-    projectTitle: 'Froots Smoothie App',
     title: 'Svelte reactivity and nutritional math in Froots',
     titleHighlight: 'Froots.',
     summary:
       'Building a snappy nutritional calculator with Svelte runes and keeping UI state delightfully simple.',
     author: 'Lauri Makkonen',
     date: '2026-08-05',
-    displayDate: 'Aug 5, 2026',
     readingTime: '6 min read',
-    excerpt:
-      'Building a snappy nutritional calculator with Svelte runes and keeping UI state delightfully simple.',
     tags: ['Svelte', 'TypeScript', 'Tailwind', 'State'],
     accentColor: '#facc15',
     content: `<p>Our goal with Froots was to create a smoothie recipe app that is fun, fresh, and accessible to users of all ages. The app allows users to browse a collection of smoothie recipes complete with nutritional information, and also create and save their own recipes.</p>
@@ -321,17 +309,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'gymbro-app',
-    projectTitle: 'GymBro App',
     title: 'Shipping an Android APK from an S3 bucket',
     titleHighlight: 'S3 bucket.',
     summary:
       "The low-budget distribution path behind GymBro, and what I'd do with a real store listing.",
     author: 'Lauri Makkonen',
     date: '2026-07-12',
-    displayDate: 'Jul 12, 2026',
     readingTime: '5 min read',
-    excerpt:
-      "The low-budget distribution path behind GymBro, and what I'd do with a real store listing.",
     tags: ['Ionic', 'Angular', 'Express', 'AWS'],
     accentColor: '#ff3e00',
     content: `<p>With GymBro, our five-person team set out to inject genuine RPG gamification into the workout experience. Every completed exercise session rewards the user with experience points, advances their level, and unlocks achievements. By pairing session tracking with visual progression, GymBro turns grueling gym consistency into an engaging habit.</p>
@@ -429,4 +413,6 @@ module.exports = verifyToken;</code></pre>
 <h2>Reflections</h2>
 <p>Despite the weekend crunch and the CI/CD firefighting, GymBro was an overwhelming success. Our team demonstrated remarkable grit, every member stepped up to deliver their piece, and seeing our gamified APK running smoothly on real Android devices made every hour of effort worthwhile.</p>`,
   },
-];
+] as const satisfies readonly BlogPost[];
+
+export type PostSlug = (typeof BLOG_POSTS)[number]['slug'];

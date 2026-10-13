@@ -4,4 +4,4 @@
 - Meta row: `<time datetime>` / reading time, `text-sm font-bold uppercase tracking-wider`.
 - Title: `heading-card` style, linked, with `hover:underline decoration-4 underline-offset-4`.
 - Excerpt: `text-lg font-medium leading-relaxed`. Tags reuse **TechTag** and sit at the bottom (`mt-auto`).
-- **Provide:** `title`, `slug`, `date`, `readingTime`, `excerpt`, `tags[]`, and `featured?`.
+- **Provide:** required `post: BlogPost` and optional `className`.
