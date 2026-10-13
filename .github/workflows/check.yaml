@@ -26,5 +26,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint, design-system check and build
+      - name: Lint, check docs and build
         run: npm run check

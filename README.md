@@ -73,7 +73,7 @@ npm run lint
 
 ### Checking before a commit
 
-Run lint, the design-system class-string check and the production build in one command. Pull requests run the same command in CI:
+Run lint, the documentation checks (design-system class strings and `AGENTS.md` against the code) and the production build in one command. The pull-request and deploy workflows run the same command:
 
 ```bash
 npm run check

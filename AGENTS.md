@@ -40,7 +40,7 @@ npm run preview
 # Lint
 npm run lint
 
-# Lint, design-system class-string check and build (what the pull-request workflow runs)
+# Lint, docs checks and build (what the pull-request and deploy workflows run)
 npm run check
 ```
 
@@ -118,11 +118,11 @@ swe-portfolio-website-2/
 Run before committing any changes:
 
 ```bash
-# Lint, check that every class string in the design-system component READMEs still appears in src/, and build
+# Lint, check the design-system READMEs and this file against the code, and build
 npm run check
 ```
 
-After changing a class string that a component README documents, update the README in the same change, or `npm run check` fails.
+`npm run check` fails when a class string in a design-system component README no longer appears in `src/`, or when a path, dependency version, npm script or colour in this file no longer matches the repository. Update the README or this file in the same change as the code.
 
 ---
 
