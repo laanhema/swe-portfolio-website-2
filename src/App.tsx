@@ -1,17 +1,18 @@
-import { useLayoutEffect, useRef } from 'react';
+import { lazy, Suspense, useLayoutEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router';
 import Nav from './features/navigation/Nav';
 import ProjectCard from './features/showcase/ProjectCard';
 import type { ProjectCardProps } from './features/showcase/ProjectCard';
 import ContactForm from './features/contact/ContactForm';
-import { BlogIndex } from './features/blog/BlogIndex';
-import { BlogPost } from './features/blog/BlogPost';
 import { useGsapAnimations } from './hooks/useGsapAnimations';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
 import { playPress } from './components/playPress';
 import Footer from './components/Footer';
 import { scrollToSection } from './features/navigation/navHelpers';
 import portrait from './assets/lauri-makkonen-portrait.jpg';
+
+const BlogIndex = lazy(() => import('./features/blog/BlogIndex'));
+const BlogPost = lazy(() => import('./features/blog/BlogPost'));
 
 const PROJECTS = [
   {
@@ -290,12 +291,14 @@ function HomePage() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/blog' element={<BlogIndex />} />
-        <Route path='/blog/:slug' element={<BlogPost />} />
-        <Route path='*' element={<Navigate to='/' replace />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/blog' element={<BlogIndex />} />
+          <Route path='/blog/:slug' element={<BlogPost />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
