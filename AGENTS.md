@@ -62,7 +62,7 @@ swe-portfolio-website-2/
 │   └── CNAME                           # Custom domain configuration (laanhema.dev)
 ├── src/
 │   ├── assets/                         # Static media (e.g., portrait image)
-│   ├── components/                     # Shared presentational UI (Icons.tsx, playPress.ts)
+│   ├── components/                     # Shared presentational UI (Footer.tsx, Icons.tsx, playPress.ts)
 │   ├── features/                       # Domain feature modules
 │   │   ├── blog/                       # Blog index, post views & data models
 │   │   ├── contact/                    # Contact section & interactive form
@@ -137,6 +137,7 @@ npm run check
 | `src/features/blog/BlogIndex.tsx` | Devlog index page listing articles |
 | `src/features/blog/BlogPost.tsx` | Full-page article reader for project deep dives |
 | `src/features/contact/ContactForm.tsx` | Contact section and messaging form |
+| `src/components/Footer.tsx` | Site-wide footer with brand mark, copyright, and social links |
 | `src/components/playPress.ts` | Mobile-friendly pointerdown press animation helper |
 | `src/hooks/useGsapAnimations.ts` | GSAP ScrollTrigger setup and cleanup |
 | `.agents/PRDs/PRD.md` | Authoritative Product Requirements Document |

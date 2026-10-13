@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useLocation, Link } from 'react-router';
+import { NAV_LINKS, scrollToSection } from './navHelpers';
 
 // Mobile browsers skip :active on taps that follow a scroll (#71), so the menu button's press
 // style is driven from pointer events and held long enough to be seen on a quick tap.
@@ -51,13 +52,7 @@ export const Nav: React.FC = () => {
     closeMenu();
     if (isHome) {
       e.preventDefault();
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        if (window.location.hash !== `#${targetId}`) {
-          history.pushState(null, '', `#${targetId}`);
-        }
-      }
+      scrollToSection(targetId);
     }
   };
 
@@ -75,37 +70,26 @@ export const Nav: React.FC = () => {
 
         {/* Desktop Navigation */}
         <div className='hidden md:flex gap-8 text-lg font-bold'>
-          <Link
-            to='/#work'
-            onClick={(e) => { handleSectionClick(e, 'work'); }}
-            className='hover:text-[#ff3e00] transition-colors relative group'
-          >
-            Work
-            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-          </Link>
-          <Link
-            to='/#about'
-            onClick={(e) => { handleSectionClick(e, 'about'); }}
-            className='hover:text-[#ff3e00] transition-colors relative group'
-          >
-            About
-            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-          </Link>
-          <Link
-            to='/blog'
-            className='hover:text-[#ff3e00] transition-colors relative group'
-          >
-            Blog
-            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-          </Link>
-          <Link
-            to='/#contact'
-            onClick={(e) => { handleSectionClick(e, 'contact'); }}
-            className='hover:text-[#ff3e00] transition-colors relative group'
-          >
-            Contact
-            <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
-          </Link>
+          {NAV_LINKS.map((link) => {
+            const sectionId = link.sectionId;
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={
+                  sectionId
+                    ? (e) => {
+                        handleSectionClick(e, sectionId);
+                      }
+                    : undefined
+                }
+                className='hover:text-[#ff3e00] transition-colors relative group'
+              >
+                {link.label}
+                <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Mobile Menu Button */}
@@ -131,34 +115,25 @@ export const Nav: React.FC = () => {
           id='mobile-menu'
           className='md:hidden border-t-4 border-[#121212] bg-[#f8f9fa] px-6 py-6 flex flex-col gap-4 text-xl font-bold uppercase tracking-wide'
         >
-          <Link
-            to='/#work'
-            onClick={(e) => { handleSectionClick(e, 'work'); }}
-            className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-          >
-            Work
-          </Link>
-          <Link
-            to='/#about'
-            onClick={(e) => { handleSectionClick(e, 'about'); }}
-            className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-          >
-            About
-          </Link>
-          <Link
-            to='/blog'
-            onClick={closeMenu}
-            className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
-          >
-            Blog
-          </Link>
-          <Link
-            to='/#contact'
-            onClick={(e) => { handleSectionClick(e, 'contact'); }}
-            className='py-2 hover:text-[#ff3e00] transition-colors'
-          >
-            Contact
-          </Link>
+          {NAV_LINKS.map((link, index) => {
+            const sectionId = link.sectionId;
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={
+                  sectionId
+                    ? (e) => {
+                        handleSectionClick(e, sectionId);
+                      }
+                    : closeMenu
+                }
+                className={`py-2${index < NAV_LINKS.length - 1 ? ' border-b-2 border-[#121212]' : ''} hover:text-[#ff3e00] transition-colors`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
       )}
     </nav>

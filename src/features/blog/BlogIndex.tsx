@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Nav from '../navigation/Nav';
 import { PostCard } from './components/PostCard';
 import { BLOG_POSTS } from './data/posts';
 import { useGsapAnimations } from '../../hooks/useGsapAnimations';
+import { useScrollReset } from '../../hooks/useScrollReset';
+import Footer from '../../components/Footer';
 
 export const BlogIndex: React.FC = () => {
   useGsapAnimations();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useScrollReset();
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#121212] flex flex-col font-sans selection:bg-[#ff3e00] selection:text-white">
@@ -45,34 +44,7 @@ export const BlogIndex: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#121212] text-white py-12 px-6 md:px-12 border-t-4 border-white mt-24">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-2xl font-bold uppercase tracking-tighter">
-            Dev<span className="text-[#ff3e00]">.</span>Portfolio
-          </div>
-          <p className="font-bold">
-            © {new Date().getFullYear()} All rights reserved.
-          </p>
-          <div className="flex gap-6 font-bold uppercase">
-            <a
-              href="https://github.com/laanhema"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#ff3e00] transition-colors"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/laanhema"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#ff3e00] transition-colors"
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer className="mt-24" />
     </div>
   );
 };
