@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router';
 import { GithubIcon } from '../../components/Icons';
 import { playPress } from '../../components/playPress';
+import type { PostSlug } from '../blog/data/posts';
 
 export interface ProjectCardProps {
   title: string;
   description: string;
-  techStack: string[];
+  techStack: readonly string[];
   repoUrl: string;
-  postSlug?: string;
+  postSlug?: PostSlug;
   color: string;
 }
 

@@ -1,40 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { formatDate } from '../formatDate';
 import type { BlogPost } from '../types';
 
 export interface ArticleHeaderProps {
-  title?: string;
-  titleHighlight?: string;
-  tags?: string[];
-  author?: string;
-  date?: string;
-  displayDate?: string;
-  readingTime?: string;
-  summary?: string;
+  post: BlogPost;
   className?: string;
-  post?: BlogPost;
 }
 
 export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
-  title: propTitle,
-  titleHighlight: propTitleHighlight,
-  tags: propTags,
-  author: propAuthor,
-  date: propDate,
-  displayDate: propDisplayDate,
-  readingTime: propReadingTime,
-  summary: propSummary,
-  className = '',
   post,
+  className = '',
 }) => {
-  const title = post?.title ?? propTitle ?? '';
-  const titleHighlight = post?.titleHighlight ?? propTitleHighlight ?? '';
-  const tags = post?.tags ?? propTags ?? [];
-  const author = post?.author ?? propAuthor ?? 'Lauri Makkonen';
-  const date = post?.date ?? propDate ?? '';
-  const displayDate = post?.displayDate ?? propDisplayDate ?? date;
-  const readingTime = post?.readingTime ?? propReadingTime ?? '';
-  const summary = post?.summary ?? propSummary ?? '';
+  const { title, titleHighlight, tags, author, date, readingTime, summary } = post;
+  const displayDate = formatDate(date);
 
   const renderTitle = () => {
     if (!titleHighlight) {

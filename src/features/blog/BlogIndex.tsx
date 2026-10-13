@@ -36,7 +36,6 @@ export const BlogIndex: React.FC = () => {
               >
                 <PostCard
                   post={post}
-                  backgroundColor={post.accentColor}
                   className="animate-on-scroll"
                 />
               </div>
