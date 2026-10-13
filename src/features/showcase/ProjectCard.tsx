@@ -1,5 +1,5 @@
 import React from 'react';
-import { useInRouterContext, Link } from 'react-router';
+import { Link } from 'react-router';
 import { GithubIcon } from '../../components/Icons';
 import { playPress } from '../../components/playPress';
 
@@ -20,7 +20,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   postSlug,
   color,
 }) => {
-  const inRouter = useInRouterContext();
 
   return (
     <article 
@@ -61,23 +60,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </a>
         
         {postSlug && (
-          inRouter ? (
-            <Link 
-              to={`/blog/${postSlug}`}
-              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation"
-              onPointerDown={playPress}
-            >
-              <span>Read Story</span>
-            </Link>
-          ) : (
-            <a 
-              href={`/blog/${postSlug}`}
-              className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation"
-              onPointerDown={playPress}
-            >
-              <span>Read Story</span>
-            </a>
-          )
+          <Link 
+            to={`/blog/${postSlug}`}
+            className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation"
+            onPointerDown={playPress}
+          >
+            <span>Read Story</span>
+          </Link>
         )}
       </div>
     </article>

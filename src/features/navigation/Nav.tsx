@@ -21,11 +21,13 @@ export const Nav: React.FC = () => {
   const releaseMenuButton = () => {
     clearTimeout(releaseTimer.current);
     const remaining = MIN_PRESS_MS - (performance.now() - pressedAt.current);
-    releaseTimer.current = window.setTimeout(() => setIsPressed(false), Math.max(0, remaining));
+    releaseTimer.current = window.setTimeout(() => {
+      setIsPressed(false);
+    }, Math.max(0, remaining));
   };
 
-  const toggleMenu = (e?: React.MouseEvent<HTMLButtonElement>) => {
-    if (e && (e.nativeEvent as PointerEvent).pointerType) {
+  const toggleMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (e.nativeEvent instanceof PointerEvent && e.nativeEvent.pointerType) {
       e.currentTarget.blur();
     }
     setIsOpen((prev) => !prev);
@@ -75,7 +77,7 @@ export const Nav: React.FC = () => {
         <div className='hidden md:flex gap-8 text-lg font-bold'>
           <Link
             to='/#work'
-            onClick={(e) => handleSectionClick(e, 'work')}
+            onClick={(e) => { handleSectionClick(e, 'work'); }}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             Work
@@ -83,7 +85,7 @@ export const Nav: React.FC = () => {
           </Link>
           <Link
             to='/#about'
-            onClick={(e) => handleSectionClick(e, 'about')}
+            onClick={(e) => { handleSectionClick(e, 'about'); }}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             About
@@ -98,7 +100,7 @@ export const Nav: React.FC = () => {
           </Link>
           <Link
             to='/#contact'
-            onClick={(e) => handleSectionClick(e, 'contact')}
+            onClick={(e) => { handleSectionClick(e, 'contact'); }}
             className='hover:text-[#ff3e00] transition-colors relative group'
           >
             Contact
@@ -131,14 +133,14 @@ export const Nav: React.FC = () => {
         >
           <Link
             to='/#work'
-            onClick={(e) => handleSectionClick(e, 'work')}
+            onClick={(e) => { handleSectionClick(e, 'work'); }}
             className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
           >
             Work
           </Link>
           <Link
             to='/#about'
-            onClick={(e) => handleSectionClick(e, 'about')}
+            onClick={(e) => { handleSectionClick(e, 'about'); }}
             className='py-2 border-b-2 border-[#121212] hover:text-[#ff3e00] transition-colors'
           >
             About
@@ -152,7 +154,7 @@ export const Nav: React.FC = () => {
           </Link>
           <Link
             to='/#contact'
-            onClick={(e) => handleSectionClick(e, 'contact')}
+            onClick={(e) => { handleSectionClick(e, 'contact'); }}
             className='py-2 hover:text-[#ff3e00] transition-colors'
           >
             Contact
