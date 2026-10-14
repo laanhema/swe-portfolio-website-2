@@ -1,7 +1,8 @@
 {
   "name": "swe-portfolio-website-2",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "laanhema",
   "type": "module",
   "scripts": {
     "dev": "vite",

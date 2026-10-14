@@ -1,6 +1,6 @@
 # laanhema.dev: Software Engineer Portfolio Website
 
-Personal portfolio website for Lauri Makkonen, built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It uses a Neo-Brutalist design (4px borders, hard drop shadows, and high-contrast typography) to present projects, experience since 2019, and contact details. The site is live at [laanhema.dev](https://laanhema.dev).
+Personal portfolio website, built with React 19, TypeScript, Vite 8, Tailwind CSS v4, and GSAP. It uses a Neo-Brutalist design (4px borders, hard drop shadows, and high-contrast typography) to present projects, and contact details. The site is live at [laanhema.dev](https://laanhema.dev).
 
 For specifications and requirements, see the [Product Requirements Document](.agents/PRDs/PRD.md).
 
@@ -17,16 +17,16 @@ For specifications and requirements, see the [Product Requirements Document](.ag
 
 ## Tech Stack
 
-| Component | Technology | Version |
-| --- | --- | --- |
-| Frontend Framework | React | ^19.2.7 |
-| Language | TypeScript | ~6.0.2 |
-| Build Tool & Dev Server | Vite | ^8.1.1 |
-| Client Routing | React Router | ^8.4.0 |
-| Styling | Tailwind CSS (with `@tailwindcss/vite`) | ^4.3.2 |
-| Animation | GSAP | ^3.15.0 |
-| Typography | @fontsource-variable/noto-sans | ^5.3.0 |
-| Linting | ESLint | ^10.6.0 |
+| Component               | Technology                              | Version |
+| ----------------------- | --------------------------------------- | ------- |
+| Frontend Framework      | React                                   | ^19.2.7 |
+| Language                | TypeScript                              | ~6.0.2  |
+| Build Tool & Dev Server | Vite                                    | ^8.1.1  |
+| Client Routing          | React Router                            | ^8.4.0  |
+| Styling                 | Tailwind CSS (with `@tailwindcss/vite`) | ^4.3.2  |
+| Animation               | GSAP                                    | ^3.15.0 |
+| Typography              | @fontsource-variable/noto-sans          | ^5.3.0  |
+| Linting                 | ESLint                                  | ^10.6.0 |
 
 ## Getting Started
 
