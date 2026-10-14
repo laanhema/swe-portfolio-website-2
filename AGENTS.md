@@ -40,6 +40,10 @@ npm run preview
 # Lint
 npm run lint
 
+# Docs checks alone: this file's claims against the repo, and design-system README class strings against src/
+npm run check:agents
+npm run check:design
+
 # Lint, docs checks and build (what the pull-request and deploy workflows run)
 npm run check
 ```
@@ -55,18 +59,26 @@ swe-portfolio-website-2/
 ├── .agents/
 │   ├── PRDs/
 │   │   └── PRD.md                      # Product Requirements Document
+│   ├── design-system/
+│   │   └── laanhema-design-system/     # Design tokens, component READMEs & page guides
 │   └── issues/
-│       └── todo-issues.md             # Issue & backlog tracking
+│       └── todo-issues.md              # Issue & backlog tracking
+├── .github/
+│   └── workflows/                      # Pull-request check and GitHub Pages deploy
 ├── public/
+│   ├── 404.html                        # GitHub Pages fallback: sends deep links back to the SPA
 │   ├── favicon.svg                     # Site favicon
 │   └── CNAME                           # Custom domain configuration (laanhema.dev)
+├── scripts/
+│   ├── check-agents-md.mjs             # Validates this file against the repository
+│   └── check-design-system.mjs         # Validates design-system README class strings against src/
 ├── src/
 │   ├── assets/                         # Static media (e.g., portrait image)
 │   ├── components/                     # Shared presentational UI (Footer.tsx, Icons.tsx, playPress.ts)
 │   ├── features/                       # Domain feature modules
 │   │   ├── blog/                       # Blog index, post views & data models
 │   │   ├── contact/                    # Contact section & interactive form
-│   │   ├── navigation/                 # Navigation bar & mobile menu drawer
+│   │   ├── navigation/                 # Navigation bar, mobile menu drawer & shared nav helpers
 │   │   └── showcase/                   # Featured project cards
 │   ├── hooks/                          # Custom React hooks (useGsapAnimations.ts, useScrollReset.ts)
 │   ├── styles/                         # CSS layers & design tokens (global.css)
@@ -140,6 +152,7 @@ npm run check
 | `src/features/contact/ContactForm.tsx` | Contact section and messaging form |
 | `src/components/Footer.tsx` | Site-wide footer with brand mark, copyright, and social links |
 | `src/components/playPress.ts` | Mobile-friendly pointerdown press animation helper |
+| `src/features/navigation/navHelpers.ts` | Shared `NAV_LINKS` for the desktop/mobile nav and the smooth-scroll helper that syncs the URL hash |
 | `src/hooks/useGsapAnimations.ts` | GSAP ScrollTrigger setup and cleanup |
 | `.agents/PRDs/PRD.md` | Authoritative Product Requirements Document |
 
@@ -152,10 +165,13 @@ npm run check
 | Product Requirements Document | [`.agents/PRDs/PRD.md`](.agents/PRDs/PRD.md) |
 | Backlog Tasks & Issues | [`.agents/issues/todo-issues.md`](.agents/issues/todo-issues.md) |
 | Task List | [`TODO.md`](TODO.md) |
+| Project Guide | [`PROJECT-GUIDE.md`](PROJECT-GUIDE.md) |
+| UI verification harness | [`.claude/skills/verify/SKILL.md`](.claude/skills/verify/SKILL.md) |
 
 ---
 
 ## Notes
 
 - **Static Site Nature**: The MVP contact CTA uses `mailto:lahmakkonen@gmail.com`; serverless form dispatch is deferred to post-MVP.
+- **SPA deep links on GitHub Pages**: GitHub Pages has no SPA fallback, so `public/404.html` stores the requested path in `sessionStorage` and redirects to `/`; the inline script in `index.html` restores that path (and resets scroll on reload) before React Router boots.
 - **Mobile First**: Pay special attention to narrow mobile viewports (320px–375px) where text truncation, button wrapping, and alignment bugs frequently surface.

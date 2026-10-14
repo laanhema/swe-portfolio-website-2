@@ -139,4 +139,5 @@ swe-portfolio-website-2/
 - [Tracked Issues](.agents/issues/todo-issues.md)
 - [Design System](.agents/design-system/laanhema-design-system/DESIGN.md)
 - [Agent Rules](AGENTS.md)
+- [Project Guide](PROJECT-GUIDE.md)
 - Task List: `TODO.md`, a local file that git does not track

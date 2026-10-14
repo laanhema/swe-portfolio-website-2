@@ -4,7 +4,7 @@
 
 - **Document Version**: 1.1.0
 - **Status**: Implemented and deployed at `laanhema.dev`. Not in the code: the SEO metadata of Phase 3 (#109) and the live-demo links of US-4 (R-6, #107).
-- **Last Updated**: 2026-10-13
+- **Last Updated**: 2026-10-14
 - **Author**: Lauri Makkonen (`laanhema`)
 - **Target Repository**: `laanhema/swe-portfolio-website-2`
 - **Output Location**: `.agents/PRDs/PRD.md`
@@ -212,6 +212,7 @@ swe-portfolio-website-2/
 │   ├── App.tsx                         # Routes, home page layout, landing scroll handling, and project data
 │   └── main.tsx                        # React 19 application root
 ├── AGENTS.md                           # Agent rules (CLAUDE.md points to it)
+├── PROJECT-GUIDE.md                    # Human-facing guide: big picture, codebase map and workflows
 ├── README.md                           # Project overview
 ├── eslint.config.js                    # ESLint flat config (strictTypeChecked, no type assertions)
 ├── index.html                          # Entry HTML: title, viewport, SPA redirect restore and reload handling
