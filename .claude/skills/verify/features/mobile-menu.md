@@ -4,7 +4,7 @@ Below the `md` breakpoint, the nav bar collapses to an orange `MENU` button. The
 
 ## Sub-features
 
-- `menu-toggle`: `Open menu` expands the drawer, and `Close menu` collapses it (`aria-expanded` flips).
+- `menu-toggle`: `Open menu` expands the drawer, and `Close menu` collapses it (`aria-expanded` flips). The logo also closes it and scrolls to the top.
 - `menu-section-link`: `WORK`, `ABOUT`, and `CONTACT` close the drawer and scroll to the section, setting the hash.
 - `menu-blog-link`: `BLOG` closes the drawer and routes to `/blog`.
 - `menu-narrow-layout`: at 320px and 375px, the logo and button do not overlap or wrap.
@@ -20,7 +20,8 @@ Preconditions:
 - Doctor is healthy. Run `ax.sh open /`, `ax.sh mobile`, then `ax.sh open /` again. `ax.sh mobile` exits 1 when the session has no page open, and the second `open` gives a mobile layout from the first paint.
 
 - **Open.** Run `ax.sh click 'button "Open menu"'`, then `ax.sh state`. The output shows `"menuExpanded": "true"`. `ax.sh has 'link "CONTACT" url=.*#contact'` succeeds.
-- **Section link.** Run `ax.sh click 'link "CONTACT"'`, then `sleep 1.2; ax.sh state`. The output shows `"hash": "#contact"`, `scrollY` > 0, and `"menuExpanded": "false"`. The screenshot shows the contact form under a `MENU` button.
+- **Section link.** Run `ax.sh click 'link "CONTACT"'`, then `sleep 1.2; ax.sh state`. The output shows `"hash": "#contact"`, `scrollY` > 0, and `"menuExpanded": "false"`. Run `ax.sh shot "$RUN_DIR/menu-contact.png"`. It shows the contact form under a `MENU` button.
+- **Logo.** Reopen the drawer, then run `ax.sh click 'link "laanhema.dev - Back to top"'`, then `sleep 1.2; ax.sh state`. The output shows `"scrollY": 0` and `"menuExpanded": "false"`.
 - **Close.** Reopen the drawer, then run `ax.sh click 'button "Close menu"'`, then `ax.sh state`. The output shows `"menuExpanded": "false"`. `ax.sh has 'link "WORK"'` fails.
 - **Blog.** Reopen the drawer, then run `ax.sh click 'link "BLOG"'`, then `ax.sh state`. The output shows `"path": "/blog"` and `"menuExpanded": "false"`.
 - **Touch tap.** Run `ax.sh tap 'button "Open menu"'`. It ends with `tap button "Open menu": ok`, and the JSON shows `"events":["pointerdown","pointerup","click"]` and `"menuExpanded":"true"` under `after`.

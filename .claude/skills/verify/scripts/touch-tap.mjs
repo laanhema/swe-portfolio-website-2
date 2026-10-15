@@ -96,6 +96,9 @@ try {
     // A target=_blank link opens a new tab; close it so the run leaves nothing behind.
     const popups = (await fetch(`${http}/json/list`).then((r) => r.json())).filter((t) => t.type === 'page' && t.id !== page.id);
     for (const p of popups) await fetch(`${http}/json/close/${p.id}`);
+    // The opener stops rendering while the new tab is in front, which freezes playPress mid-press;
+    // bring it back and let the animation finish, as it does when a visitor returns to the tab.
+    if (popups.length) { await send('Page.bringToFront'); await sleep(500); }
 
     const read = function () {
       const cs = getComputedStyle(this);
