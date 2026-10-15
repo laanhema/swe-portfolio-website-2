@@ -30,7 +30,7 @@ Preconditions:
 - **Nav matches home (mobile).** Run `ax.sh mobile`, then `ax.sh nav` on `/`, `/blog`, `/blog/tralla`, and `/blog/does-not-exist`. Every line ends in `ok`, the `logo=` and `menu=` boxes match `/`, and each command exits 0 (#75).
 - **Back.** Run `ax.sh click 'link "← ALL POSTS"'`, then `ax.sh state`. The output shows `"path": "/blog"`.
 - **404.** Run `ax.sh open /blog/does-not-exist`, then `ax.sh state`. The output shows `"h1": "Post Not Found."`. `ax.sh has 'link "← BACK TO ALL POSTS"'` succeeds.
-- **Deep link.** Run `ax.sh open /blog/gymbro-app`, then `ax.sh state`. The output shows `"path": "/blog/gymbro-app"` and the GymBro post's h1. To check the GitHub Pages redirect, use `verify-server.sh start preview`. Note that `vite preview` also uses SPA fallback and never serves `404.html`, so this check cannot prove the Pages redirect locally.
+- **Deep link.** Run `ax.sh open /blog/gymbro-app`, then `ax.sh state`. The output shows `"path": "/blog/gymbro-app"` and `"h1": "Shipping an Android APK from an S3 bucket."`. This proves Vite's SPA fallback only. The GitHub Pages redirect (`public/404.html` stores the path, and the inline script in `index.html` restores it) cannot be proven locally: `vite preview` also uses SPA fallback and never serves `404.html`. Check it on the deployed site.
 
 ## Gotchas
 
