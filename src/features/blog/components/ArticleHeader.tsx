@@ -29,7 +29,7 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
       return (
         <>
           {prefix}
-          <span className="text-[#ff3e00]">{titleHighlight}</span>
+          <span className="text-accent">{titleHighlight}</span>
         </>
       );
     }
@@ -41,7 +41,7 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
       return (
         <>
           {before}
-          <span className="text-[#ff3e00]">{titleHighlight}</span>
+          <span className="text-accent">{titleHighlight}</span>
           {after}
         </>
       );
@@ -49,7 +49,7 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
 
     return (
       <>
-        {title} <span className="text-[#ff3e00]">{titleHighlight}</span>
+        {title} <span className="text-accent">{titleHighlight}</span>
       </>
     );
   };
@@ -58,10 +58,10 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
     <header className={`max-w-4xl mx-auto pt-16 md:pt-20 pb-12 ${className}`.trim()}>
       <Link
         to="/blog"
-        className="inline-flex items-center gap-2 font-bold uppercase tracking-wider mb-10 hover:text-[#ff3e00] transition-colors relative group"
+        className="inline-flex items-center gap-2 font-bold uppercase tracking-wider mb-10 hover:text-accent transition-colors relative group"
       >
         ← All posts
-        <span className="absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full"></span>
+        <span className="absolute -bottom-1 left-0 w-0 h-1 bg-accent transition-all group-hover:w-full"></span>
       </Link>
 
       <div className="flex flex-wrap gap-2 mb-6">
@@ -87,7 +87,7 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
         <span>{readingTime}</span>
       </div>
 
-      <p className="text-xl md:text-2xl font-medium border-l-8 border-[#ff3e00] pl-6">
+      <p className="text-xl md:text-2xl font-medium border-l-8 border-accent pl-6">
         {summary}
       </p>
     </header>

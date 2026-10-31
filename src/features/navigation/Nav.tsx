@@ -57,15 +57,15 @@ export const Nav: React.FC = () => {
   };
 
   return (
-    <nav className='sticky top-0 z-50 w-full bg-[#f8f9fa] border-b-4 border-[#121212]'>
+    <nav className='sticky top-0 z-50 w-full bg-bg-primary border-b-4 border-text-primary'>
       <div className='py-4 px-6 md:px-12 flex justify-between items-center'>
         <Link
           to='/'
           onClick={handleLogoClick}
-          className='text-2xl md:text-3xl font-bold uppercase tracking-tighter hover:text-[#ff3e00] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff3e00]'
+          className='text-2xl md:text-3xl font-bold uppercase tracking-tighter hover:text-accent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
           aria-label='laanhema.dev - Back to top'
         >
-          laanhema<span className='text-[#ff3e00]'>.</span>dev
+          laanhema<span className='text-accent'>.</span>dev
         </Link>
 
         {/* Desktop Navigation */}
@@ -83,10 +83,10 @@ export const Nav: React.FC = () => {
                       }
                     : undefined
                 }
-                className='hover:text-[#ff3e00] transition-colors relative group'
+                className='hover:text-accent transition-colors relative group'
               >
                 {link.label}
-                <span className='absolute -bottom-1 left-0 w-0 h-1 bg-[#ff3e00] transition-all group-hover:w-full'></span>
+                <span className='absolute -bottom-1 left-0 w-0 h-1 bg-accent transition-all group-hover:w-full'></span>
               </Link>
             );
           })}
@@ -100,7 +100,7 @@ export const Nav: React.FC = () => {
           onPointerCancel={releaseMenuButton}
           onPointerLeave={releaseMenuButton}
           data-pressed={isPressed || undefined}
-          className='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-[#ff3e00] text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none data-pressed:translate-x-1 data-pressed:translate-y-1 data-pressed:shadow-none transition-all duration-75 touch-manipulation cursor-pointer'
+          className='md:hidden brutal-border px-4 py-2 font-bold uppercase bg-accent text-white brutal-shadow active:translate-x-1 active:translate-y-1 active:shadow-none data-pressed:translate-x-1 data-pressed:translate-y-1 data-pressed:shadow-none transition-all duration-75 touch-manipulation cursor-pointer'
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
           aria-controls='mobile-menu'
@@ -113,7 +113,7 @@ export const Nav: React.FC = () => {
       <div
         id='mobile-menu'
         hidden={!isOpen}
-        className='md:hidden border-t-4 border-[#121212] bg-[#f8f9fa] px-6 py-6 flex flex-col gap-4 text-xl font-bold uppercase tracking-wide'
+        className='md:hidden border-t-4 border-text-primary bg-bg-primary px-6 py-6 flex flex-col gap-4 text-xl font-bold uppercase tracking-wide'
       >
         {NAV_LINKS.map((link, index) => {
           const sectionId = link.sectionId;
@@ -128,7 +128,7 @@ export const Nav: React.FC = () => {
                     }
                   : closeMenu
               }
-              className={`py-2${index < NAV_LINKS.length - 1 ? ' border-b-2 border-[#121212]' : ''} hover:text-[#ff3e00] transition-colors`}
+              className={`py-2${index < NAV_LINKS.length - 1 ? ' border-b-2 border-text-primary' : ''} hover:text-accent transition-colors`}
             >
               {link.label}
             </Link>
