@@ -4,7 +4,7 @@ Below the `md` breakpoint, the nav bar collapses to an orange `MENU` button. The
 
 ## Sub-features
 
-- `menu-toggle`: `Open menu` expands the drawer, and `Close menu` collapses it (`aria-expanded` flips). The logo also closes it and scrolls to the top.
+- `menu-toggle`: `Open menu` expands the drawer, and `Close menu` collapses it (`aria-expanded` flips). The `#mobile-menu` drawer stays in the DOM with the `hidden` attribute while closed so `aria-controls` resolves, while its links leave the accessibility tree. The logo also closes it and scrolls to the top.
 - `menu-section-link`: `WORK`, `ABOUT`, and `CONTACT` close the drawer and scroll to the section, setting the hash.
 - `menu-blog-link`: `BLOG` closes the drawer and routes to `/blog`.
 - `menu-narrow-layout`: at 320px and 375px, the logo and button do not overlap or wrap.
