@@ -3,7 +3,7 @@
 ## Project: Software Engineer Portfolio Website (`laanhema.dev`)
 
 - **Document Version**: 1.1.0
-- **Status**: Implemented and deployed at `laanhema.dev`. Not in the code: the SEO metadata of Phase 3 (#109) and the live-demo links of US-4 (R-6, #107).
+- **Status**: Implemented and deployed at `laanhema.dev`. Not in the code: the live-demo links of US-4 (R-6, #107).
 - **Last Updated**: 2026-10-14
 - **Author**: Lauri Makkonen (`laanhema`)
 - **Target Repository**: `laanhema/swe-portfolio-website-2`
@@ -443,7 +443,7 @@ gantt
 - **Goal**: Optimize load times, animation performance, search engine metadata, and assistive technology support.
 - **Deliverables**:
   - [x] Audit GSAP animations with `ScrollTrigger.refresh()` and `prefers-reduced-motion` support. Reduced motion is handled through `gsap.matchMedia()` (#97); the code does not call `ScrollTrigger.refresh()`.
-  - [ ] Add rich SEO metadata in `index.html` (description, OpenGraph image, Twitter card). Not implemented: `index.html` holds the title "laanhema.dev", the favicon link and the viewport tag only.
+  - [x] Add rich SEO metadata in `index.html` (description, OpenGraph image, Twitter card) (#109).
   - [x] Verify keyboard tab order and focus rings on all interactive buttons and inputs.
 - **Validation**: Google Lighthouse score $\ge 90$ across Performance, Accessibility, and SEO. Not measured.
 
@@ -479,10 +479,9 @@ gantt
 
 ### 13.1 Specified, Not Built
 
-1. **SEO Metadata**: The description, OpenGraph image and Twitter card of Phase 3 (#109).
-2. **Live Demo and APK Links**: The outbound links to live deployments of section 4.1 and US-4 (R-6, #107).
-3. **Link Validation in CI**: The automated check of external links that R-3 names.
-4. **Automated Cross-Breakpoint Visual Checks**: The checks that R-1 names.
+1. **Live Demo and APK Links**: The outbound links to live deployments of section 4.1 and US-4 (R-6, #107).
+2. **Link Validation in CI**: The automated check of external links that R-3 names.
+3. **Automated Cross-Breakpoint Visual Checks**: The checks that R-1 names.
 
 ---
 
