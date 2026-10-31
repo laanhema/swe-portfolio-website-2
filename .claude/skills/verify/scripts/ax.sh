@@ -16,8 +16,8 @@
 #   ax.sh nav                         print the nav logo and menu button boxes and font; exit 1 unless the font is Noto Sans Variable
 #   ax.sh buttons                     hover VIEW WORK, the first card's CODE and READ STORY, and SEND MESSAGE; exit 1 unless all four lift the same (#56)
 #   ax.sh cursor                      print SEND MESSAGE's and the form fields' computed cursor; exit 1 unless the button is pointer and the fields are text (#86)
-#   ax.sh submit [path]               submit the contact form empty, then filled; exit 1 unless the empty submit is blocked and the filled one
-#                                     navigates to the prefilled mailto: URL (the navigation is recorded and cancelled, so no mail client opens) (#99)
+#   ax.sh submit [path]               submit the contact form empty, with whitespace-only fields, then filled; exit 1 unless empty and whitespace
+#                                     submits are blocked and the filled one navigates to the prefilled mailto: URL (the navigation is recorded and cancelled, so no mail client opens) (#99, #111)
 #   ax.sh hero                      check hero header across desktop and mobile viewports; exit 1 if any element has computed filter containing blur
 #   ax.sh all                         run tables (on every blog post), nav, buttons, cursor, submit and hero; exit 1 if any fails
 #   ax.sh mobile | desktop            viewport 375x812 mobile+touch | 1280x900
@@ -112,22 +112,36 @@ for i, (label, hov, tf, tr, sh) in enumerate(rows):
     press() { axi click "@$(uid_of 'button "SEND MESSAGE"')" >/dev/null; sleep 0.3; }
     read_form="JSON.stringify({urls: window.__mailto, invalid: [...document.querySelectorAll('#contact :invalid')].map(e => e.id).filter(Boolean)})"
     press; empty="$(ev "$read_form")"
-    for field in 'NAME|Jane Smith' 'EMAIL|jane@example.com' 'MESSAGE|Hello & welcome?'; do
+    for field in 'NAME|   ' 'EMAIL|jane@example.com' 'MESSAGE|Hello & welcome?'; do
       axi fill "@$(uid_of "textbox \"${field%%|*}\"")" "${field#*|}" >/dev/null
     done
+    press; space_name="$(ev "$read_form")"
+    for field in 'NAME|Jane Smith' 'MESSAGE|   '; do
+      axi fill "@$(uid_of "textbox \"${field%%|*}\"")" "${field#*|}" >/dev/null
+    done
+    press; space_msg="$(ev "$read_form")"
+    axi fill "@$(uid_of "textbox \"MESSAGE\"")" 'Hello & welcome?' >/dev/null
     press; filled="$(ev "$read_form")"
     out="$(python3 -c '
 import json, sys
-empty, filled = (json.loads(a) for a in sys.argv[1:3])
+empty, space_name, space_msg, filled = (json.loads(a) for a in sys.argv[1:5])
 want = "mailto:lahmakkonen@gmail.com?subject=Contact%20from%20Jane%20Smith&body=Name%3A%20Jane%20Smith%0AEmail%3A%20jane%40example.com%0A%0AMessage%3A%0AHello%20%26%20welcome%3F"
 blocked = not empty["urls"] and empty["invalid"] == ["name", "email", "message"]
 print("empty submit: navigations=%d invalid=%s %s" % (len(empty["urls"]), ",".join(empty["invalid"]), "ok" if blocked else "NOT-BLOCKED"))
+blocked_name = not space_name["urls"] and "name" in space_name["invalid"]
+blocked_msg = not space_msg["urls"] and "message" in space_msg["invalid"]
+status_spaces = "ok" if (blocked_name and blocked_msg) else "NOT-INVALID"
+print("spaces submit: name blocked=%s message blocked=%s %s" % (
+    "ok" if blocked_name else "FAILED",
+    "ok" if blocked_msg else "FAILED",
+    status_spaces
+))
 urls = filled["urls"]
 status = "ok" if urls == [want] else "WRONG-URL" if urls else "NO-MAILTO"
 print("valid submit: %s %s" % (urls[-1] if urls else "no navigation", status))
-' "$empty" "$filled")"
+' "$empty" "$space_name" "$space_msg" "$filled")"
     echo "$out"
-    ! grep -q -E 'NOT-BLOCKED|WRONG-URL|NO-MAILTO' <<<"$out" ;;
+    ! grep -q -E 'NOT-BLOCKED|NOT-INVALID|WRONG-URL|NO-MAILTO' <<<"$out" ;;
   hero)
     out=""
     for vp in desktop mobile; do
