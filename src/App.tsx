@@ -1,4 +1,4 @@
-import { lazy, Suspense, useLayoutEffect, useRef } from 'react';
+import { lazy, Suspense, useLayoutEffect, useRef, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router';
 import Nav from './features/navigation/Nav';
 import ProjectCard from './features/showcase/ProjectCard';
@@ -88,6 +88,38 @@ function holdAnchor(target: HTMLElement, root: HTMLElement): () => void {
   observer.observe(root);
   return stop;
 }
+
+const HeroPortrait = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useLayoutEffect(() => {
+    if (imgRef.current?.complete) {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  return (
+    <div className='w-full max-w-md xl:max-w-none xl:w-[34%] shrink-0 animate-on-scroll xl:pt-2'>
+      <div className='w-full aspect-[2/3] brutal-border brutal-shadow bg-[#f8f9fa] overflow-hidden'>
+        <img
+          ref={imgRef}
+          src={portrait}
+          alt='Lauri Makkonen'
+          width={853}
+          height={1280}
+          fetchPriority='high'
+          onLoad={() => {
+            setIsLoaded(true);
+          }}
+          className={`w-full h-full object-cover transition-opacity duration-700 ease-out motion-reduce:transition-none ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      </div>
+    </div>
+  );
+};
 
 function HomePage() {
   useGsapAnimations();
@@ -181,15 +213,7 @@ function HomePage() {
             </div>
           </div>
 
-          <div className='w-full max-w-md xl:max-w-none xl:w-[34%] shrink-0 animate-on-scroll xl:pt-2'>
-            <img
-              src={portrait}
-              alt='Lauri Makkonen'
-              width={853}
-              height={1280}
-              className='w-full h-auto aspect-[2/3] object-cover brutal-border brutal-shadow bg-[#121212]'
-            />
-          </div>
+          <HeroPortrait />
         </div>
       </header>
 
