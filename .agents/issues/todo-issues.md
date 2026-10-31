@@ -2,7 +2,7 @@
 
 - **Source File**: `TODO.md`
 - **Generated Date**: 2026-10-07
-- **Last Updated**: 2026-10-13
+- **Last Updated**: 2026-10-15
 - **Repository**: `laanhema/swe-portfolio-website-2`
 
 ## Status
@@ -78,6 +78,7 @@ Verification methodology rests on repository code inspection, static build and l
 - Tasks 25–26 (`TODO.md:25-26`): Already tracked as GitHub issues #66 and #68 (TODO-35, TODO-36).
 - Tasks 27–31 (`TODO.md:27-31`): Already tracked as GitHub issues #71 through #75 (TODO-37 to TODO-41).
 - Tasks 32–34 and 36 (`TODO.md:32-34`, `TODO.md:36`): Already tracked as GitHub issues #86, #87, #88 and #91 (TODO-42 to TODO-45).
+- Task 46 (`TODO.md:46`): Already done (removed the `var` keywords), commit 7897ceb.
 
 ---
 
@@ -2294,6 +2295,230 @@ Several accent treatments are below the 4.5:1 contrast that WCAG 2.1 AA asks of 
 - Keep the inline script of `index.html` (the SPA redirect restore and the reload handling) as it is.
 - `index.html` changes, so verify with `verify-server.sh start preview`.
 - After the change, tick the SEO deliverable of Phase 3 in the PRD.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-55] Show feedback when a contact field holds only spaces
+
+**GitHub**: #111
+**Status**: pending
+
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: bug, frontend
+**Source**: `TODO.md:48` — "- [ ] The contact form silently does nothing when the Name or Message field holds only spaces."
+
+### Description
+
+When the Name or Message field holds only spaces, the browser's `required` check passes because the field is not empty. `handleSubmit` then trims the value, finds it empty and returns, so `SEND MESSAGE` does nothing and the visitor gets no feedback. Expected: the submit is blocked with a validation message on the offending field.
+
+### Acceptance Criteria
+
+- [ ] With Name set to only spaces and the other fields valid, `SEND MESSAGE` does not navigate and shows a validation message on the Name field.
+- [ ] The same holds for Message.
+- [ ] After the field is corrected, a valid submit still opens the same prefilled `mailto:` URL, and `ax.sh submit` passes.
+- [ ] `npm run check` passes.
+
+### Technical Notes
+
+- The early return is at `src/features/contact/ContactForm.tsx:21-23`.
+- Email is not affected: `type="email"` strips leading and trailing whitespace from its value, so an email of only spaces already fails `required`.
+- One approach: in `handleSubmit`, call `setCustomValidity('…')` and `reportValidity()` on the field whose trimmed value is empty, and clear the custom validity on that field's `input` event. The browser then shows its native message, like the empty case.
+- Found by reading the source during the verify-skill maintenance pass; not reproduced live yet.
+- Verify with the verify skill (`.claude/skills/verify/features/contact.md`). Consider adding a whitespace case to `ax.sh submit`, which already checks the empty and valid submits (#99).
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-56] Keep the mobile menu's aria-controls target in the DOM
+
+**GitHub**: #112
+**Status**: pending
+
+**Type**: Bug
+**GitHub Label**: bug
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: bug, frontend, mobile
+**Source**: `TODO.md:49` — "- [ ] The mobile menu button keeps aria-controls="mobile-menu" while the drawer is closed, but the drawer element is removed from the page when closed, so the attribute points at an id that does not exist."
+
+### Description
+
+The mobile menu button always carries `aria-controls="mobile-menu"`, but `#mobile-menu` is only rendered while the drawer is open. While it is closed, the attribute points at an id that does not exist, which gives screen readers a broken reference. Expected: the reference always resolves.
+
+### Acceptance Criteria
+
+- [ ] `aria-controls` never references a missing id: either the drawer stays in the DOM while closed, or the attribute is set only while the drawer is open.
+- [ ] When the drawer is closed, its links are neither focusable nor in the accessibility tree, so `ax.sh has 'link "WORK"'` fails at the mobile viewport.
+- [ ] The toggle and the drawer links behave as before, and the mobile-menu recipe of the verify skill passes, including the #64 overshoot case.
+- [ ] `npm run check` passes.
+
+### Technical Notes
+
+- The button is at `src/features/navigation/Nav.tsx:96-109` (`aria-controls` at :106); the drawer is `{isOpen && (<div id='mobile-menu' …>)}` at :112-137.
+- Preferred fix: always render the drawer and add the `hidden` attribute when closed. A `hidden` element takes no space and leaves the tab order and the accessibility tree, so the #64 fix (close with `flushSync` before measuring the scroll target) keeps working.
+- The alternative is `aria-controls={isOpen ? 'mobile-menu' : undefined}`.
+- The design-system previews copy the button markup (`.agents/design-system/laanhema-design-system/components/NavBar/preview.html`, `BlogArticle/preview.html`, `Homepage/preview.html`); keep them in line if the markup changes.
+- Found by reading the source during the verify-skill maintenance pass.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-57] Replace hard-coded colour hex classes with theme tokens
+
+**GitHub**: #113
+**Status**: pending
+
+**Type**: Technical
+**GitHub Label**: technical
+**Priority**: Low
+**Complexity**: Medium
+**Labels**: technical, frontend
+**Source**: `TODO.md:44` — "- [ ] Light / Dark Mode switch would be nice to have in year 2026."
+
+### Description
+
+A light/dark switch needs colours that can change at runtime, but every component hard-codes its colours as arbitrary hex classes (`text-[#ff3e00]`, `bg-[#121212]`, …; 96 uses across 10 files). Move them onto the `@theme` tokens that `global.css` already defines, with no visible change. This is the first of two parts of the light/dark task.
+
+### Acceptance Criteria
+
+- [ ] No `[#hex]` colour classes remain in `src/`. Components use the `@theme` tokens of `global.css` (`bg-bg-primary`, `text-accent`, …), and `--shadow-brutal` uses a token too.
+- [ ] The site looks unchanged: `ax.sh all` passes, and before/after screenshots of `/`, `/blog` and `/blog/tralla` match at both viewports.
+- [ ] The design-system READMEs' class strings are updated in the same change, so `npm run check` passes.
+
+### Technical Notes
+
+- Tokens: `src/styles/global.css:3-15` (`--color-bg-primary`, `--color-text-primary`, `--color-accent`, `--color-accent-cyan`, `--color-accent-yellow`, `--color-accent-purple`, `--shadow-brutal`, `--shadow-brutal-sm`).
+- Files with hex classes: `App.tsx`, `Nav.tsx`, `Footer.tsx`, `ProjectCard.tsx`, `ContactForm.tsx`, `BlogIndex.tsx`, `BlogPost.tsx`, `ArticleHeader.tsx`, `posts.ts` (accent colours and inline HTML) and `global.css`.
+- `npm run check:design` fails when a README class string no longer appears in `src/`, so update `.agents/design-system/laanhema-design-system/components/*/README.md` (and the previews) together with the code. AGENTS.md lists the palette hex values; `check:agents` validates them.
+- Part 1 of 2 of the light/dark task; TODO-58 builds on it.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: TODO-58
+
+---
+
+## [TODO-58] Add a light/dark mode switch
+
+**GitHub**: #114
+**Status**: pending
+
+**Type**: Feature
+**GitHub Label**: enhancement
+**Priority**: Low
+**Complexity**: Medium
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:44` — "- [ ] Light / Dark Mode switch would be nice to have in year 2026."
+
+### Description
+
+Add a theme switch so visitors can read the site in a dark theme. It follows the system preference on a first visit and remembers the visitor's choice. This is the second of two parts of the light/dark task.
+
+### Acceptance Criteria
+
+- [ ] A toggle in the nav (desktop bar and mobile drawer) switches between light and dark themes.
+- [ ] The first visit follows `prefers-color-scheme`; the choice is remembered across reloads, with no flash of the wrong theme on load.
+- [ ] In the dark theme, text and accent controls meet WCAG AA 4.5:1.
+- [ ] All pages (home, blog index, post, 404) and the brutalist borders and shadows stay legible in both themes.
+
+### Technical Notes
+
+- Needs the token refactor of TODO-57 first; then a dark theme is a second set of values for the same tokens (for example under `[data-theme=dark]` with a Tailwind v4 `@custom-variant dark`).
+- Avoid the flash: set the theme attribute in the inline script of `index.html`, before React boots, next to the SPA redirect restore. `index.html` changes, so verify with `verify-server.sh start preview`.
+- The brutalist look relies on `#121212` borders and shadows on a light canvas; the dark theme needs light borders and shadows instead, and the black About section and footer need their own values.
+- Add the toggle to the design system (`.agents/design-system/laanhema-design-system/`) per AGENTS.md.
+- #108 fixes accent contrast in the light theme; the dark palette needs the same check.
+- Part 2 of 2 of the light/dark task.
+
+### Dependencies
+
+- Blocked by: TODO-57
+- Blocks: None
+
+---
+
+## [TODO-59] Replace the default Vite favicon with a "</>" mark
+
+**GitHub**: #115
+**Status**: pending
+
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:45` — "- [ ] Generate a small favicon for the website - it would be cool if it was literally this: "</>" - indicates this is a developer's website."
+
+### Description
+
+The site still ships Vite's default purple logo as `public/favicon.svg`. Replace it with a small `</>` mark in the site's style, so the browser tab says "developer's site" at a glance.
+
+### Acceptance Criteria
+
+- [ ] `public/favicon.svg` shows a `</>` glyph in the site's palette and brutalist style, replacing the Vite logo.
+- [ ] The glyph is drawn as paths, not `<text>`, so it renders the same without the web font.
+- [ ] It stays readable at 16×16 and 32×32 on both light and dark browser tab bars.
+
+### Technical Notes
+
+- `index.html:5` links `/favicon.svg`; keep the path so no other change is needed.
+- A favicon cannot load the web font, so convert the glyph to outlines. A solid tile (for example `#121212` with an `#ff3e00` slash, or the reverse) keeps it legible on both tab bar colours.
+- Palette and style: `.agents/design-system/laanhema-design-system/DESIGN.md`.
+- `index.html` and `public/` are build-output changes: verify with `verify-server.sh start preview`.
+
+### Dependencies
+
+- Blocked by: None
+- Blocks: None
+
+---
+
+## [TODO-60] Replace the hero portrait's black loading box with a smooth reveal
+
+**GitHub**: #116
+**Status**: pending
+
+**Type**: Enhancement
+**GitHub Label**: enhancement
+**Priority**: Medium
+**Complexity**: Small
+**Labels**: enhancement, frontend
+**Source**: `TODO.md:47` — "- [ ] The hero picture loads a black box before it fully loads."
+
+### Description
+
+The hero portrait has a `#121212` background, so a solid black box fills its slot until the 123 kB JPEG arrives. Show a placeholder that blends with the page instead, and reveal the image smoothly once it has loaded.
+
+### Acceptance Criteria
+
+- [ ] While the portrait loads, its slot shows a placeholder that matches the page (a light or blurred preview), not a solid black box.
+- [ ] The image fades in once loaded, and appears instantly under `prefers-reduced-motion`.
+- [ ] There is no layout shift: the slot keeps its 2:3 size from `width`/`height`.
+- [ ] Checked in a preview build with network throttling, at both viewports.
+
+### Technical Notes
+
+- The image is at `src/App.tsx:183-192` (`bg-[#121212]` on the `<img>` at :190; asset `src/assets/lauri-makkonen-portrait.jpg`, 123 kB).
+- The image is above the fold, so keep it eager; `fetchpriority="high"` and a smaller WebP/AVIF version would shorten the wait.
+- Its wrapper has `.animate-on-scroll`, which GSAP fades in (`src/hooks/useGsapAnimations.ts`); the load fade must not fight that animation.
+- Options for the placeholder: a tiny inlined blurred preview as the background, or the canvas colour with the brutalist border.
 
 ### Dependencies
 
