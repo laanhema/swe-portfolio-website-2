@@ -5,7 +5,18 @@ import { playPress } from '../../components/playPress';
 const ContactForm: React.FC = () => {
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const nameInput = form.elements.namedItem('name');
+    const messageInput = form.elements.namedItem('message');
+
+    if (nameInput instanceof HTMLInputElement) {
+      nameInput.setCustomValidity('');
+    }
+    if (messageInput instanceof HTMLTextAreaElement) {
+      messageInput.setCustomValidity('');
+    }
+
+    const formData = new FormData(form);
     const name = formData.get('name');
     const email = formData.get('email');
     const message = formData.get('message');
@@ -18,7 +29,20 @@ const ContactForm: React.FC = () => {
     const trimmedEmail = email.trim();
     const trimmedMessage = message.trim();
 
-    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+    let hasWhitespaceError = false;
+
+    if (!trimmedName && nameInput instanceof HTMLInputElement) {
+      nameInput.setCustomValidity('Please fill out this field.');
+      hasWhitespaceError = true;
+    }
+
+    if (!trimmedMessage && messageInput instanceof HTMLTextAreaElement) {
+      messageInput.setCustomValidity('Please fill out this field.');
+      hasWhitespaceError = true;
+    }
+
+    if (hasWhitespaceError || !trimmedName || !trimmedEmail || !trimmedMessage) {
+      form.reportValidity();
       return;
     }
 
@@ -60,6 +84,9 @@ const ContactForm: React.FC = () => {
                 autoComplete="name"
                 className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all"
                 placeholder="John Doe"
+                onInput={(e) => {
+                  e.currentTarget.setCustomValidity('');
+                }}
               />
             </div>
             
@@ -86,6 +113,9 @@ const ContactForm: React.FC = () => {
                 rows={4}
                 className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all resize-none"
                 placeholder="How can I help you?"
+                onInput={(e) => {
+                  e.currentTarget.setCustomValidity('');
+                }}
               ></textarea>
             </div>
             
