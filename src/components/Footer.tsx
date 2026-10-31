@@ -7,11 +7,11 @@ export interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
   return (
     <footer
-      className={`bg-[#121212] text-white py-12 px-6 md:px-12 border-t-4 border-white${className ? ` ${className}` : ''}`}
+      className={`bg-text-primary text-white py-12 px-6 md:px-12 border-t-4 border-white${className ? ` ${className}` : ''}`}
     >
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-2xl font-bold uppercase tracking-tighter">
-          Dev<span className="text-[#ff3e00]">.</span>Portfolio
+          Dev<span className="text-accent">.</span>Portfolio
         </div>
         <p className="font-bold">
           © {new Date().getFullYear()} All rights reserved.
@@ -21,7 +21,7 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             href="https://github.com/laanhema"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#ff3e00] transition-colors"
+            className="hover:text-accent transition-colors"
           >
             GitHub
           </a>
@@ -29,7 +29,7 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             href="https://www.linkedin.com/in/laanhema"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#ff3e00] transition-colors"
+            className="hover:text-accent transition-colors"
           >
             LinkedIn
           </a>

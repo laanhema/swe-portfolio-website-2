@@ -52,10 +52,10 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 md:px-12 bg-white border-t-4 border-[#121212]">
+    <section id="contact" className="py-24 px-6 md:px-12 bg-white border-t-4 border-text-primary">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-5xl md:text-7xl font-bold uppercase mb-12 animate-on-scroll">
-          Let&apos;s Build <br/> Something <span className="text-[#ff3e00]">Awesome.</span>
+          Let&apos;s Build <br/> Something <span className="text-accent">Awesome.</span>
         </h2>
         
         <div className="grid md:grid-cols-2 gap-12">
@@ -66,7 +66,7 @@ const ContactForm: React.FC = () => {
             
             <a 
               href="mailto:lahmakkonen@gmail.com" 
-              className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold uppercase break-all hover:text-[#ff3e00] transition-colors"
+              className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold uppercase break-all hover:text-accent transition-colors"
             >
               <MailIcon className="w-8 h-8 shrink-0" />
               lahmakkonen@gmail.com
@@ -82,7 +82,7 @@ const ContactForm: React.FC = () => {
                 name="name"
                 required
                 autoComplete="name"
-                className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all"
+                className="brutal-border p-4 bg-bg-primary focus:outline-none focus:bg-white focus:brutal-shadow transition-all"
                 placeholder="John Doe"
                 onInput={(e) => {
                   e.currentTarget.setCustomValidity('');
@@ -98,7 +98,7 @@ const ContactForm: React.FC = () => {
                 name="email"
                 required
                 autoComplete="email"
-                className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all"
+                className="brutal-border p-4 bg-bg-primary focus:outline-none focus:bg-white focus:brutal-shadow transition-all"
                 placeholder="john@example.com"
               />
             </div>
@@ -111,7 +111,7 @@ const ContactForm: React.FC = () => {
                 required
                 autoComplete="off"
                 rows={4}
-                className="brutal-border p-4 bg-[#f8f9fa] focus:outline-none focus:bg-white focus:brutal-shadow transition-all resize-none"
+                className="brutal-border p-4 bg-bg-primary focus:outline-none focus:bg-white focus:brutal-shadow transition-all resize-none"
                 placeholder="How can I help you?"
                 onInput={(e) => {
                   e.currentTarget.setCustomValidity('');
@@ -121,7 +121,7 @@ const ContactForm: React.FC = () => {
             
             <button 
               type="submit"
-              className="mt-4 bg-[#ff3e00] text-white brutal-border py-4 font-bold uppercase text-xl shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation cursor-pointer"
+              className="mt-4 bg-accent text-white brutal-border py-4 font-bold uppercase text-xl shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation cursor-pointer"
               onPointerDown={playPress}
             >
               Send Message

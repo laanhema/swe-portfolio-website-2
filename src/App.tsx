@@ -22,7 +22,7 @@ const PROJECTS = [
     techStack: ['Angular', 'Ionic', 'Express', 'MongoDB'],
     repoUrl: 'https://github.com/jamktiko/gymbroapp',
     postSlug: 'gymbro-app',
-    color: '#ff3e00', // Orange accent
+    color: 'var(--color-accent)', // Orange accent
   },
   {
     title: 'Tralla',
@@ -31,7 +31,7 @@ const PROJECTS = [
     techStack: ['Angular', 'Taiga UI', 'NgRx SignalStore'],
     repoUrl: 'https://github.com/laanhema/tralla',
     postSlug: 'tralla',
-    color: '#00e5ff', // Cyan accent
+    color: 'var(--color-accent-cyan)', // Cyan accent
   },
   {
     title: 'Froots Smoothie App',
@@ -40,7 +40,7 @@ const PROJECTS = [
     techStack: ['Svelte', 'TypeScript', 'Tailwind'],
     repoUrl: 'https://github.com/jamktiko/smoothie_testi',
     postSlug: 'froots-smoothie-app',
-    color: '#facc15', // Yellow accent
+    color: 'var(--color-accent-yellow)', // Yellow accent
   },
   {
     title: 'Distill Design Scraper',
@@ -49,7 +49,7 @@ const PROJECTS = [
     techStack: ['Next.js', 'React', 'Playwright', 'Sharp', 'Culori', 'Zod'],
     repoUrl: 'https://github.com/laanhema/distill-design-scraper',
     postSlug: 'distill-design-scraper',
-    color: '#a855f7', // Purple accent
+    color: 'var(--color-accent-purple)', // Purple accent
   },
 ] as const satisfies readonly ProjectCardProps[];
 
@@ -101,7 +101,7 @@ const HeroPortrait = () => {
 
   return (
     <div className='w-full max-w-md xl:max-w-none xl:w-[34%] shrink-0 animate-on-scroll xl:pt-2'>
-      <div className='w-full aspect-[2/3] brutal-border brutal-shadow bg-[#f8f9fa] overflow-hidden'>
+      <div className='w-full aspect-[2/3] brutal-border brutal-shadow bg-bg-primary overflow-hidden'>
         <img
           ref={imgRef}
           src={portrait}
@@ -172,7 +172,7 @@ function HomePage() {
               <br />
               Systems.
             </h1>
-            <p className='text-xl md:text-2xl max-w-2xl font-medium mb-12 border-l-8 border-[#ff3e00] pl-6 animate-on-scroll'>
+            <p className='text-xl md:text-2xl max-w-2xl font-medium mb-12 border-l-8 border-accent pl-6 animate-on-scroll'>
               Full-stack software engineer building fast, reliable web
               applications. Coding since 2019, I focus on clean architecture,
               responsive interfaces, and seeing projects through from first
@@ -184,7 +184,7 @@ function HomePage() {
                 href='#work'
                 onClick={handleViewWork}
                 onPointerDown={playPress}
-                className='bg-[#121212] text-white px-8 py-4 text-xl font-bold uppercase shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation'
+                className='bg-text-primary text-white px-8 py-4 text-xl font-bold uppercase shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation'
               >
                 View Work
               </a>
@@ -193,7 +193,7 @@ function HomePage() {
                   href='https://github.com/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover text-[#121212] flex items-center justify-center touch-manipulation'
+                  className='bg-white brutal-border p-4 shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover text-text-primary flex items-center justify-center touch-manipulation'
                   aria-label='GitHub'
                   onPointerDown={playPress}
                 >
@@ -203,7 +203,7 @@ function HomePage() {
                   href='https://www.linkedin.com/in/laanhema'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='bg-white brutal-border p-4 shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover text-[#121212] flex items-center justify-center touch-manipulation'
+                  className='bg-white brutal-border p-4 shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover text-text-primary flex items-center justify-center touch-manipulation'
                   aria-label='LinkedIn'
                   onPointerDown={playPress}
                 >
@@ -220,12 +220,12 @@ function HomePage() {
       {/* About Section */}
       <section
         id='about'
-        className='py-24 px-6 md:px-12 bg-[#121212] text-white border-y-4 border-[#121212]'
+        className='py-24 px-6 md:px-12 bg-text-primary text-white border-y-4 border-text-primary'
       >
         <div className='max-w-6xl mx-auto flex flex-col md:flex-row gap-16 items-center'>
           <div className='flex-1 animate-on-scroll'>
             <h2 className='text-5xl md:text-7xl font-bold uppercase mb-8'>
-              The <span className='text-[#00e5ff]'>Dev</span> <br /> Behind{' '}
+              The <span className='text-accent-cyan'>Dev</span> <br /> Behind{' '}
               <br /> The Code.
             </h2>
             <p className='text-xl leading-relaxed font-medium'>
@@ -236,15 +236,15 @@ function HomePage() {
             </p>
           </div>
           <div className='flex-1 grid grid-cols-2 gap-6 animate-on-scroll w-full'>
-            <div className='bg-[#facc15] text-[#121212] brutal-border p-6 aspect-square flex flex-col justify-center'>
+            <div className='bg-accent-yellow text-text-primary brutal-border p-6 aspect-square flex flex-col justify-center'>
               <span className='text-5xl font-bold mb-2'>2019</span>
               <span className='text-xl font-bold uppercase'>Coding Since</span>
             </div>
-            <div className='bg-[#ff3e00] text-[#121212] brutal-border p-6 aspect-square flex flex-col justify-center translate-y-8'>
+            <div className='bg-accent text-text-primary brutal-border p-6 aspect-square flex flex-col justify-center translate-y-8'>
               <span className='text-5xl font-bold mb-2'>25</span>
               <span className='text-xl font-bold uppercase'>Public Repos</span>
             </div>
-            <div className='col-span-2 mt-8 bg-[#00e5ff] text-[#121212] brutal-border p-6 flex flex-col justify-center'>
+            <div className='col-span-2 mt-8 bg-accent-cyan text-text-primary brutal-border p-6 flex flex-col justify-center'>
               <span className='text-5xl font-bold mb-2'>2000+</span>
               <span className='text-xl font-bold uppercase'>
                 GitHub Contributions This Year
@@ -259,7 +259,7 @@ function HomePage() {
         <div className='max-w-6xl mx-auto'>
           <div className='flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-0 mb-16 animate-on-scroll'>
             <h2 className='text-6xl md:text-8xl font-bold uppercase tracking-tighter'>
-              Selected <br /> <span className='text-[#ff3e00]'>Works.</span>
+              Selected <br /> <span className='text-accent'>Works.</span>
             </h2>
             <p className='max-w-sm text-xl font-bold pb-4'>
               A few projects I&apos;ve built recently.

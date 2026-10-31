@@ -10,8 +10,8 @@
 
   --font-sans: 'Noto Sans Variable', system-ui, sans-serif;
 
-  --shadow-brutal: 6px 6px 0px 0px #121212;
-  --shadow-brutal-sm: 3px 3px 0px 0px #121212;
+  --shadow-brutal: 6px 6px 0px 0px var(--color-text-primary);
+  --shadow-brutal-sm: 3px 3px 0px 0px var(--color-text-primary);
 }
 
 @layer base {
@@ -53,7 +53,7 @@
   
   .brutal-shadow:active,
   .brutal-shadow[data-pressed] {
-    box-shadow: 0px 0px 0px 0px #121212;
+    box-shadow: 0px 0px 0px 0px var(--color-text-primary);
     transform: translate(6px, 6px);
   }
 
@@ -80,7 +80,7 @@
   .brutal-prose h2 { @apply mt-16 text-3xl md:text-4xl font-bold uppercase leading-tight tracking-tight; }
   .brutal-prose h3 { @apply mt-12 text-2xl font-bold uppercase tracking-tight; }
   .brutal-prose h2 + *, .brutal-prose h3 + * { @apply mt-4; }
-  .brutal-prose a { @apply font-bold underline decoration-4 underline-offset-4 decoration-accent hover:bg-[#facc15]; }
+  .brutal-prose a { @apply font-bold underline decoration-4 underline-offset-4 decoration-accent hover:bg-accent-yellow; }
   .brutal-prose strong { @apply font-bold; }
   .brutal-prose ul { @apply list-[square] pl-6 marker:text-accent; }
   .brutal-prose ol { @apply list-decimal pl-6 marker:font-bold; }

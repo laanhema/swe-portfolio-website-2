@@ -11,7 +11,7 @@ export const BlogIndex: React.FC = () => {
   useScrollReset();
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-[#121212] flex flex-col font-sans selection:bg-[#ff3e00] selection:text-white">
+    <div className="min-h-screen bg-bg-primary text-text-primary flex flex-col font-sans selection:bg-accent selection:text-white">
       <Nav />
 
       <main className="py-24 px-6 md:px-12 flex-1">
@@ -19,7 +19,7 @@ export const BlogIndex: React.FC = () => {
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-0 mb-16 animate-on-scroll">
             <h1 className="text-6xl md:text-8xl font-bold uppercase tracking-tighter">
-              Field <br /> <span className="text-[#ff3e00]">Notes.</span>
+              Field <br /> <span className="text-accent">Notes.</span>
             </h1>
             <p className="max-w-sm text-xl font-bold pb-4">
               What worked, what broke, and what I learned building them.

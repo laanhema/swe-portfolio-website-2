@@ -11,7 +11,7 @@ export const BLOG_POSTS = [
     date: '2026-09-18',
     readingTime: '6 min read',
     tags: ['Angular', 'NgRx', 'SignalStore', 'TypeScript'],
-    accentColor: '#00e5ff',
+    accentColor: 'var(--color-accent-cyan)',
     content: `<p>I rely on Kanban boards every day. A flat to-do list doesn&apos;t show what&apos;s actually in progress or stuck. But tools like Trello keep locking basic features behind paid plans, and commercial boards feel sluggish.</p>
 <p>Tralla started because I wanted a fast, focused board for my own workflow. No enterprise upsells, just columns and cards that move when you tell them to.</p>
 
@@ -58,25 +58,25 @@ export const BLOG_POSTS = [
 <p>Instead of mutating arrays in place, state changes go through store actions and <code>patchState</code>. That keeps mutations in one place and makes board state predictable.</p>
 
 <pre><code><span class="text-gray-400">// creates a new task</span>
-<span class="text-[#00e5ff]">createNewTask</span>(boardId: <span class="text-[#facc15]">number</span>, listId: <span class="text-[#facc15]">number</span>) {
-  <span class="text-[#ff3e00]">const</span> currentTasks = <span class="text-[#ff3e00]">this</span>.<span class="text-[#00e5ff]">getTasksByListId</span>(boardId, listId);
-  <span class="text-[#ff3e00]">const</span> lastUsedId = currentTasks.length &gt; <span class="text-[#facc15]">0</span> ? currentTasks[currentTasks.length - <span class="text-[#facc15]">1</span>].tid : <span class="text-[#facc15]">1</span>;
+<span class="text-accent-cyan">createNewTask</span>(boardId: <span class="text-accent-yellow">number</span>, listId: <span class="text-accent-yellow">number</span>) {
+  <span class="text-accent">const</span> currentTasks = <span class="text-accent">this</span>.<span class="text-accent-cyan">getTasksByListId</span>(boardId, listId);
+  <span class="text-accent">const</span> lastUsedId = currentTasks.length &gt; <span class="text-accent-yellow">0</span> ? currentTasks[currentTasks.length - <span class="text-accent-yellow">1</span>].tid : <span class="text-accent-yellow">1</span>;
 
-  <span class="text-[#ff3e00]">const</span> newTask: <span class="text-[#facc15]">ITask</span> = {
-    tid: lastUsedId + <span class="text-[#facc15]">1</span>,
-    title: <span class="text-[#facc15]">''</span>,
-    taskDone: <span class="text-[#ff3e00]">false</span>,
+  <span class="text-accent">const</span> newTask: <span class="text-accent-yellow">ITask</span> = {
+    tid: lastUsedId + <span class="text-accent-yellow">1</span>,
+    title: <span class="text-accent-yellow">''</span>,
+    taskDone: <span class="text-accent">false</span>,
   };
 
-  <span class="text-[#ff3e00]">const</span> update = store.<span class="text-[#00e5ff]">boards</span>().<span class="text-[#00e5ff]">map</span>((x) =&gt; {
-    <span class="text-[#ff3e00]">if</span> (x.bid !== boardId) <span class="text-[#ff3e00]">return</span> x;
+  <span class="text-accent">const</span> update = store.<span class="text-accent-cyan">boards</span>().<span class="text-accent-cyan">map</span>((x) =&gt; {
+    <span class="text-accent">if</span> (x.bid !== boardId) <span class="text-accent">return</span> x;
 
-    <span class="text-[#ff3e00]">return</span> {
+    <span class="text-accent">return</span> {
       ...x,
-      content: x.content.<span class="text-[#00e5ff]">map</span>((x) =&gt; {
-        <span class="text-[#ff3e00]">if</span> (x.lid !== listId) <span class="text-[#ff3e00]">return</span> x;
+      content: x.content.<span class="text-accent-cyan">map</span>((x) =&gt; {
+        <span class="text-accent">if</span> (x.lid !== listId) <span class="text-accent">return</span> x;
 
-        <span class="text-[#ff3e00]">return</span> {
+        <span class="text-accent">return</span> {
           ...x,
           content: [...currentTasks, newTask],
         };
@@ -84,7 +84,7 @@ export const BLOG_POSTS = [
     };
   });
 
-  <span class="text-[#00e5ff]">patchState</span>(store, { boards: update });
+  <span class="text-accent-cyan">patchState</span>(store, { boards: update });
 }</code></pre>
 
 <h2>Modern Angular features</h2>
@@ -114,7 +114,7 @@ export const BLOG_POSTS = [
     date: '2026-08-30',
     readingTime: '5 min read',
     tags: ['Next.js', 'Playwright', 'Culori', 'Design Tokens'],
-    accentColor: '#a855f7',
+    accentColor: 'var(--color-accent-purple)',
     content: `<p>I started Distill Design Scraper in summer 2026. It was my first project built mainly with AI coding agents. Instead of writing every line manually, I spent most of my time directing agent workflows: structuring context, building prompt skills, and verifying generated code against live sites.</p>
 
 <h2>Extracting design tokens from real sites</h2>
@@ -175,25 +175,25 @@ export const BLOG_POSTS = [
 </ol>
 
 <pre><code><span class="text-gray-400">/** Nearest palette role for a measured CSS color, or null if nothing is close enough. */</span>
-<span class="text-[#ff3e00]">export function</span> <span class="text-[#00e5ff]">nearestPaletteRole</span>(
-  colorValue: <span class="text-[#facc15]">string</span>,
-  palette: <span class="text-[#facc15]">Palette</span>,
-): <span class="text-[#facc15]">ColorRole</span> | <span class="text-[#ff3e00]">null</span> {
-  <span class="text-[#ff3e00]">const</span> parsed = <span class="text-[#00e5ff]">parseColor</span>(colorValue);
-  <span class="text-[#ff3e00]">if</span> (!parsed) <span class="text-[#ff3e00]">return null</span>;
+<span class="text-accent">export function</span> <span class="text-accent-cyan">nearestPaletteRole</span>(
+  colorValue: <span class="text-accent-yellow">string</span>,
+  palette: <span class="text-accent-yellow">Palette</span>,
+): <span class="text-accent-yellow">ColorRole</span> | <span class="text-accent">null</span> {
+  <span class="text-accent">const</span> parsed = <span class="text-accent-cyan">parseColor</span>(colorValue);
+  <span class="text-accent">if</span> (!parsed) <span class="text-accent">return null</span>;
 
-  <span class="text-[#ff3e00]">let</span> best: <span class="text-[#facc15]">ColorRole</span> | <span class="text-[#ff3e00]">null</span> = <span class="text-[#ff3e00]">null</span>;
-  <span class="text-[#ff3e00]">let</span> bestDist = <span class="text-[#facc15]">Infinity</span>;
-  <span class="text-[#ff3e00]">for</span> (<span class="text-[#ff3e00]">const</span> swatch <span class="text-[#ff3e00]">of</span> palette.colors) {
-    <span class="text-[#ff3e00]">const</span> swatchColor = <span class="text-[#00e5ff]">parseColor</span>(swatch.hex);
-    <span class="text-[#ff3e00]">if</span> (!swatchColor) <span class="text-[#ff3e00]">continue</span>;
-    <span class="text-[#ff3e00]">const</span> dist = <span class="text-[#00e5ff]">deltaE</span>(parsed, swatchColor);
-    <span class="text-[#ff3e00]">if</span> (dist &lt; bestDist &amp;&amp; swatch.role) {
+  <span class="text-accent">let</span> best: <span class="text-accent-yellow">ColorRole</span> | <span class="text-accent">null</span> = <span class="text-accent">null</span>;
+  <span class="text-accent">let</span> bestDist = <span class="text-accent-yellow">Infinity</span>;
+  <span class="text-accent">for</span> (<span class="text-accent">const</span> swatch <span class="text-accent">of</span> palette.colors) {
+    <span class="text-accent">const</span> swatchColor = <span class="text-accent-cyan">parseColor</span>(swatch.hex);
+    <span class="text-accent">if</span> (!swatchColor) <span class="text-accent">continue</span>;
+    <span class="text-accent">const</span> dist = <span class="text-accent-cyan">deltaE</span>(parsed, swatchColor);
+    <span class="text-accent">if</span> (dist &lt; bestDist &amp;&amp; swatch.role) {
       bestDist = dist;
       best = swatch.role;
     }
   }
-  <span class="text-[#ff3e00]">return</span> bestDist &lt;= ROLE_MATCH_DELTA_E ? best : <span class="text-[#ff3e00]">null</span>;
+  <span class="text-accent">return</span> bestDist &lt;= ROLE_MATCH_DELTA_E ? best : <span class="text-accent">null</span>;
 }</code></pre>
 
 <h2>Deployment plans</h2>
@@ -210,7 +210,7 @@ export const BLOG_POSTS = [
     date: '2026-08-05',
     readingTime: '6 min read',
     tags: ['Svelte', 'TypeScript', 'Tailwind', 'State'],
-    accentColor: '#facc15',
+    accentColor: 'var(--color-accent-yellow)',
     content: `<p>Froots is a smoothie recipe app built by our student team. You can look up nutritional stats for different ingredients, mix your own recipes, and save custom blends.</p>
 
 <h2>Sprint structure</h2>
@@ -273,25 +273,25 @@ export const BLOG_POSTS = [
 <p>Recipes persist across reloads without needing a server or database.</p>
 
 <pre><code><span class="text-gray-400">// luo uuden smoothien ja uuden smoothieKortin ja lis&auml;&auml; kummatkin globaleihin taulukoihin + poistuu takaisin etusivulle</span>
-<span class="text-[#ff3e00]">function</span> <span class="text-[#00e5ff]">createSmoothie</span>() {
-  <span class="text-[#ff3e00]">const</span> maxId = globalSmoothies
-    .<span class="text-[#00e5ff]">get</span>()
-    .<span class="text-[#00e5ff]">reduce</span>((max, smoothie) =&gt; (smoothie.id &gt; max ? smoothie.id : max), -<span class="text-[#facc15]">1</span>);
-  <span class="text-[#ff3e00]">const</span> newSmoothie: <span class="text-[#facc15]">Smoothie</span> = {
-    id: maxId + <span class="text-[#facc15]">1</span>,
+<span class="text-accent">function</span> <span class="text-accent-cyan">createSmoothie</span>() {
+  <span class="text-accent">const</span> maxId = globalSmoothies
+    .<span class="text-accent-cyan">get</span>()
+    .<span class="text-accent-cyan">reduce</span>((max, smoothie) =&gt; (smoothie.id &gt; max ? smoothie.id : max), -<span class="text-accent-yellow">1</span>);
+  <span class="text-accent">const</span> newSmoothie: <span class="text-accent-yellow">Smoothie</span> = {
+    id: maxId + <span class="text-accent-yellow">1</span>,
     name: uudenSmoothienNimi,
     ingredients: uudenSmoothienIngredients,
     ingredientsAmount: uudenSmoothienIngredientsAmounts,
-    pic: <span class="text-[#facc15]">"/images/default-faded-leaf.jpg"</span>,
+    pic: <span class="text-accent-yellow">"/images/default-faded-leaf.jpg"</span>,
     preparationTimeMinutes: uudenSmoothienValmistusaika,
     notes: uudenSmoothienNotet,
   };
 
-  <span class="text-[#00e5ff]">luoSmoothieKortti</span>(newSmoothie, <span class="text-[#ff3e00]">true</span>);
-  globalSmoothies.<span class="text-[#00e5ff]">get</span>().<span class="text-[#00e5ff]">unshift</span>(newSmoothie);
+  <span class="text-accent-cyan">luoSmoothieKortti</span>(newSmoothie, <span class="text-accent">true</span>);
+  globalSmoothies.<span class="text-accent-cyan">get</span>().<span class="text-accent-cyan">unshift</span>(newSmoothie);
   <span class="text-gray-400">// p&auml;ivitet&auml;&auml;n localStoragen muuttuja smoothiesLS</span>
-  localStorage.<span class="text-[#00e5ff]">setItem</span>(<span class="text-[#facc15]">"smoothiesLS"</span>, JSON.<span class="text-[#00e5ff]">stringify</span>(globalSmoothies.<span class="text-[#00e5ff]">get</span>()));
-  <span class="text-[#00e5ff]">homePage</span>();
+  localStorage.<span class="text-accent-cyan">setItem</span>(<span class="text-accent-yellow">"smoothiesLS"</span>, JSON.<span class="text-accent-cyan">stringify</span>(globalSmoothies.<span class="text-accent-cyan">get</span>()));
+  <span class="text-accent-cyan">homePage</span>();
 }</code></pre>
 
 <h2>What broke and what we learned</h2>
@@ -317,7 +317,7 @@ export const BLOG_POSTS = [
     date: '2026-07-12',
     readingTime: '5 min read',
     tags: ['Ionic', 'Angular', 'Express', 'AWS'],
-    accentColor: '#ff3e00',
+    accentColor: 'var(--color-accent)',
     content: `<p>GymBro was a five-person student project where we wanted to turn workout logging into an RPG. Finishing an exercise session awards XP, raises your level, and unlocks achievements. The idea was to make consistent gym tracking feel rewarding rather than repetitive.</p>
 
 <h2>Core application features</h2>
@@ -380,22 +380,22 @@ export const BLOG_POSTS = [
 <h2>Managing a team while using AI coding tools</h2>
 <p>We used AI coding tools for boilerplate, which changed how I spent my time as project lead. Instead of writing every CRUD route and data transform by hand, I spent more time reviewing PRs, checking in on teammates, and unblocking people when work stalled. It made the role feel much more like coordinating an engineering team than just churning out syntax.</p>
 
-<pre><code><span class="text-[#ff3e00]">const</span> jwt = <span class="text-[#00e5ff]">require</span>(<span class="text-[#facc15]">"jsonwebtoken"</span>);
+<pre><code><span class="text-accent">const</span> jwt = <span class="text-accent-cyan">require</span>(<span class="text-accent-yellow">"jsonwebtoken"</span>);
 
-<span class="text-[#ff3e00]">const</span> <span class="text-[#00e5ff]">verifyToken</span> = (req, res, next) =&gt; {
-  <span class="text-[#ff3e00]">try</span> {
-    <span class="text-[#ff3e00]">const</span> authHeader =
-      req.headers[<span class="text-[#facc15]">"authorization"</span>] || req.headers[<span class="text-[#facc15]">"Authorization"</span>];
-    <span class="text-[#ff3e00]">if</span> (!authHeader || !authHeader.<span class="text-[#00e5ff]">startsWith</span>(<span class="text-[#facc15]">"Bearer "</span>)) {
-      <span class="text-[#ff3e00]">return</span> res.<span class="text-[#00e5ff]">status</span>(<span class="text-[#facc15]">401</span>).<span class="text-[#00e5ff]">json</span>({ error: <span class="text-[#facc15]">"Unauthorized"</span> });
+<span class="text-accent">const</span> <span class="text-accent-cyan">verifyToken</span> = (req, res, next) =&gt; {
+  <span class="text-accent">try</span> {
+    <span class="text-accent">const</span> authHeader =
+      req.headers[<span class="text-accent-yellow">"authorization"</span>] || req.headers[<span class="text-accent-yellow">"Authorization"</span>];
+    <span class="text-accent">if</span> (!authHeader || !authHeader.<span class="text-accent-cyan">startsWith</span>(<span class="text-accent-yellow">"Bearer "</span>)) {
+      <span class="text-accent">return</span> res.<span class="text-accent-cyan">status</span>(<span class="text-accent-yellow">401</span>).<span class="text-accent-cyan">json</span>({ error: <span class="text-accent-yellow">"Unauthorized"</span> });
     }
 
-    <span class="text-[#ff3e00]">const</span> token = authHeader.<span class="text-[#00e5ff]">split</span>(<span class="text-[#facc15]">" "</span>)[<span class="text-[#facc15]">1</span>];
-    <span class="text-[#ff3e00]">const</span> decoded = jwt.<span class="text-[#00e5ff]">verify</span>(token, process.env.JWT_SECRET);
+    <span class="text-accent">const</span> token = authHeader.<span class="text-accent-cyan">split</span>(<span class="text-accent-yellow">" "</span>)[<span class="text-accent-yellow">1</span>];
+    <span class="text-accent">const</span> decoded = jwt.<span class="text-accent-cyan">verify</span>(token, process.env.JWT_SECRET);
     req.user = decoded;
-    <span class="text-[#00e5ff]">next</span>();
-  } <span class="text-[#ff3e00]">catch</span> {
-    <span class="text-[#ff3e00]">return</span> res.<span class="text-[#00e5ff]">status</span>(<span class="text-[#facc15]">401</span>).<span class="text-[#00e5ff]">json</span>({ error: <span class="text-[#facc15]">"Invalid token."</span> });
+    <span class="text-accent-cyan">next</span>();
+  } <span class="text-accent">catch</span> {
+    <span class="text-accent">return</span> res.<span class="text-accent-cyan">status</span>(<span class="text-accent-yellow">401</span>).<span class="text-accent-cyan">json</span>({ error: <span class="text-accent-yellow">"Invalid token."</span> });
   }
 };
 

@@ -63,7 +63,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         {postSlug && (
           <Link 
             to={`/blog/${postSlug}`}
-            className="flex-1 bg-[#121212] text-white border-4 border-[#121212] py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation"
+            className="flex-1 bg-text-primary text-white border-4 border-text-primary py-3 px-3 flex items-center justify-center font-bold uppercase text-center leading-tight shadow-brutal transition-[transform,box-shadow] duration-100 brutal-shadow-hover touch-manipulation"
             onPointerDown={playPress}
           >
             <span>Read Story</span>
