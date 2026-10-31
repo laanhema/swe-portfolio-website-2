@@ -110,32 +110,31 @@ export const Nav: React.FC = () => {
       </div>
 
       {/* Mobile Navigation Drawer */}
-      {isOpen && (
-        <div
-          id='mobile-menu'
-          className='md:hidden border-t-4 border-[#121212] bg-[#f8f9fa] px-6 py-6 flex flex-col gap-4 text-xl font-bold uppercase tracking-wide'
-        >
-          {NAV_LINKS.map((link, index) => {
-            const sectionId = link.sectionId;
-            return (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={
-                  sectionId
-                    ? (e) => {
-                        handleSectionClick(e, sectionId);
-                      }
-                    : closeMenu
-                }
-                className={`py-2${index < NAV_LINKS.length - 1 ? ' border-b-2 border-[#121212]' : ''} hover:text-[#ff3e00] transition-colors`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-        </div>
-      )}
+      <div
+        id='mobile-menu'
+        hidden={!isOpen}
+        className='md:hidden border-t-4 border-[#121212] bg-[#f8f9fa] px-6 py-6 flex flex-col gap-4 text-xl font-bold uppercase tracking-wide'
+      >
+        {NAV_LINKS.map((link, index) => {
+          const sectionId = link.sectionId;
+          return (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={
+                sectionId
+                  ? (e) => {
+                      handleSectionClick(e, sectionId);
+                    }
+                  : closeMenu
+              }
+              className={`py-2${index < NAV_LINKS.length - 1 ? ' border-b-2 border-[#121212]' : ''} hover:text-[#ff3e00] transition-colors`}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 };
